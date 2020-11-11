@@ -1,0 +1,27 @@
+/* Navbar.css */
+.navbar {
+  width: 100vw;
+  height: 100px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.btns_area {
+  margin-right: 363px;
+}
+.btns_area span {
+  width: 50px;
+  height: 33px;
+  font-size: 25px;
+  font-family: Segoe UI;
+  font-weight: 600;
+  line-height: 33px;
+  color: #555555;
+  opacity: 1;
+}
+.btns_area button {
+  width: 40px;
+  height: 40px;
+}
