@@ -17,21 +17,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from "vue-class-component";
-
-@Options({
-  methods: {
-    route2Home() {
-      this.$router.push({ path: "/" });
-    },
-    route2Gate() {
-      this.$router.push({ path: "/gate" });
-    },
-  },
-})
-export default class Nav extends Vue {}
-</script>
+<script src="../assets/js/Nav.js"></script>
 
 <style>
 @import "../assets/css/global.css";

@@ -157,22 +157,22 @@
         </div>
       </div>
     </div>
+
     <div class="footer">
       <span>footer</span>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from "vue-class-component";
+<script>
 import Nav from "@/components/Nav.vue";
 
-@Options({
+export default {
+  name: "Home",
   components: {
     Nav,
   },
-})
-export default class Home extends Vue {}
+};
 </script>
 
 <style>
