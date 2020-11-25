@@ -1,6 +1,6 @@
-/* Gate.css */
-.achivements_box {
-  width: 1920px;
+/* Achievements.scss */
+.achievements_box {
+  width: 100%;
   min-height: 670px;
   max-height: 1880px;
   background: rgba(235, 235, 235, 1);
@@ -9,46 +9,12 @@
   justify-content: flex-start;
   align-items: center;
 }
-#filter_bar {
-  width: 1200px;
-  height: 50px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+.searchpage.achievements_box {
+  width: 950px;
+  height: 100%;
+  background-color: transparent;
 }
-.filter_bar__item {
-  width: 241px;
-  height: 50px;
-}
-.filter_bar__item li {
-  width: 120px;
-  height: 50px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  float: left;
-  list-style: none;
-}
-.filter_bar__item li span {
-  width: 80px;
-  height: 19px;
-  display: block;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 19px;
-  text-align: center;
-  color: rgba(85, 85, 85, 1);
-}
-#cutline {
-  width: 0px;
-  height: 30px;
-  border: 1px solid rgba(112, 112, 112, 1);
-}
-.achivements_content {
+.achievements_content {
   width: 100%;
   min-height: 510px;
   max-height: 1700px;
@@ -57,22 +23,48 @@
   justify-content: flex-start;
   align-items: center;
 }
-.achivements_item {
+.achievements_item {
   width: 920px;
   height: 150px;
   margin-bottom: 20px;
   background-color: rgba(255, 255, 255, 1);
 }
-.achivements_item > * {
+.achievements_item > * {
   margin: 11px 22px;
 }
+.searchpage.achievements_box .achievements_item:nth-child(1) {
+  margin-top: 20px;
+}
 .item__above {
+  width: 876px;
   margin: 0 22px;
   margin-top: 12px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+.item__above #title {
+  height: 19px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  color: rgba(85, 85, 85, 1);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.item__above #title span:nth-child(1) {
+  margin-right: 5px;
+}
+.item__above #title span:nth-child(2) {
+  width: 550px;
+  display: inline-block;
+  color: rgba(0, 115, 152, 1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .item__btns_area {
   width: 200px;
@@ -82,7 +74,7 @@
   justify-content: flex-end;
   align-items: center;
 }
-.achivements_item .btns_area button {
+.achievements_item .btns_area button {
   height: 20px;
 }
 #author {
@@ -131,7 +123,7 @@
   font-weight: 400;
   line-height: 20px;
   text-align: justify;
-  color: rgba(85, 85, 85，1);
+  color: rgba(85, 85, 85, 1);
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;

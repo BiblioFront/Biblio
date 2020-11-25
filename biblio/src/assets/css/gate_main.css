@@ -1,6 +1,6 @@
-/* Gate.css */
-.maincontent {
-  width: 1920px;
+/* Gate.scss */
+.gatepage.main_content {
+  width: 100%;
   height: 1300px;
 }
 .scholar_info_box {
@@ -28,7 +28,7 @@
   height: 140px;
   border-radius: 50%;
 }
-.scholar_info {
+.gatepage.scholar_info {
   width: 100%;
   height: 105px;
   display: flex;
@@ -36,7 +36,7 @@
   justify-content: flex-end;
   align-items: center;
 }
-.scholar_info span {
+.gatepage.scholar_info span {
   width: 400px;
   height: 20px;
   font-size: 14px;
@@ -45,7 +45,7 @@
   text-align: center;
   color: rgba(85, 85, 85, 1);
 }
-.scholar_info #name {
+.gatepage.scholar_info #name {
   width: 200px;
   height: 34px;
   font-size: 24px;
@@ -53,11 +53,11 @@
   line-height: 34px;
   letter-spacing: 2px;
 }
-.scholar_info #institution {
+.gatepage.scholar_info #institution {
   margin-bottom: 10px;
   color: rgba(150, 150, 150, 1);
 }
-.scholar_info #subject {
+.gatepage.scholar_info #subject {
   font-size: 15px;
 }
 .scholar_btns_area {
@@ -90,7 +90,7 @@
   justify-content: flex-start;
   align-items: center;
 }
-.achivements {
+.achievements {
   width: 1000px;
   height: 100px;
   display: flex;
@@ -98,7 +98,7 @@
   justify-content: space-between;
   align-items: center;
 }
-.achivements:nth-child(2) {
+.achievements:nth-child(2) {
   height: 180px;
   margin-top: 80px;
 }
@@ -149,4 +149,43 @@
   margin-top: 50px;
   border: 1px solid rgba(112, 112, 112, 1);
   border-radius: 50%;
+}
+#filter_bar {
+  width: 1200px;
+  height: 50px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.filter_bar__item {
+  width: 241px;
+  height: 50px;
+}
+.filter_bar__item li {
+  width: 120px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  float: left;
+  list-style: none;
+}
+.filter_bar__item li span {
+  width: 80px;
+  height: 19px;
+  display: block;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  text-align: center;
+  color: rgba(85, 85, 85, 1);
+}
+#cutline {
+  width: 0px;
+  height: 30px;
+  border: 1px solid rgba(112, 112, 112, 1);
 }

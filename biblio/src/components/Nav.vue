@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <div id="logo" @click="route2Home()">
-      <span>logo&name</span>
+      <span>biblio</span>
     </div>
     <div class="btns_area">
       <div v-if="1">

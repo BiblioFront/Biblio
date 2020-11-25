@@ -19,7 +19,9 @@
               placeholder="输入搜索内容..."
             />
             <div class="search_btn">
-              <button>search</button>
+              <button @click="route2Search()">
+                <svg-icon name="search"></svg-icon>
+              </button>
             </div>
           </div>
 
@@ -39,12 +41,13 @@
       </div>
     </div>
 
-    <div class="main_content">
+    <div class="homepage main_content">
       <div class="left_box">
         <div class="box_info">
           <span id="title">热门文献</span>
           <span id="degree">热度</span>
         </div>
+
         <div class="left_box__content">
           <div class="left_box__item">
             <span>1</span>
@@ -105,12 +108,16 @@
         <div class="box_info">
           <span id="title">最新动态</span>
         </div>
+
         <div class="rigth_box__content">
           <div class="right_box__inner paper_box">
             <div class="inner_header">
               <span id="inner_title">期刊论文</span>
-              <input class="more_btn" type="button" value="more" />
+              <button class="more_btn">
+                <svg-icon name="more"></svg-icon>
+              </button>
             </div>
+
             <div class="inner_content">
               <div class="inner_item">
                 <div id="linesign"></div>
@@ -133,7 +140,9 @@
           <div class="right_box__inner research_box">
             <div class="inner_header">
               <span id="inner_title">科研专利</span>
-              <input class="more_btn" type="button" value="more" />
+              <button class="more_btn">
+                <svg-icon name="more"></svg-icon>
+              </button>
             </div>
             <div class="inner_content">
               <div class="inner_item">
@@ -164,19 +173,9 @@
   </div>
 </template>
 
-<script>
-import Nav from "@/components/Nav.vue";
+<script src="../assets/js/Home.js"></script>
 
-export default {
-  name: "Home",
-  components: {
-    Nav,
-  },
-};
-</script>
-
-<style>
+<style scoped>
 @import "../assets/css/global.css";
-@import "../assets/css/home_frontarea.css";
-@import "../assets/css/home_mainarea.css";
+@import "../assets/css/home.css";
 </style>
