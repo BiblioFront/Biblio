@@ -1,0 +1,135 @@
+/* home.css */
+.container {
+  width: 100vw;
+  height: 1480px;
+  background: rgba(0, 0, 0, 0);
+}
+.main_content {
+  width: 100vw;
+  height: 600px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.left_box,
+.right_box {
+  width: 600px;
+  height: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.left_box__content,
+.rigth_box__content {
+  width: 600px;
+  height: 400px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.box_info {
+  width: 550px;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.main_content #title {
+  width: 100px;
+  height: 29px;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 29px;
+  color: rgba(85, 85, 85, 1);
+}
+.left_box .box_info #degree {
+  width: 120px;
+  height: 20px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 35px;
+  color: rgba(150, 150, 150, 1);
+}
+.left_box__item {
+  width: 550px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.left_box__item span {
+  height: 23px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 23px;
+  color: rgb(85, 85, 85, 1);
+}
+.left_box__item span:nth-child(1) {
+  width: 50px;
+}
+.left_box__item span:nth-child(2) {
+  width: 380px;
+}
+.left_box__item span:nth-child(3) {
+  width: 120px;
+  text-align: center;
+}
+.right_box__inner {
+  width: 550px;
+  height: 180px;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+}
+.right_box .inner_header {
+  width: 550px;
+  height: 40px;
+  background: rgba(245, 245, 245, 1);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.right_box #inner_title {
+  padding-left: 15px;
+  color: rgba(85, 85, 85, 1);
+}
+.inner_content {
+  width: 550px;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.inner_item {
+  width: 530px;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.inner_item span {
+  width: 480px;
+  height: 17px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 17px;
+  color: rgba(85, 85, 85, 1);
+}
+#cutline3 {
+  width: 2px;
+  height: 400px;
+  background-color: rgba(85, 85, 85, 1);
+}
+#linesign {
+  width: 5px;
+  height: 5px;
+  margin-right: 6px;
+  background: rgba(164, 129, 246, 1);
+  border-radius: 50%;
+}

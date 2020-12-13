@@ -8,9 +8,9 @@
   justify-content: space-between;
   align-items: center;
 }
-.btns_area {
+/* .btns_area {
   margin-right: 363px;
-}
+} */
 .btns_area span {
   width: 50px;
   height: 33px;
@@ -19,6 +19,7 @@
   font-weight: 600;
   line-height: 33px;
   color: rgba(150, 75, 180, 1);
+  color:#AC97FA;
 }
 .btns_area button {
   width: 40px;

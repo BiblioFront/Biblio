@@ -1,0 +1,142 @@
+/* Gate.css */
+.achivements_box {
+  width: 1920px;
+  min-height: 670px;
+  max-height: 1880px;
+  background: rgba(235, 235, 235, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+#filter_bar {
+  width: 1200px;
+  height: 50px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.filter_bar__item {
+  width: 241px;
+  height: 50px;
+}
+.filter_bar__item li {
+  width: 120px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  float: left;
+  list-style: none;
+}
+.filter_bar__item li span {
+  width: 80px;
+  height: 19px;
+  display: block;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  text-align: center;
+  color: rgba(85, 85, 85, 1);
+}
+#cutline {
+  width: 0px;
+  height: 30px;
+  border: 1px solid rgba(112, 112, 112, 1);
+}
+.achivements_content {
+  width: 100%;
+  min-height: 510px;
+  max-height: 1700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.achivements_item {
+  width: 920px;
+  height: 150px;
+  margin-bottom: 20px;
+  background-color: rgba(255, 255, 255, 1);
+}
+.achivements_item > * {
+  margin: 11px 22px;
+}
+.item__above {
+  margin: 0 22px;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.item__btns_area {
+  width: 200px;
+  height: 18px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.achivements_item .btns_area button {
+  height: 20px;
+}
+#author {
+  height: 16px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: rgba(150, 150, 150, 1);
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+#author span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#author span:nth-child(1) {
+  max-width: 350px;
+}
+#author span:nth-child(2) {
+  max-width: 250px;
+}
+#summary {
+  display: flex;
+  flex-direction: column;
+}
+#summary button {
+  width: 40px;
+  height: 16px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: left;
+  color: rgba(0, 115, 152, 1);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+#summary p {
+  width: 876px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: justify;
+  color: rgba(85, 85, 85，1);
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-overflow: -o-ellipsis-lastline;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
