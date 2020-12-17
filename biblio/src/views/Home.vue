@@ -13,11 +13,25 @@
 
         <div class="searchdiv">
           <div class="searchbar">
+            <el-select class="search_options" v-model="option">
+              <el-option
+                v-for="item in searchOptions"
+                :key="item.option"
+                :label="item.label"
+                :value="item.option"
+              >
+              </el-option>
+            </el-select>
+
+            <div id="option_text--divider"></div>
+
             <input
               class="search_text"
               type="text"
+              :value="seachInput"
               placeholder="输入搜索内容..."
             />
+
             <div class="search_btn">
               <button @click="route2Search()">
                 <svg-icon name="search"></svg-icon>
@@ -174,4 +188,14 @@
 <style scoped>
 @import "../assets/css/global.css";
 @import "../assets/css/home.css";
+.el-select-dropdown__item {
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 16px;
+  font-weight: lighter !important;
+  color: #707070 !important;
+  letter-spacing: 2px;
+}
 </style>

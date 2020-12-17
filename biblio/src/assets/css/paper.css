@@ -1,0 +1,95 @@
+/* Paper.css */
+.paperpage.el-container {
+  background-color: whitesmoke;
+}
+.paperpage.el-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+.catalog-list {
+  padding: 0 5% 30px 8%;
+  border-bottom: 1px solid #e2e2e2;
+}
+.text {
+  font-size: 14px;
+}
+.item {
+  margin-bottom: 18px;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+.box-card {
+  width: 240px;
+}
+.author {
+  padding: 0;
+  margin-right: 10px;
+  line-height: 27px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: normal;
+  text-emphasis-color: blue;
+  color: blue;
+}
+.rowtit {
+  display: inline-block;
+  vertical-align: middle;
+  padding-right: 5px;
+  line-height: 26px;
+  font-weight: bold;
+}
+.abstract-text {
+  display: inline;
+  color: #666;
+  line-height: 26px;
+  font-weight: normal;
+  text-align: justify;
+}
+.wx-tit {
+  text-align: center;
+}
+.ref-paper {
+  padding-top: 20px;
+  height: 32px;
+  font-size: 18px;
+  line-height: 32px;
+  font-family: "Microsoft YaHei", "微软雅黑";
+  color: #333;
+  border-bottom: 2px solid #e3e3e3;
+}
+.ref-item {
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+.time {
+  font-size: 13px;
+  color: #999;
+}
+.bottom {
+  margin-top: 13px;
+  line-height: 12px;
+}
+.button {
+  padding: 0;
+  float: right;
+}
+.image {
+  width: 100%;
+  display: block;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}

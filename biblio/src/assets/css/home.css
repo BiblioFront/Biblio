@@ -53,8 +53,24 @@
   justify-content: flex-start;
   align-items: center;
 }
+.search_options {
+  width: 108px;
+  height: 100%;
+}
+.search_options .el-input__inner {
+  height: 50px !important;
+  border: none !important;
+  text-align: center;
+  font-size: 16px;
+  letter-spacing: 2px;
+}
+#option_text--divider {
+  width: 2px;
+  height: 30px;
+  background-color: #964bb4;
+}
 .search_text {
-  width: 610px;
+  width: 500px;
   height: 46px;
   margin: 0 20px;
   font-size: 18px;

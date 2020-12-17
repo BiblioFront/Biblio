@@ -74,6 +74,41 @@
   justify-content: flex-end;
   align-items: center;
 }
+.item__btns_area button {
+  width: 25px;
+  height: 25px;
+  margin: 0 2px;
+  border: none;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.item__btns_area button .svg-icon {
+  cursor: pointer;
+  fill: #707070 !important;
+}
+.item__btns_area button .svg-icon:hover {
+  transition: 0.1s linear;
+  -moz-transition: 0.1s linear;
+  -webkit-transition: 0.1s linear;
+}
+.item__btns_area button:nth-child(2) .svg-icon {
+  margin-top: 2px;
+}
+.item__btns_area button:nth-child(3) .svg-icon {
+  width: 20px !important;
+  height: 20px !important;
+}
+.item__btns_area button:nth-child(1) .svg-icon:hover {
+  fill: #ebca13 !important;
+}
+.item__btns_area button:nth-child(2) .svg-icon:hover {
+  fill: #b30505 !important;
+}
+.item__btns_area button:nth-child(3) .svg-icon:hover {
+  fill: #61bb0d !important;
+}
 .achievements_item .btns_area button {
   height: 20px;
 }

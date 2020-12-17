@@ -1,50 +1,66 @@
 <template>
   <div>
     <div class="navbar">
-      <div id="logo">
-        <span @click="route2Home()">biblio</span>
-      </div>
+      <div class="nav_mainarea">
+        <div id="logo">
+          <span @click="route2Home()">biblio</span>
+        </div>
 
-      <div v-if="!pageState" class="midarea">
-        <div class="navcmp searchbar">
-          <input
-            class="search_text"
-            type="text"
-            placeholder="输入搜索内容..."
-          />
-          <div class="search_btn">
-            <button @click="route2Search()">
-              <svg-icon name="search"></svg-icon>
-            </button>
+        <div v-if="!pageState" class="midarea">
+          <div class="navcmp searchbar">
+            <el-select class="search_options" v-model="option">
+              <el-option
+                v-for="item in searchOptions"
+                :key="item.option"
+                :label="item.label"
+                :value="item.option"
+              >
+              </el-option>
+            </el-select>
+
+            <div id="option_text--divider"></div>
+
+            <input
+              class="search_text"
+              type="text"
+              :value="seachInput"
+              placeholder="输入搜索内容..."
+            />
+
+            <div class="search_btn">
+              <button @click="route2Search()">
+                <svg-icon name="search"></svg-icon>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="navcmp btns_area">
-        <div class="afterlg" v-if="lg == 1">
-          <el-dropdown @command="handleCommand">
-            <el-avatar>个人</el-avatar>
-            <el-dropdown-menu class="navcmp" slot="dropdown">
-              <el-dropdown-item command="info">账号信息</el-dropdown-item>
-              <el-dropdown-item command="gate">学者信息</el-dropdown-item>
-              <el-dropdown-item command="lgout" divided
-                >退出登录</el-dropdown-item
-              >
-            </el-dropdown-menu>
-          </el-dropdown>
+        <div class="navcmp btns_area">
+          <div class="afterlg" v-if="lg == 1">
+            <el-dropdown @command="handleCommand">
+              <el-avatar>个人</el-avatar>
+              <el-dropdown-menu class="navcmp" slot="dropdown">
+                <el-dropdown-item command="info">账号信息</el-dropdown-item>
+                <el-dropdown-item command="gate">学者信息</el-dropdown-item>
+                <el-dropdown-item command="lgout" divided
+                  >退出登录</el-dropdown-item
+                >
+              </el-dropdown-menu>
+            </el-dropdown>
 
-          <el-button
-            class="inform"
-            icon="el-icon-bell"
-            @click="setdrawer"
-            circle
-          ></el-button>
-        </div>
+            <el-button
+              class="inform"
+              icon="el-icon-bell"
+              @click="setdrawer"
+              circle
+            ></el-button>
+          </div>
 
-        <div class="beforelg" v-else-if="lg == 0">
-          <span id="welcome">欢迎</span>
-          <el-button @click.native="route2Login()">登录</el-button>
-          <el-button @click.native="route2Register()">注册</el-button>
+          <div class="beforelg" v-else-if="lg == 0">
+            <span id="welcome">欢迎</span>
+            <el-button @click.native="route2Login()">登录</el-button>
+            <el-button @click.native="route2Register()">注册</el-button>
+          </div>
         </div>
       </div>
     </div>
@@ -93,5 +109,15 @@
 .drawer-title span {
   margin-left: 30px;
   margin-top: 50px;
+}
+.el-select-dropdown__item {
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 16px;
+  font-weight: lighter !important;
+  color: #707070 !important;
+  letter-spacing: 2px;
 }
 </style>

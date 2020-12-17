@@ -84,9 +84,9 @@
                 </div>
 
                 <div class="item__btns_area">
-                  <button>收藏</button>
-                  <button>相关文章</button>
-                  <button>分享</button>
+                  <button><svg-icon name="like"></svg-icon></button>
+                  <button><svg-icon name="relative"></svg-icon></button>
+                  <button><svg-icon name="share"></svg-icon></button>
                 </div>
               </div>
 

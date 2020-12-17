@@ -3,9 +3,9 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Gate from "../views/Gate.vue";
 import Search from "../views/Search.vue";
-import Paper from "../views/paper.vue";
+import Paper from "../views/Paper.vue";
 import MyInfo from "../views/MyInfo.vue";
-import PaperDetail from "../views/paperdetail.vue";
+import PaperDetail from "../views/Paperdetail.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 

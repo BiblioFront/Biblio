@@ -27,18 +27,16 @@
             <h3 class="author">江田岛海军学院</h3>
           </el-row>
 
-          <el-row >
-              <div class="link">
+          <el-row>
+            <div class="link">
               <el-col :span="2">
-            <el-link href="https://element.eleme.io" target="_blank"
-              >导出</el-link
-            ></el-col>
-            <el-col :span="2">
-            <el-link type="primary">收藏</el-link></el-col>
-            <el-col :span="2">
-            <el-link type="success">分享</el-link></el-col>
-            <el-col :span="2">
-            <el-link type="info">打印</el-link></el-col>
+                <el-link href="https://element.eleme.io" target="_blank"
+                  >导出</el-link
+                ></el-col
+              >
+              <el-col :span="2"> <el-link type="primary">收藏</el-link></el-col>
+              <el-col :span="2"> <el-link type="success">分享</el-link></el-col>
+              <el-col :span="2"> <el-link type="info">打印</el-link></el-col>
             </div>
           </el-row>
 
@@ -54,8 +52,7 @@
             <span class="abstract-text">人类命运共同体;实践进路;多维视角;</span>
           </el-row>
 
-
-          <el-row v-for="(o) in 100" :key="o"> 正文 </el-row>
+          <el-row v-for="o in 100" :key="o"> 正文 </el-row>
         </el-card>
       </el-row>
     </el-main>
@@ -65,9 +62,6 @@
 <script>
 export default {
   name: "PaperDetail",
-  data: function () {
-    return {};
-  },
 };
 </script>
 

@@ -6,6 +6,21 @@
   font-family: STZhongsong;
   outline: none;
 }
+.el-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.el-header {
+  width: 100%;
+  height: auto !important;
+  padding: 0 !important;
+  z-index: 99;
+}
+.el-main {
+  width: 1200px;
+}
 #logo span {
   width: auto;
   height: 50px;
