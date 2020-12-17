@@ -3,6 +3,11 @@ import Nav from "@/components/Nav.vue";
 
 export default {
   name: "Home",
+  data() {
+    return {
+      isHome: 1,
+    };
+  },
   components: {
     Nav,
   },

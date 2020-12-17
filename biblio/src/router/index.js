@@ -4,28 +4,28 @@ import Home from "../views/Home.vue";
 import Gate from "../views/Gate.vue";
 import Search from "../views/Search.vue";
 import Paper from "../views/paper.vue";
-import MyInfo from '../views/MyInfo.vue'
+import MyInfo from "../views/MyInfo.vue";
 import PaperDetail from "../views/paperdetail.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
   },
   {
     path: "/gate",
     name: "Gate",
-    component: Gate
+    component: Gate,
   },
   {
     path: "/info",
     name: "MyInfo",
-    component: MyInfo
+    component: MyInfo,
   },
   {
     path: "/search",
@@ -35,27 +35,27 @@ const routes = [
   {
     path: "/paper",
     name: "Paper",
-    component: Paper
+    component: Paper,
   },
   {
     path: "/paperdetail",
     name: "PaperDetail",
-    component :PaperDetail
+    component: PaperDetail,
   },
   {
-	path: "/login",
-	name: "Login",
-	component:Login
+    path: "/login",
+    name: "Login",
+    component: Login,
   },
   {
-	path: "/register",
-	name: "Register",
-	component:Register
-  }
+    path: "/register",
+    name: "Register",
+    component: Register,
+  },
 ];
 
 const router = new VueRouter({
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

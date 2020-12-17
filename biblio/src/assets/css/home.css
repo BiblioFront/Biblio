@@ -67,7 +67,7 @@
   width: 44px;
   height: 44px;
   margin: 3px;
-  background: rgba(150, 75, 180, 1);
+  background: #964bb4;
 }
 .search_btn button {
   width: 100%;
@@ -162,8 +162,6 @@
   height: 2px;
   background: rgba(255, 255, 255, 1);
 }
-
-/* home.css */
 .container {
   width: 100%;
   height: 1480px;

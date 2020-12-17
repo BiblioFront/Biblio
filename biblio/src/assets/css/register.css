@@ -1,0 +1,57 @@
+/* Register.css */
+.register-page {
+  height: 100vh;
+  width: 100vw;
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.register-container {
+  background-clip: padding-box;
+  margin-top: 70px;
+  padding: 60px 90px;
+  background: #fff;
+  border: none;
+  box-shadow: 0 2px 3px 0 rgba(213, 213, 213, 0.7);
+}
+.reg-title {
+  margin: 0 auto 30px auto;
+  text-align: center;
+  color: #964bb4;
+}
+.register-page .el-form-item.button-item .el-form-item__content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.register-page .el-button.mainbtns {
+  width: 50% !important;
+  border-radius: 3px !important;
+  background: #fff !important;
+  color: #ad6fc5 !important;
+  border: 1px solid #ad6fc5 !important;
+  font-size: 16px !important;
+}
+.register-page .el-button.mainbtns:hover {
+  color: #fff !important;
+  border-color: #964bb4 !important;
+  background: #964bb4 !important;
+}
+.register-page .el-checkbox__inner:hover,
+.register-page .el-checkbox__input.is-focus .el-checkbox__inner {
+  border-color: #ac97fa !important;
+}
+.register-page .el-checkbox__input.is-checked .el-checkbox__inner,
+.register-page .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background: #964bb4 !important;
+  border-color: #964bb4 !important;
+}
+#loginbtn {
+  color: #ac97fa !important;
+}
+#loginbtn:hover {
+  color: #964bb4 !important;
+}

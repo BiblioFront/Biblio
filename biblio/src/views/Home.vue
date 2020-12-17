@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Nav />
+    <Nav :pageState="isHome" />
     <div class="img_box">
       <div class="img__main_box">
         <div class="upper_slogen">
@@ -24,10 +24,6 @@
               </button>
             </div>
           </div>
-
-          <div id="cutline1"></div>
-
-          <button id="advanced_search">高级搜索</button>
         </div>
       </div>
 
@@ -44,7 +40,7 @@
     <div class="homepage main_content">
       <div class="left_box">
         <div class="box_info">
-          <span id="title">热门文献</span>
+          <span id="title">热门领域</span>
           <span id="degree">热度</span>
         </div>
 
