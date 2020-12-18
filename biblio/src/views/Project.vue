@@ -8,10 +8,10 @@
       <div class="bibliopage_main">
         <div class="detail_container">
           <div class="biblio_source">
-            <span>论文</span>
+            <span>科研项目</span>
             <span>></span>
-            <el-tag>这里是期刊名</el-tag>
-            <span>xxxx年xx月xx日（线上发表日期）</span>
+            <el-tag>这里是所属计划名称</el-tag>
+            <span>立项于xxxx年（立项年份）</span>
           </div>
 
           <div class="biblio_title">
@@ -22,7 +22,7 @@
 
           <div class="author_info">
             <span id="author">平田一郎</span>
-            <span id="organization">江田岛海军学院</span>
+            <span id="company">江田岛海军学院</span>
           </div>
 
           <div class="summary">
@@ -38,7 +38,12 @@
           </div>
 
           <div class="other_info">
-            <span id="item-title">DOI</span>
+            <span id="item-title">公开范围</span>
+            <span id="text">10.15981/j.cnki.dongyueluncong.2020.11.006</span>
+          </div>
+
+          <div class="other_info">
+            <span id="item-title">所属计划</span>
             <span id="text">10.15981/j.cnki.dongyueluncong.2020.11.006</span>
           </div>
 
@@ -54,7 +59,7 @@
         <el-divider></el-divider>
 
         <div class="relative_container">
-          <h2>相似文献</h2>
+          <h2>相似科研项目</h2>
 
           <div class="relative_content">
             <div class="relative_item">
@@ -120,87 +125,6 @@
                   <span>发布时间：</span>
                   <span>xxxx年xx月xx日</span>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="comments_container">
-        <div class="comments_header">
-          <h1>250</h1>
-          <h1>评论</h1>
-        </div>
-
-        <el-divider></el-divider>
-
-        <div class="comments_main">
-          <div class="comments_send">
-            <el-avatar :size="40">me</el-avatar>
-            <div class="textarea_container">
-              <textarea name="comment"></textarea>
-              <button type="submit" class="comments_submit">发表评论</button>
-            </div>
-          </div>
-
-          <div class="comments_content">
-            <div class="comments_item">
-              <el-dropdown @command="handleCommand" :hide-on-click="false">
-                <span class="el-dropdown-link">
-                  <el-avatar :size="40">others</el-avatar>
-                </span>
-                <el-dropdown-menu class="from_user" slot="dropdown">
-                  <el-dropdown-item disabled
-                    >usernameusernameusername</el-dropdown-item
-                  >
-                  <el-dropdown-item command="info" divided
-                    ><svg-icon name="user"></svg-icon>用户信息</el-dropdown-item
-                  >
-                  <el-dropdown-item command="letter"
-                    ><svg-icon name="promotion"></svg-icon
-                    >私信</el-dropdown-item
-                  >
-                </el-dropdown-menu>
-              </el-dropdown>
-
-              <div class="text_container">
-                <p class="text_content">
-                  《赛博朋克2077》是知名游戏《巫师》系列开发商CD Projekt
-                  RED（简称CDPR）开发制作的一款角色扮演游戏。故事设定在黑暗腐败、科技高度发达的未来世界中，并且兼有开放世界元素与RPG机制。游戏支持包括波兰语、汉语、英语、法语、德语、葡萄牙语（巴西）、日语等10种不同语言的配音，所有配音都有相应的口型动画
-                  [1] 。 该款游戏于2019年6月在E3游戏展展出。 [2]
-                  2020年6月19日，CD
-                  Projekt将游戏的发布时间推迟至2020年11月19日。 [3]
-                  同年10月28日，CD
-                  Projekt再次将游戏发布时间推迟至2020年12月10日，现已发售
-                </p>
-
-                <p class="comment_time">xxxx年xx月xx日 xx:xx:xx</p>
-              </div>
-            </div>
-
-            <div class="comments_item">
-              <el-dropdown @command="handleCommand" :hide-on-click="false">
-                <span class="el-dropdown-link">
-                  <el-avatar :size="40">others</el-avatar>
-                </span>
-                <el-dropdown-menu class="from_user" slot="dropdown">
-                  <el-dropdown-item disabled>username</el-dropdown-item>
-                  <el-dropdown-item divided
-                    ><svg-icon name="user"></svg-icon>用户信息</el-dropdown-item
-                  >
-                  <el-dropdown-item
-                    ><svg-icon name="promotion"></svg-icon
-                    >私信</el-dropdown-item
-                  >
-                </el-dropdown-menu>
-              </el-dropdown>
-
-              <div class="text_container">
-                <p class="text_content">
-                  《赛博朋克2077》是知名游戏《巫师》系列开发商波兰蠢驴《赛博朋克2077》是知名游戏《巫师》系列开发商波兰蠢驴《赛博朋克2077》是知名游戏《巫师》系列开发商波兰蠢驴《赛博朋克2077》是知名游戏《巫师》系列开发商波兰蠢驴《赛博朋克2077》是知名游戏《巫师》系列开发商波兰蠢驴
-                </p>
-
-                <p class="comment_time">xxxx年xx月xx日 xx:xx:xx</p>
               </div>
             </div>
           </div>
@@ -216,7 +140,7 @@
   </el-container>
 </template>
 
-<script src="../assets/js/Paper.js"></script>
+<script src="../assets/js/Project.js"></script>
 
 <style scoped>
 @import "../assets/css/global.css";

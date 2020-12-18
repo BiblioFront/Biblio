@@ -1,0 +1,391 @@
+/* biblio.css */
+.bibliopage.el-container {
+  background-color: #fff;
+}
+.bibliopage.el-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+.bibliopage_main,
+.comments_container {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.bibliopage_main {
+  margin-right: 30px;
+  width: calc(1200px - 250px - 30px);
+}
+.biblio_source {
+  width: 100%;
+  height: 30px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.biblio_source span {
+  color: #707070;
+  font-size: 13px;
+  margin-right: 10px;
+}
+.biblio_source span:nth-child(1) {
+  font-size: 14px;
+  color: #964bb4;
+  font-weight: bold;
+}
+.biblio_source span:nth-child(2) {
+  font-size: 16px;
+  color: #964bb4;
+}
+.biblio_source .el-tag {
+  max-width: 200px;
+  height: 30px;
+  line-height: 29px;
+  padding: 0 10px;
+  color: #964bb4;
+  border-color: #ac97fa;
+  background-color: #f0eff8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.biblio_title {
+  width: 90%;
+  line-height: 32px;
+  margin: 20px 0;
+  text-align: center;
+  position: relative;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+}
+.author_info {
+  margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.author_info #author,
+.author_info #organization,
+.author_info #company,
+.author_info #agency {
+  margin: 3px 0;
+  font-size: 14px;
+  color: #505050;
+}
+.summary {
+  margin: 5px 0;
+  margin-bottom: 10px;
+}
+.other_info {
+  margin: 5px 0;
+}
+#item-title {
+  width: 70px;
+  display: inline-block;
+  text-align: right;
+  line-height: 25px;
+  margin-right: 10px;
+  font-weight: bold;
+  color: #404040;
+}
+#text {
+  width: calc(100% - 80px);
+  color: #505050;
+  line-height: 25px;
+}
+.summary #text {
+  display: block;
+  text-align: justify;
+  position: relative;
+  top: 0;
+  left: 100%;
+  transform: translateX(-100%);
+  -moz-transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+}
+.bibliopage.btns_area {
+  margin-top: 30px;
+  margin-left: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.bibliopage.btns_area .el-button {
+  width: 100px;
+  height: 40px;
+  margin-right: 20px;
+  padding: 0;
+  font-size: 14px;
+  color: #964bb4;
+  border-color: #f0eff8;
+  background-color: #f0eff8;
+  letter-spacing: 1px;
+}
+.bibliopage.btns_area .el-button:hover {
+  color: #f0eff8;
+  border-color: #964bb4;
+  background-color: #964bb4;
+}
+.bibliopage.btns_area .el-button span {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.bibliopage.btns_area .el-button .svg-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 3px;
+}
+.bibliopage.btns_area .el-button .svg-icon--download {
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+}
+.bibliopage.btns_area .el-button .svg-icon--quote,
+.bibliopage.btns_area .el-button .svg-icon--warning {
+  margin-top: 1px;
+}
+.bibliopage.btns_area .el-button .svg-icon--warning {
+  margin-right: 4px;
+}
+.bibliopage.btns_area .el-button .svg-icon--share {
+  width: 16px;
+  height: 16px;
+}
+.relative_container {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+.relative_container h2 {
+  margin-left: 2.5%;
+  margin-bottom: 10px;
+}
+.relative_content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.relative_item {
+  height: 120px;
+  margin: 10px 2.5%;
+  box-shadow: 0px 3px 6px rgba(213, 213, 213, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  transition: 0.1s linear;
+  -webkit-transition: 0.1s linear;
+  -moz-transition: 0.1s linear;
+}
+.relative_item:hover {
+  box-shadow: 0px 3px 6px rgba(150, 150, 150, 0.7);
+  transition: 0.2s linear;
+  -webkit-transition: 0.2s linear;
+  -moz-transition: 0.2s linear;
+}
+.relative_item .item__above #title {
+  cursor: pointer;
+}
+.relative_item .item__above,
+.relative_item #summary {
+  margin-bottom: 9px;
+}
+.relative_item .item__above,
+.relative_item #author,
+.relative_item #summary p {
+  width: 95%;
+}
+.relative_item .item__above #title span:nth-child(1) {
+  width: 45px;
+}
+.relative_item #summary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.relative_item #summary p {
+  height: 40px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: justify;
+  color: rgba(85, 85, 85, 1);
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-overflow: -o-ellipsis-lastline;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.relative_item #author {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Comments.css */
+.comments_container {
+  width: 250px;
+  max-height: 2000px;
+  margin-top: 70px;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.comments_header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+.comments_header h1:nth-child(1) {
+  margin-right: 10px;
+  font-weight: normal;
+}
+.comments_send,
+.comments_item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.comments_send {
+  margin-bottom: 20px;
+}
+.textarea_container {
+  width: 200px !important;
+  height: 235px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.textarea_container textarea {
+  font-size: 13px;
+  display: inline-block;
+  box-sizing: border-box;
+  background-color: #f4f5f7;
+  border: 1px solid #e5e9ef;
+  overflow: auto;
+  border-radius: 4px 4px 0 0;
+  border-bottom: none;
+  color: #555;
+  width: 100% !important;
+  height: 200px;
+  transition: 0s;
+  padding: 5px 10px;
+  line-height: normal;
+  resize: none;
+}
+.textarea_container textarea:hover,
+.textarea_container textarea:focus {
+  background-color: #fff;
+}
+.comments_submit {
+  width: 100%;
+  height: 35px;
+  border: 1px solid #e5e9ef;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  letter-spacing: 2px;
+  font-size: 14px;
+  background-color: #e5e9ef;
+  color: #707070;
+  cursor: pointer;
+}
+.comments_submit:hover {
+  color: #f0eff8;
+  border-color: #964bb4;
+  background-color: #964bb4;
+  transition: 0.1s linear;
+  -webkit-transition: 0.1s linear;
+  -moz-transition: 0.1s linear;
+}
+.comments_main,
+.comments_content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.comments_item {
+  width: 100%;
+  height: auto;
+  padding: 20px 0;
+  border-top: 1px solid #e5e9ef;
+  margin-bottom: 10px;
+}
+.text_container {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.text_container,
+.text_content {
+  font-size: 14px;
+  color: #444;
+  width: 200px;
+  height: 100%;
+  line-height: 20px;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+.comment_time {
+  font-size: 13px;
+  color: #c0c0c0;
+  width: 100%;
+  height: 100%;
+  line-height: 20px;
+  text-align: right;
+}
+.from_user li {
+  text-align: center;
+}
+.from_user .el-dropdown-menu__item .svg-icon {
+  margin-right: 5px;
+  position: relative;
+}
+.from_user .el-dropdown-menu__item .svg-icon--user {
+  width: 15px !important;
+  height: 15px !important;
+  top: 4px;
+}
+.from_user .el-dropdown-menu__item .svg-icon--promotion {
+  margin-left: -1px;
+  margin-right: 6px;
+  top: 2px;
+  width: 13px !important;
+  height: 13px !important;
+}
+.from_user .el-dropdown-menu__item:focus {
+  color: #555 !important;
+  background-color: #fff !important;
+}
+.from_user .el-dropdown-menu__item:not(.is-disabled):hover {
+  color: #964bb4 !important;
+  background-color: #f0eff8 !important;
+}

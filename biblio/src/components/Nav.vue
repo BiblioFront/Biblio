@@ -71,8 +71,8 @@
           ><i class="el-icon-message-solid"></i
         ></span>
 
-        <el-button icon="el-icon-s-promotion" @click.native="showForm"
-          >私信</el-button
+        <el-button @click.native="showForm"
+          ><svg-icon name="promotion"></svg-icon>私信</el-button
         >
       </div>
 

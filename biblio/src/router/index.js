@@ -4,8 +4,9 @@ import Home from "../views/Home.vue";
 import Gate from "../views/Gate.vue";
 import Search from "../views/Search.vue";
 import Paper from "../views/Paper.vue";
+import Patent from "../views/Patent.vue";
+import Project from "../views/Project.vue";
 import MyInfo from "../views/MyInfo.vue";
-import PaperDetail from "../views/Paperdetail.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 
@@ -38,9 +39,14 @@ const routes = [
     component: Paper,
   },
   {
-    path: "/paperdetail",
-    name: "PaperDetail",
-    component: PaperDetail,
+    path: "/patent",
+    name: "Patent",
+    component: Patent,
+  },
+  {
+    path: "/project",
+    name: "Project",
+    component: Project,
   },
   {
     path: "/login",

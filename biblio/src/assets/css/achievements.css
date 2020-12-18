@@ -85,6 +85,8 @@
   align-items: center;
 }
 .item__btns_area button .svg-icon {
+  width: 20px !important;
+  height: 20px !important;
   cursor: pointer;
   fill: #707070 !important;
 }
@@ -97,8 +99,8 @@
   margin-top: 2px;
 }
 .item__btns_area button:nth-child(3) .svg-icon {
-  width: 20px !important;
-  height: 20px !important;
+  width: 18px !important;
+  height: 18px !important;
 }
 .item__btns_area button:nth-child(1) .svg-icon:hover {
   fill: #ebca13 !important;
