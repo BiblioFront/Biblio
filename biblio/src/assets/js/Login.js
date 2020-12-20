@@ -1,9 +1,7 @@
-/* Login.js */
 export default {
   name: "Login",
-  data() {
+  data: function () {
     return {
-      loading: false,
       loginForm: {
         phone: "",
         password: "",
@@ -13,48 +11,41 @@ export default {
         password: [{ required: true, message: "请输入密码", trigger: "blur" }],
       },
       checked: false,
+      loading: false,
     };
   },
   methods: {
-    login(formName) {
-      var _this = this;
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          let userInfo = {
-            phone: this.loginForm.phone,
-            password: this.loginForm.password,
-          };
-          this.$api.login.login(userInfo).then((res) => {
-            if (res.code === 400) {
-              _this.$message({
-                message: res.msg,
-                type: "error",
-              });
-            } else {
-              _this.$store.commit("login", res.data);
-              console.log(_this.$store.state.user.username.id);
-              _this.$router.push("/home");
-            }
-          }); //.catch(failResponse => {})
-        } else {
-          _this.$message({
-            message: "请填写完整登录信息！",
-            type: "error",
-          });
-        }
-      });
-    },
-    reset() {
-      this.$refs.loginForm.resetFields();
-    },
     route2Home() {
       this.$router.push({ path: "/" });
     },
+    login: function () {
+      console.log("登录");
+      console.log(this.loginForm.phone);
+      console.log(this.loginForm.password);
+      var _this = this;
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          console.log("valid!");
+          this.$axios.post('/user/login',{
+            username:_this.loginForm.phone,
+            password:_this.loginForm.password
+          }).then(response => {
+            if(response.msg === "login success")
+            {
+              window.localStorage.setItem("token",response.token);
+            }
+            else console.log("login fail");
+          }).catch(error => {
+            console.log(error);
+            console.log("请求异常");
+          })
+        } else console.log("invalid!");
+      });
+    },
+    reset: function () {
+      // console.log("重置");
+      this.loginForm.phone = "";
+      this.loginForm.password = "";
+    },
   },
-  // destroyed:function(){
-  //   if(this.loginstatus)
-  //   {
-  //     bus.$emit('login-event');
-  //   }
-  // }
 };

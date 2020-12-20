@@ -7,12 +7,13 @@
     <div class="register-container">
       <el-form :model="registerForm" :rules="fieldRules" ref="registerForm">
         <h2 class="reg-title"><b>注册</b></h2>
-        <el-form-item prop="name">
+
+        <el-form-item prop="username">
           <el-input
             type="text"
-            v-model="registerForm.name"
+            v-model="registerForm.username"
             auto-complete="off"
-            placeholder="昵称"
+            placeholder="用户名"
           ></el-input>
         </el-form-item>
         <el-form-item prop="password">
@@ -23,20 +24,20 @@
             placeholder="密码"
           ></el-input>
         </el-form-item>
-        <el-form-item prop="password2">
-          <el-input
-            type="password"
-            v-model="registerForm.password2"
-            auto-complete="off"
-            placeholder="请再次输入密码"
-          ></el-input>
-        </el-form-item>
         <el-form-item prop="email">
           <el-input
-            type="email"
+            type="text"
             v-model="registerForm.email"
             auto-complete="off"
-            placeholder="邮箱"
+            placeholder="请输入邮箱"
+          ></el-input>
+        </el-form-item>
+        <el-form-item prop="nickname">
+          <el-input
+            type="email"
+            v-model="registerForm.nickname"
+            auto-complete="off"
+            placeholder="昵称"
           ></el-input>
         </el-form-item>
         <el-form-item class="button-item" style="margin-bottom: 10px">

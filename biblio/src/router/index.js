@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Gate from "../views/Gate.vue";
 import Search from "../views/Search.vue";
-import Paper from "../views/paper.vue";
+import Paper from "../views/Paper.vue";
 import Patent from "../views/Patent.vue";
 import Project from "../views/Project.vue";
 import MyInfo from "../views/MyInfo.vue";
