@@ -10,36 +10,36 @@
           <div class="biblio_source">
             <span>论文</span>
             <span>></span>
-            <el-tag>这里是期刊名</el-tag>
-            <span>xxxx年xx月xx日（线上发表日期）</span>
+            <el-tag>{{paper.title}}</el-tag>
+            <span>{{paper.date}}</span>
           </div>
 
           <div class="biblio_title">
             <h1>
-              全球抗疫为推动构建人类命运共同体顺势塑局全球抗疫为推动构建人类命运共同体顺势塑局全球抗疫为推动构建
+              {{paper.title}}
             </h1>
           </div>
 
           <div class="author_info">
-            <span id="author">平田一郎</span>
-            <span id="organization">江田岛海军学院</span>
+            <span id="author">{{paper.author}}</span>
+            <span id="organization">{{paper.organization}}</span>
           </div>
 
           <div class="summary">
             <span id="item-title">摘要</span>
             <span id="text"
-              >新冠肺炎疫情在全球的蔓延,再次证明了人类是一个休戚与共的命运共同体,昭示着人类命运共同体不仅是一种理念,更是一种实践。尽管目前还没有足够的客观条件推动人类命运共同体图景的完全实现,但全球抗疫为人类命运共同体明晰了构建框架。当前,全球抗疫可从主体、圈层、内容、路径等多个维度入手统筹设计:主体之维,要从人类命运共同体的主体到中介,协同构建;圈层之维,要从中华民族共同体到人类命运共同体,合力打造;内容之维,要从政治共同体到卫生健康共同体,全方位构建;路径之维,要从达成共识到保障机制,层层推进。</span
+              >{{paper.summary}}</span
             >
           </div>
 
           <div class="other_info">
             <span id="item-title">关键词</span>
-            <span id="text">人类命运共同体;实践进路;多维视角;</span>
+            <span id="text">{{paper.keywords}}</span>
           </div>
 
           <div class="other_info">
             <span id="item-title">DOI</span>
-            <span id="text">10.15981/j.cnki.dongyueluncong.2020.11.006</span>
+            <span id="text">{{paper.url}}</span>
           </div>
 
           <div class="bibliopage btns_area">
@@ -216,7 +216,61 @@
   </el-container>
 </template>
 
-<script src="../assets/js/Paper.js"></script>
+<script>
+import Nav from "@/components/Nav.vue";
+
+export default {
+  name: "Paper",
+  components: {
+    Nav,
+  },
+  data:function(){
+    return {
+      id:"5fccd17b376ae34bbb980c49",
+      paper:{
+        _id:"5fccd17b376ae34bbb980c49",
+        author: "李树娟,钟焕荣,于亮,赵军,范伟检,黄伟",
+        title: "危险化学品数据库的发展现状与展望",
+        summary: "为完善我国危险化学品数据库,充分发挥其为化学品安全管理和公众提供可靠的信息服务的作用,通过研究国外危险化学品数据库的发展现状及其特点,分析我国危险化学品数据库目前存在的问题.研究表明:国外危险化学品数据库发展较完善,其数据结构设计较合理,且信息全面、数量多;而我国危险化学品数据库建设还比较落后,存在数据结构设计简单、标准不统一、信息未能共享等问题.因此,在发展我国危险化学品数据库时,应确保数据的数量、质量和多样性,设计合理的数据结构,并实现数据共享,使其为安全评价提供可靠的数据支持.",
+        url: "http://d.wanfangdata.com.cn/periodical/ChlQZXJpb2RpY2FsQ0hJTmV3UzIwMjAxMjAzEhJoY2NsbGh5eXkyMDIwMDEwMzQaCHNneDVrbTNz",
+        keywords: "危险化学品;数据库",
+        date:"2020年12月30日",
+        organization:"江田岛海军学院"
+      }
+    }
+  },
+  created:function(){
+    console.log("created");
+    this.$axios({
+        method: "get",
+        url: "/user/paper",
+        params: {
+          paperID: this.id,
+        },
+        headers: {
+          // token: window.localStorage.getItem("token"),
+          token:"1bd97ca0-78ec-480c-a28b-f274501c0d4d"
+        },
+      }).then(response => {
+        if ( response.msg == 'get paper and comment successfully') {
+          this.paper = response.paper;
+        }
+        else console.log(response.msg);
+      }).catch(error => {
+        console.log(error);
+      })
+  },
+  methods: {
+    handleCommand(command) {
+      if (command == "info") {
+        /* 跳转至对应用户信息页 */
+      } else if (command == "letter") {
+        /* 发送私信 */
+      }
+    },
+  },
+};
+</script>
 
 <style scoped>
 @import "../assets/css/global.css";
