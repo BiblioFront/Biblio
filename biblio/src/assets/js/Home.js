@@ -21,6 +21,10 @@ export default {
         },
         {
           option: "4",
+          label: "科研项目",
+        },
+        {
+          option: "4",
           label: "学者",
         },
       ],

@@ -28,8 +28,45 @@ export default {
       searchInput: "",
       messageData: [
         {
-          content: "hi!",
           from: "user10086",
+          time: "2020.12.19 16:05",
+          content: "hi!",
+        },
+        {
+          from: "user10087",
+          time: "2020.12.19 16:07",
+          content:
+            "hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!",
+        },
+        {
+          from: "user10086",
+          time: "2020.12.19 16:05",
+          content: "hi!",
+        },
+        {
+          from: "user10086",
+          time: "2020.12.19 16:05",
+          content: "hi!",
+        },
+        {
+          from: "user10086",
+          time: "2020.12.19 16:05",
+          content: "hi!",
+        },
+        {
+          from: "user10086",
+          time: "2020.12.19 16:05",
+          content: "hi!",
+        },
+        {
+          from: "user10086",
+          time: "2020.12.19 16:05",
+          content: "hi!",
+        },
+        {
+          from: "user10086",
+          time: "2020.12.19 16:05",
+          content: "hi!",
         },
       ],
       lg: 1,
@@ -54,6 +91,12 @@ export default {
       if (command == "info") this.$router.push({ path: "/info" });
       else if (command == "gate") this.$router.push({ path: "/gate" });
       else if (command == "lgout");
+    },
+    deleteRow(index, rows) {
+      rows.splice(index, 1);
+    },
+    deleteAll() {
+      this.messageData.splice();
     },
     route2Home() {
       this.$router.push({ path: "/" });

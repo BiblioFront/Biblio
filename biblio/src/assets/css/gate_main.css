@@ -36,6 +36,12 @@
   justify-content: flex-end;
   align-items: center;
 }
+.gatepage.scholar_info .svg-icon--verify {
+  width: 15px !important;
+  height: 15px !important;
+  position: absolute;
+  color: #ecd712;
+}
 .gatepage.scholar_info span {
   width: 400px;
   height: 20px;
@@ -98,6 +104,9 @@
   justify-content: space-between;
   align-items: center;
 }
+.statisticbar {
+  justify-content: space-evenly;
+}
 .achievements:nth-child(2) {
   height: 180px;
   margin-top: 80px;
@@ -105,7 +114,7 @@
 .statistic_circle {
   width: 90px;
   height: 90px;
-  border: 4px solid rgba(112, 112, 112, 1);
+  border: 10px solid rgba(112, 112, 112, 1);
   border-radius: 50%;
   display: flex;
   flex-direction: column;
@@ -127,28 +136,11 @@
   font-weight: 400;
   line-height: 20px;
   text-align: center;
-  color: rgba(85, 85, 85, 1);
+  color: #555555;
 }
 .statistic_table span:nth-child(1),
 .statistic_table span:nth-child(2) {
   color: rgba(150, 150, 150, 1);
-}
-.words {
-  width: 400px;
-  height: 180px;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-}
-.figure {
-  width: 550px;
-  height: 175px;
-  background: rgb(173, 77, 77);
-}
-.cooperation {
-  width: 400px;
-  height: 400px;
-  margin-top: 50px;
-  border: 1px solid rgba(112, 112, 112, 1);
-  border-radius: 50%;
 }
 #filter_bar {
   width: 1200px;
@@ -188,4 +180,40 @@
   width: 0px;
   height: 30px;
   border: 1px solid rgba(112, 112, 112, 1);
+}
+.collaboration_content {
+  width: 120px;
+  height: 130px;
+  box-shadow: 0 2px 5px 0 rgba(165, 165, 165, 0.7);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.collaboration_content p {
+  width: 100%;
+  font-size: 13px;
+  color: #808080;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.collaboration_content #name {
+  width: 100%;
+  margin: 5px 10px;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #505050;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#collaboration_cutline {
+  width: 100%;
+  height: 1px;
+  margin: 7px 0;
+  background-color: #dbdbdb;
 }

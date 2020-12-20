@@ -1,15 +1,19 @@
 <template>
   <div class="container">
     <Nav />
+
     <div class="gatepage main_content">
       <div class="scholar_info_box">
         <div class="scholar_avatar">
-          <img src="../assets/img/scholar_avatar.jpg" alt="" />
+          <img src="../assets/img/scholar_avatar_default.jpg" alt="学者头像" />
         </div>
 
         <div class="gatepage scholar_info">
-          <span id="name">马保国</span>
-          <div id="verified"></div>
+          <div>
+            <span id="name">马保国</span>
+            <svg-icon name="verify"></svg-icon>
+          </div>
+
           <span id="institution">混元形意太极门</span>
           <span id="subject">学科：掌门人</span>
         </div>
@@ -21,31 +25,10 @@
       </div>
 
       <div class="research_info">
-        <div class="achievements">
-          <div class="statistic_circle">
-            <span>期刊</span>
-            <span>0.00%</span>
-          </div>
-
-          <div class="statistic_circle">
-            <span>会议</span>
-            <span>0.00%</span>
-          </div>
-
-          <div class="statistic_circle">
-            <span>专利</span>
-            <span>0.00%</span>
-          </div>
-
-          <div class="statistic_circle">
-            <span>科研</span>
-            <span>0.00%</span>
-          </div>
-
-          <div class="statistic_circle">
-            <span>其他</span>
-            <span>0.00%</span>
-          </div>
+        <div class="achievements statisticbar">
+          <CircleProgressbar title="论文" />
+          <CircleProgressbar title="专利" />
+          <CircleProgressbar title="科研项目" />
 
           <div class="statistic_table">
             <span>总篇数</span>
@@ -56,12 +39,11 @@
         </div>
 
         <div class="achievements">
-          <div class="words">词云</div>
-
-          <div class="figure">图表统计</div>
+          <WordsCloud :data="scholarKeywords" />
+          <LineMap :yearIndex="yearIndex" :biblioIndex="biblioIndex" />
         </div>
 
-        <div class="cooperation"></div>
+        <Collaborator :data="collaborators" />
       </div>
     </div>
 
@@ -167,16 +149,7 @@
   </div>
 </template>
 
-<script>
-import Nav from "@/components/Nav.vue";
-
-export default {
-  name: "Gate",
-  components: {
-    Nav,
-  },
-};
-</script>
+<script src="../assets/js/Gate.js"></script>
 
 <style scoped>
 @import "../assets/css/global.css";

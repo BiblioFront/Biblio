@@ -28,7 +28,7 @@
             <input
               class="search_text"
               type="text"
-              :value="seachInput"
+              prop="seachInput"
               placeholder="输入搜索内容..."
             />
 

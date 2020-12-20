@@ -23,7 +23,7 @@
             <input
               class="search_text"
               type="text"
-              :value="seachInput"
+              :value="searchInput"
               placeholder="输入搜索内容..."
             />
 
@@ -76,14 +76,43 @@
         >
       </div>
 
-      <el-table :data="messageData" style="font-size:12px;">
+      <el-table class="message_container" :data="messageData" height="85vh">
         <el-table-column property="content" label="" width="auto">
           <template slot-scope="scope">
-            <el-avatar :size="30">user</el-avatar>
-            <span style="margin-left: 10px">{{ scope.row.from }}</span>
+            <el-collapse class="message_item" accordion>
+              <el-avatar :size="30">user</el-avatar>
+              <el-collapse-item
+                class="message_content"
+                :title="scope.row.from"
+                name="1"
+              >
+                <p>{{ scope.row.content }}</p>
+                <p id="message_time">
+                  {{ scope.row.time }}
+                </p>
+              </el-collapse-item>
+            </el-collapse>
+          </template>
+        </el-table-column>
+        <el-table-column property="content" label="" width="80px">
+          <template slot-scope="scope">
+            <el-button
+              @click.native.prevent="deleteRow(scope.$index, messageData)"
+              type="text"
+              class="message_delete"
+              icon="el-icon-error"
+              >删除</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
+      <el-button
+        @click.native.prevent="deleteAll()"
+        type="text"
+        class="message_deleteALL"
+        icon="el-icon-delete-solid"
+        >全部删除</el-button
+      >
     </el-drawer>
 
     <el-dialog title="发送私信" :visible.sync="formsee">
@@ -106,6 +135,7 @@
 <style lang="scss" scoped>
 @import "../assets/css/global.css";
 @import "../assets/css/navbar.css";
+@import "../assets/css/message.css";
 .drawer-title span {
   margin-left: 30px;
   margin-top: 50px;

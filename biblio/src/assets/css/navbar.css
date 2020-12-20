@@ -118,7 +118,7 @@
   font-family: Segoe UI;
   font-weight: 600;
   line-height: 50px;
-  color: #964bb4;
+  color: #624bb4;
 }
 .navcmp.btns_area .el-button {
   font-size: 16px !important;
@@ -156,51 +156,4 @@
 .navcmp .el-dropdown-menu__item:not(.is-disabled):hover {
   color: #964bb4 !important;
   background-color: #f0eff8 !important;
-}
-.drawer-title {
-  width: 100%;
-  height: 60px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-#drawer-title--circle {
-  width: 37px;
-  height: 37px;
-  margin: 0;
-  margin-left: 20px;
-  display: block;
-  font-size: 20px;
-  color: #ac97fa;
-  border: 2px solid #ac97fa;
-  border-radius: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.drawer-title .el-button,
-.drawer-title .el-button:focus {
-  width: 80px;
-  height: 37px;
-  border: none;
-  color: #ac97fa;
-  background-color: #fff;
-  margin: 0;
-  padding: 0;
-  margin-right: 20px;
-  font-size: 16px;
-  text-align: center;
-  line-height: 37px;
-}
-.drawer-title .el-button:hover,
-.drawer-title .el-button:active {
-  background-color: #ac97fa;
-  color: #fff;
-}
-.drawer-table--from {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
 }
