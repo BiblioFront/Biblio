@@ -44,14 +44,14 @@
             >登 录</el-button
           >
         </el-form-item>
-        <el-form-item class="register-item" style="margin: 0 0 0 2px;">
+        <el-form-item class="register-item" style="margin: 0 0 0 2px">
           <el-checkbox
             class="login_remember"
             v-model="checked"
             label-position="left"
             ><span>记住密码</span>
           </el-checkbox>
-          <span style="color: #505458;margin-left: 130px">还没有账号?</span>
+          <span style="color: #505458; margin-left: 130px">还没有账号?</span>
           <router-link to="/register">
             <el-button id="regbtn" type="text">立即注册</el-button>
           </router-link>
@@ -62,6 +62,7 @@
 </template>
 
 <script src="../assets/js/Login.js"></script>
+
 
 <style scoped>
 @import "../assets/css/global.css";
