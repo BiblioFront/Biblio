@@ -120,7 +120,7 @@
 
 <style scoped>
 @import "../assets/css/global.css";
-@import "../assets/css/Myinfo.css";
+@import "../assets/css/Admin.css";
 .user_info {
   width: 100%;
   height: 105px;
