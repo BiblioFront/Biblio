@@ -26,6 +26,26 @@ export default {
       uploadAchievementFormRules: {
         needed: { required: true, message: '必填', trigger: 'blur' },
       },
+      uploadPaperFormRules: {
+        author: { required: true, message: '必填', trigger: 'blur' },
+        title: { required: true, message: '必填', trigger: 'blur' },
+        url: { required: true, message: '必填', trigger: 'blur' },
+      },
+      uploadPatentFormRules: {
+        patentID: { required: true, message: '必填', trigger: 'blur' },
+        title: { required: true, message: '必填', trigger: 'blur' },
+        applyDate: { required: true, message: '必填', trigger: 'blur' },
+        publishID: { required: true, message: '必填', trigger: 'blur' },
+        owner: { required: true, message: '必填', trigger: 'blur' },
+        designer: { required: true, message: '必填', trigger: 'blur' },
+        status: { required: true, message: '必填', trigger: 'blur' },
+      },
+      uploadProjectFormRules: {
+        author: { required: true, message: '必填', trigger: 'blur' },
+        company: { required: true, message: '必填', trigger: 'blur' },
+        title: { required: true, message: '必填', trigger: 'blur' },
+        scope: { required: true, message: '必填', trigger: 'blur' },
+      },
       hasSendEmail: false, // 判断是否已经发送过邮件
       verificationBoxVisible: true, // 验证框可见性
       verificationDialogVisible: false, // 验证弹窗可见性
@@ -265,10 +285,8 @@ export default {
     // 发送验证码
     claim() {
       this.$refs.verificationFormRef.validate((valid) => {
-        // 校验失败
-        if (!valid) {
-          return
-        }
+        if (!valid) return
+
         var scholarID = this.all.scholarInfo.scholarID
         console.log(scholarID)
         var token = window.localStorage.getItem('token')
@@ -307,17 +325,17 @@ export default {
       // this.$refs.verificationFormRef.resetFields()
       this.verificationForm.verification_code = ''
     },
-    // 上传学术成果
-    uploadAchievement() {
-      console.log(this.achievementType)
+    // 上传论文
+    uploadPaper() {
+      this.$refs.uploadPaperFormRef.validate((valid) => {
+        if (!valid) return
+        var scholarID = this.all.scholarInfo.scholarID
+        console.log(scholarID)
+        var token = window.localStorage.getItem('token')
+        console.log(token)
 
-      var scholarID = this.all.scholarInfo.scholarID
-      console.log(scholarID)
-      var token = window.localStorage.getItem('token')
-      console.log(token)
-
-      if (this.achievementType === '论文') {
         let uploadPaperForm = {
+          author: this.uploadPaperForm.author,
           title: this.uploadPaperForm.title,
           summary: this.uploadPaperForm.summary,
           url: this.uploadPaperForm.url,
@@ -348,7 +366,19 @@ export default {
             console.log(error)
             console.log('请求异常')
           })
-      } else if (this.achievementType === '专利') {
+        console.log(this.achievementType)
+      })
+    },
+    // 上传专利
+    uploadPatent() {
+      this.$refs.uploadPatentFormRef.validate((valid) => {
+        if (!valid) return
+
+        var scholarID = this.all.scholarInfo.scholarID
+        console.log(scholarID)
+        var token = window.localStorage.getItem('token')
+        console.log(token)
+
         let uploadPatentForm = {
           title: this.uploadPatentForm.title,
           summary: this.uploadPatentForm.summary,
@@ -369,13 +399,15 @@ export default {
           status: this.uploadPatentForm.status,
         }
 
-        console.log(uploadPatentForm)
+        // console.log(uploadPatentForm)
 
         this.$axios
           .post(
             '/user/patent/add?ResearcherID=' + scholarID,
             uploadPatentForm,
-            { headers: { token: token } }
+            {
+              headers: { token: token },
+            }
           )
           .then((response) => {
             var msg = response.data.msg
@@ -395,7 +427,18 @@ export default {
             console.log(error)
             console.log('请求异常')
           })
-      } else if (this.achievementType === '研究项目') {
+      })
+    },
+    // 上传项目
+    uploadProject() {
+      this.$refs.uploadProjectFormRef.validate((valid) => {
+        if (!valid) return
+
+        var scholarID = this.all.scholarInfo.scholarID
+        console.log(scholarID)
+        var token = window.localStorage.getItem('token')
+        console.log(token)
+
         let uploadProjectForm = {
           author: this.uploadProjectForm.author,
           title: this.uploadProjectForm.title,
@@ -409,9 +452,11 @@ export default {
         // console.log(uploadProjectForm)
         this.$axios
           .post(
-            '/user/patent/add?ResearcherID=' + scholarID,
+            '/user/project/add?ResearcherID=' + scholarID,
             uploadProjectForm,
-            { headers: { token: token } }
+            {
+              headers: { token: token },
+            }
           )
           .then((response) => {
             var msg = response.data.msg
@@ -431,6 +476,16 @@ export default {
             console.log(error)
             console.log('请求异常')
           })
+      })
+    },
+    // 上传学术成果
+    uploadAchievement() {
+      if (this.achievementType === '论文') {
+        this.uploadPaper()
+      } else if (this.achievementType === '专利') {
+        this.uploadPatent()
+      } else if (this.achievementType === '研究项目') {
+        this.uploadProject()
       }
     },
   },
