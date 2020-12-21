@@ -20,6 +20,12 @@
           <div class="info-table">
             <div class="info-avatar">
               <img src="../assets/img/scholar_avatar.jpg" alt="" />
+              <!-- <el-upload class="avatar-uploader" action="/apis/account/upload_photo" name="photo"
+                  :show-file-list="false" :on-success="handleAvatarSuccess"
+                  :before-upload="beforeAvatarUpload" accept="image/*">
+                  <img v-if="ruleForm.photo" :src="ruleForm.photo" class="avatar">
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload> -->
             </div>
             <span id="avatar_tip">点击修改头像</span>
             <span id="name">马保国</span>
