@@ -21,7 +21,7 @@
         <div class="scholar_btns_area">
           <button @click="verification">我要认证</button>
           <button>关注</button>
-          <button @click="uploadAchievementDialogOpened">
+          <button @click="uploadAchievementDialogVisible = true">
             上传成果
           </button>
         </div>
@@ -67,10 +67,20 @@
                 我们已向您的注册邮箱发送了验证码，请注意查收
               </span>
             </div>
-            <el-input
-              v-model="verificationForm.verification_code"
-              placeholder="验证码"
-            ></el-input>
+            <el-form
+              ref="verificationFormRef"
+              :model="verificationForm"
+              :rules="verificationFormRules"
+            >
+              <el-form-item prop="verification_code">
+                <el-input
+                  v-model="verificationForm.verification_code"
+                  placeholder="验证码"
+                  required
+                >
+                </el-input>
+              </el-form-item>
+            </el-form>
           </div>
         </transition>
       </div>
@@ -100,104 +110,176 @@
           </el-option>
         </el-select>
       </div>
+
       <div v-show="achievementType == '论文'">
-        <span>论文题目</span>
-        <el-input v-model="uploadPaperForm.title" placeholder="题目">
-        </el-input>
-        <span>论文摘要</span>
-        <el-input
-          type="textarea"
-          autosize
-          v-model="uploadPaperForm.summary"
-          placeholder="摘要"
+        <el-form
+          ref="uploadAchievementFormRef"
+          :model="uploadPaperForm"
+          :rules="uploadAchievementFormRules"
         >
-        </el-input>
-        <span>论文链接</span>
-        <el-input v-model="uploadPaperForm.url" placeholder="链接"> </el-input>
-        <span>关键词</span>
-        <el-input v-model="uploadPaperForm.keywords" placeholder="关键词">
-        </el-input>
-        <span>期刊</span>
-        <el-input v-model="uploadPaperForm.journal" placeholder="期刊">
-        </el-input>
-        <span>机构</span>
-        <el-input v-model="uploadPaperForm.organization" placeholder="机构">
-        </el-input>
+          <el-form-item prop="needed">
+            <span>论文题目</span>
+            <el-input v-model="uploadPaperForm.title" placeholder="题目">
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>论文摘要</span>
+            <el-input
+              type="textarea"
+              autosize
+              v-model="uploadPaperForm.summary"
+              placeholder="摘要"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>论文链接</span>
+            <el-input v-model="uploadPaperForm.url" placeholder="链接">
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>关键词</span>
+            <el-input v-model="uploadPaperForm.keywords" placeholder="关键词">
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>期刊</span>
+            <el-input v-model="uploadPaperForm.journal" placeholder="期刊">
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>机构</span>
+            <el-input v-model="uploadPaperForm.organization" placeholder="机构">
+            </el-input>
+          </el-form-item>
+        </el-form>
       </div>
+
       <div v-show="achievementType == '专利'">
-        <span>专利名</span>
-        <el-input v-model="uploadPatentForm.title" placeholder="专利名">
-        </el-input>
-        <span>专利类型</span>
-        <el-input v-model="uploadPatentForm.patentID" placeholder="类型">
-        </el-input>
-        <span>申请日期</span>
-        <el-date-picker
-          v-model="uploadPatentForm.applyDate"
-          type="date"
-          placeholder="选择日期"
-          value-format="yyyy-MM-dd"
+        <el-form
+          ref="uploadAchievementFormRef"
+          :model="uploadPaperForm"
+          :rules="uploadAchievementFormRules"
         >
-        </el-date-picker>
-        <span>公开号</span>
-        <el-input v-model="uploadPatentForm.publishID" placeholder="专利公开号">
-        </el-input>
-        <span>公开日期</span>
-        <el-date-picker
-          v-model="uploadPatentForm.publicDate"
-          type="date"
-          placeholder="选择日期"
-          value-format="yyyy-MM-dd"
-        >
-        </el-date-picker>
-        <span>主分类号</span>
-        <el-input
-          v-model="uploadPatentForm.mainTypeNumber"
-          placeholder="主分类号"
-        >
-        </el-input>
-        <span>分类号</span>
-        <el-input v-model="uploadPatentForm.typeNumber" placeholder="分类号">
-        </el-input>
-        <span>专利权人</span>
-        <el-input v-model="uploadPatentForm.owner" placeholder="专利权人">
-        </el-input>
-        <span>专利发明人</span>
-        <el-input v-model="uploadPatentForm.designer" placeholder="专利发明人">
-        </el-input>
-        <span>主申请人地址</span>
-        <el-input v-model="uploadPatentForm.address" placeholder="地址">
-        </el-input>
-        <span>主申请人地址</span>
-        <el-input v-model="uploadPatentForm.address" placeholder="地址">
-        </el-input>
-        <span>代理机构</span>
-        <el-input v-model="uploadPatentForm.agency" placeholder="代理机构">
-        </el-input>
-        <span>代理人</span>
-        <el-input v-model="uploadPatentForm.agent" placeholder="代理人">
-        </el-input>
-        <span>国别、省市代码</span>
-        <el-input v-model="uploadPatentForm.code" placeholder="国别;省市代码">
-        </el-input>
-        <span>主权项</span>
-        <el-input
-          type="textarea"
-          autosize
-          v-model="uploadPatentForm.description"
-          placeholder="描述"
-        >
-        </el-input>
-        <span>法律状态</span>
-        <div>
-          <el-radio v-model="uploadPatentForm.status" label="有权">
-            有权
-          </el-radio>
-          <el-radio v-model="uploadPatentForm.status" label="无权">
-            无权
-          </el-radio>
-        </div>
+          <el-form-item prop="needed">
+            <span>专利名</span>
+            <el-input v-model="uploadPatentForm.title" placeholder="专利名">
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>专利类型</span>
+            <el-input v-model="uploadPatentForm.patentID" placeholder="类型">
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>申请日期</span>
+            <el-date-picker
+              v-model="uploadPatentForm.applyDate"
+              type="date"
+              placeholder="选择日期"
+              value-format="yyyy-MM-dd"
+            >
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>公开号</span>
+            <el-input
+              v-model="uploadPatentForm.publishID"
+              placeholder="专利公开号"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>公开日期</span>
+            <el-date-picker
+              v-model="uploadPatentForm.publicDate"
+              type="date"
+              placeholder="选择日期"
+              value-format="yyyy-MM-dd"
+            >
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>主分类号</span>
+            <el-input
+              v-model="uploadPatentForm.mainTypeNumber"
+              placeholder="主分类号"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>分类号</span>
+            <el-input
+              v-model="uploadPatentForm.typeNumber"
+              placeholder="分类号"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>专利权人</span>
+            <el-input v-model="uploadPatentForm.owner" placeholder="专利权人">
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>专利发明人</span>
+            <el-input
+              v-model="uploadPatentForm.designer"
+              placeholder="专利发明人"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>主申请人地址</span>
+            <el-input v-model="uploadPatentForm.address" placeholder="地址">
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>主申请人地址</span>
+            <el-input v-model="uploadPatentForm.address" placeholder="地址">
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>代理机构</span>
+            <el-input v-model="uploadPatentForm.agency" placeholder="代理机构">
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>代理人</span>
+            <el-input v-model="uploadPatentForm.agent" placeholder="代理人">
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>国别、省市代码</span>
+            <el-input
+              v-model="uploadPatentForm.code"
+              placeholder="国别;省市代码"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>主权项</span>
+            <el-input
+              type="textarea"
+              autosize
+              v-model="uploadPatentForm.description"
+              placeholder="描述"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="needed">
+            <span>法律状态</span>
+            <div>
+              <el-radio v-model="uploadPatentForm.status" label="有权">
+                有权
+              </el-radio>
+              <el-radio v-model="uploadPatentForm.status" label="无权">
+                无权
+              </el-radio>
+            </div>
+          </el-form-item>
+        </el-form>
       </div>
+
       <div v-show="achievementType == '研究项目'">
         <span>参与者</span>
         <el-input
@@ -226,13 +308,16 @@
         <el-input v-model="uploadProjectForm.keywords" placeholder="关键词">
         </el-input>
         <span>立项年份</span>
-        <el-input v-model.number="uploadProjectForm.year" placeholder="立项年份">
+        <el-input
+          v-model.number="uploadProjectForm.year"
+          placeholder="立项年份"
+        >
         </el-input>
         <span>公开范围</span>
         <el-input v-model="uploadProjectForm.scope" placeholder="公开范围">
         </el-input>
       </div>
-      <div slot="footer" class="dialog-footer" v-show="verificationBoxVisible">
+      <div slot="footer" class="dialog-footer" v-show="achievementType != null">
         <el-button @click="uploadAchievement">确 定</el-button>
       </div>
     </el-dialog>

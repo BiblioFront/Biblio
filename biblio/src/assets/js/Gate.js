@@ -16,6 +16,16 @@ export default {
   },
   data() {
     return {
+      verificationFormRules: {
+        verification_code: {
+          required: true,
+          message: '请输入验证码',
+          trigger: 'blur',
+        },
+      },
+      uploadAchievementFormRules: {
+        needed: { required: true, message: '必填', trigger: 'blur' },
+      },
       hasSendEmail: false, // 判断是否已经发送过邮件
       verificationBoxVisible: true, // 验证框可见性
       verificationDialogVisible: false, // 验证弹窗可见性
@@ -254,35 +264,41 @@ export default {
     },
     // 发送验证码
     claim() {
-      var scholarID = this.all.scholarInfo.scholarID
-      console.log(scholarID)
-      var token = window.localStorage.getItem('token')
-      console.log(token)
+      this.$refs.verificationFormRef.validate((valid) => {
+        // 校验失败
+        if (!valid) {
+          return
+        }
+        var scholarID = this.all.scholarInfo.scholarID
+        console.log(scholarID)
+        var token = window.localStorage.getItem('token')
+        console.log(token)
 
-      this.$axios
-        .post(
-          '/user/claim?researcherID=' + scholarID,
-          { verification_code: this.verificationForm.verification_code },
-          { headers: { token: token } }
-        )
-        .then((response) => {
-          var msg = response.data.msg
-          console.log(msg)
-          if (msg === 'claim successfully') {
-            this.$message.success('认证成功')
-            this.verificationDialogClosed()
-          } else if (msg === 'Wrong verification code') {
-            this.$message.error('验证码错误')
-          } else if (msg === 'please login first') {
-            this.verificationErrorVisible = true
-            this.verificationErrorInfo = '请先登录'
-            this.$message.error('请先登录')
-          }
-        })
-        .catch((error) => {
-          console.log(error)
-          console.log('请求异常')
-        })
+        this.$axios
+          .post(
+            '/user/claim?researcherID=' + scholarID,
+            { verification_code: this.verificationForm.verification_code },
+            { headers: { token: token } }
+          )
+          .then((response) => {
+            var msg = response.data.msg
+            console.log(msg)
+            if (msg === 'claim successfully') {
+              this.$message.success('认证成功')
+              this.verificationDialogClosed()
+            } else if (msg === 'Wrong verification code') {
+              this.$message.error('验证码错误')
+            } else if (msg === 'please login first') {
+              this.verificationErrorVisible = true
+              this.verificationErrorInfo = '请先登录'
+              this.$message.error('请先登录')
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+            console.log('请求异常')
+          })
+      })
     },
     // 关闭验证弹窗
     verificationDialogClosed() {
@@ -294,6 +310,12 @@ export default {
     // 上传学术成果
     uploadAchievement() {
       console.log(this.achievementType)
+
+      var scholarID = this.all.scholarInfo.scholarID
+      console.log(scholarID)
+      var token = window.localStorage.getItem('token')
+      console.log(token)
+
       if (this.achievementType === '论文') {
         let uploadPaperForm = {
           title: this.uploadPaperForm.title,
@@ -303,7 +325,29 @@ export default {
           journal: this.uploadPaperForm.journal,
           organization: this.uploadPaperForm.organization,
         }
-        console.log(uploadPaperForm)
+        // console.log(uploadPaperForm)
+        this.$axios
+          .post('/user/paper/add?ResearcherID=' + scholarID, uploadPaperForm, {
+            headers: { token: token },
+          })
+          .then((response) => {
+            var msg = response.data.msg
+            console.log(msg)
+            if (msg === 'successfully') {
+              this.$message.success('上传成功')
+              this.achievementType = null
+              this.uploadPaperForm = {}
+              this.uploadAchievementDialogVisible = false
+            } else if (msg === 'You have no authority') {
+              this.$message.error('您没有权限')
+            } else if (msg === 'please login first') {
+              this.$message.error('请先登录')
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+            console.log('请求异常')
+          })
       } else if (this.achievementType === '专利') {
         let uploadPatentForm = {
           title: this.uploadPatentForm.title,
@@ -326,6 +370,31 @@ export default {
         }
 
         console.log(uploadPatentForm)
+
+        this.$axios
+          .post(
+            '/user/patent/add?ResearcherID=' + scholarID,
+            uploadPatentForm,
+            { headers: { token: token } }
+          )
+          .then((response) => {
+            var msg = response.data.msg
+            console.log(msg)
+            if (msg === 'successfully') {
+              this.$message.success('上传成功')
+              this.achievementType = null
+              this.uploadPatentForm = {}
+              this.uploadAchievementDialogVisible = false
+            } else if (msg === 'You have no authority') {
+              this.$message.error('您没有权限')
+            } else if (msg === 'please login first') {
+              this.$message.error('请先登录')
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+            console.log('请求异常')
+          })
       } else if (this.achievementType === '研究项目') {
         let uploadProjectForm = {
           author: this.uploadProjectForm.author,
@@ -337,13 +406,32 @@ export default {
           scope: this.uploadProjectForm.scope,
           plan: this.uploadProjectForm.plan,
         }
-        console.log(uploadProjectForm)
+        // console.log(uploadProjectForm)
+        this.$axios
+          .post(
+            '/user/patent/add?ResearcherID=' + scholarID,
+            uploadProjectForm,
+            { headers: { token: token } }
+          )
+          .then((response) => {
+            var msg = response.data.msg
+            console.log(msg)
+            if (msg === 'successfully') {
+              this.$message.success('上传成功')
+              this.achievementType = null
+              this.uploadProjectForm = {}
+              this.uploadAchievementDialogVisible = false
+            } else if (msg === 'You have no authority') {
+              this.$message.error('您没有权限')
+            } else if (msg === 'please login first') {
+              this.$message.error('请先登录')
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+            console.log('请求异常')
+          })
       }
-    },
-    uploadAchievementDialogOpened() {
-      this.achievementType = null
-      this.uploadPaperForm = {}
-      this.uploadAchievementDialogVisible = true
     },
   },
 }
