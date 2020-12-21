@@ -70,10 +70,24 @@ export default {
             // if(response.msg === )
             console.log(response.data.msg);
             if(response.data.msg === "register success"){
+              this.$message({
+                message:'恭喜你，注册成功',
+                type: 'success'
+              });
               _this.$router.push('/login');
+            }
+            else {
+              this.$message({
+                message:'发生甚么事了，注册失败',
+                type: 'error'
+              });
             }
           }).catch(error => {
             console.log(error);
+            this.$message({
+              message:'发生甚么事了，注册失败',
+              type: 'error'
+            });
           });
         }
         else console.log("验证失败");

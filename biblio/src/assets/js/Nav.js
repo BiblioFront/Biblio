@@ -133,7 +133,10 @@ export default {
     handleCommand(command) {
       if (command == "info") this.$router.push({ path: "/info" });
       else if (command == "gate") this.$router.push({ path: "/gate" });
-      else if (command == "lgout");
+      else if (command == "lgout") {
+          window.localStorage.clear();
+          this.$router.push({ path: "/login" });
+      }
     },
     deleteRow(index, rows) {
       rows.splice(index, 1);
