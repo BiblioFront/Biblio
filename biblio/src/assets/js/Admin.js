@@ -39,6 +39,7 @@ export default {
       this.$message('已停止数据更新')
     },
     updateHotFiled() {
+      if (this.isUpdatingHotField) return
       this.isUpdatingHotField = true
       this.$axios({
         method: 'get',
@@ -62,6 +63,7 @@ export default {
         })
     },
     updateHotPaper() {
+      if (this.isUpdatingHotPaper) return
       this.isUpdatingHotPaper = true
       this.$axios({
         method: 'get',

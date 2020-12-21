@@ -14,7 +14,7 @@
             @click="updateData"
             :icon="isUpdatingData ? 'el-icon-loading' : null"
             :disabled="
-              isRebuildIndex || isUpdatingHotField || isUpdatingHotPaper
+              isUpdatingHotField || isUpdatingHotPaper || isRebuildIndex
             "
           >
             {{ isUpdatingData === false ? '更新数据' : '更新数据中' }}
@@ -22,7 +22,7 @@
           <el-button
             @click="updateHotFiled"
             :icon="isUpdatingHotField ? 'el-icon-loading' : null"
-            :disabled="isRebuildIndex || isUpdatingData || isUpdatingHotPaper"
+            :disabled="isUpdatingData || isUpdatingHotPaper || isRebuildIndex"
           >
             {{
               isUpdatingHotField === false ? '更新热点领域' : '更新热点领域中'
@@ -31,7 +31,7 @@
           <el-button
             @click="updateHotPaper"
             :icon="isUpdatingHotPaper ? 'el-icon-loading' : null"
-            :disabled="isRebuildIndex || isUpdatingData || isUpdatingHotField"
+            :disabled="isUpdatingData || isUpdatingHotField || isRebuildIndex"
           >
             {{
               isUpdatingHotPaper === false ? '更新热门文献' : '更新热门文献中'
@@ -41,7 +41,7 @@
             @click="rebuildIndex"
             :icon="isRebuildIndex ? 'el-icon-loading' : null"
             :disabled="
-              isUpdatingHotPaper || isUpdatingData || isUpdatingHotField
+              isUpdatingData || isUpdatingHotField || isUpdatingHotPaper
             "
           >
             {{ isRebuildIndex === false ? '重建索引' : '重建索引中' }}
