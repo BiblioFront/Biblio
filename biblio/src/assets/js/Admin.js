@@ -1,237 +1,105 @@
 /* Myinfo.js */
-import Nav from "@/components/Nav.vue";
+import Nav from '@/components/Nav.vue'
 
 export default {
-  name: "MyInfo",
+  name: 'MyInfo',
   components: {
     Nav,
   },
-    data() {
-      var checkEmail = (rule, value, callback) => {
-                const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
-                if (!value) {
-                    return callback(new Error('邮箱不能为空'))
-                }
-                setTimeout(() => {
-                    if (mailReg.test(value)) {
-                      // console.log(value+" 判断邮箱格式正确");
-                        this.emailright = true;
-                        callback()
-                    } else {
-                      // console.log(value);
-                        callback(new Error('请输入正确的邮箱格式'))
-                    }
-                }, 100)
-            }
-      return {
-        infoform: {
-          username:'马保国',
-          password:'123',
-          email: '123@qq.com',
-          nickname: 'haha',
-          avator: '',
-          auth: '',
-          admin: false,
-          token:'',
-          id:'',
-          verification_code:''
-        },
-        password:'123456',
-        infoform_chan:{
-          email:'',
-        },
-        newname:'',
-        newemail:'',
-        oldpassword:"",
-        newpassword: "",
-        photo:'',
-        isAuth:true,
-        editname:false,
-        editemail:false,
-        editpassword:false,
-        emailright:false,
-        rules: {
-            email: [
-                { required: false, validator: checkEmail, trigger: 'blur' }
-            ],
-        },
+  data() {
+    return {
+      isUpdatingData: false,
+      isUpdatingHotField: false,
+      isUpdatingHotPaper: false,
+      isRebuildIndex: false,
+      updateDataDialogVisible: false,
+      rebuildIndexDialogVisible: false,
+    }
+  },
+  methods: {
+    getRandom(value) {
+      return value
+    },
+    updateData() {
+      if (!this.isUpdatingData) {
+        this.isUpdatingData = true
+        setTimeout(() => {
+          this.isUpdatingData = false
+          this.updateDataDialogVisible = false
+          this.$message.success('数据更新成功')
+        }, 500000)
+      } else {
+        this.updateDataDialogVisible = true
       }
     },
-    mounted: function () {
+    stopUpdateData() {
+      this.isUpdatingData = false
+      this.updateDataDialogVisible = false
+      this.$message('已停止数据更新')
+    },
+    updateHotFiled() {
+      this.isUpdatingHotField = true
       this.$axios({
-        method:'get',
-        url:'/user',
-        params:{
-          
-        },
-        headers: {
-          token: window.localStorage.getItem("token"),
-        },
-      }).then(response => {
-        console.log(response);
-        this.infoform = response.data.information;
-      }).catch(error => {
-        console.log(error);
+        method: 'get',
+        url: '/analysis/update/hotfield',
+        params: {},
+        headers: {},
       })
-            // this.$http.get('/user').then(res => {
-                
-            //     this.infoform = res.information;
-            //     if(this.infoform.auth != null){
-            //       this.isAuth = true;
-            //     }
-            // })
-        },
-    methods: {
-      onSubmit() {
-        console.log('submit!');
-      },
-      gotoGate(){
-        this.$router.push('/gate');
-      },
-      goEditname(){
-        console.log("editname");
-        this.editname = true;
-      },
-      SaveEditname(){
-        this.$axios({
-          method:'patch',
-          url:'/user',
-          params:{
-            
-          },
-          headers: {
-            token: window.localStorage.getItem("token"),
-          },
-          data:{
-            username:this.newname
+        .then((response) => {
+          var msg = response.data.msg
+          console.log(msg)
+          if (msg === 'success') {
+            this.$message.success('热点领域更新成功')
+          } else {
+            this.$message.error('热点领域更新失败')
           }
-        }).then(response => {
-          console.log(response);
-          if(response.data.msg == "Changed successfully"){
-            this.$message.success("修改用户名成功！");
-            this.infoform.username = this.newname;
-            this.editname = false;
-          }else{
-            this.$message.error("用户名已存在，请重新修改");
-          }
-        }).catch(error => {
-          console.log(error);
+          this.isUpdatingHotField = false
         })
-        
-      },
-      goEditemail(){
-        this.emailright = false;
-        this.editemail = true;
-      },
-      SaveEditemail(infoform_chan){
-        // console.log(this.emailright+" （emairight的值")
-        // console.log(this.infoform_chan.email+" （email的值")
-        this.$refs[infoform_chan].validate(valid =>{
-          if(valid){
-            this.$axios({
-              method:'patch',
-              url:'/user',
-              params:{
-                
-              },
-              headers: {
-                token: window.localStorage.getItem("token"),
-              },
-              data:{
-                email:this.infoform_chan.email
-              }
-            }).then(response => {
-              console.log(response);
-              if(response.data.msg == "Changed successfully"){
-                this.$message.success("修改邮箱成功！");
-                this.infoform.password = this.newpassword;
-                this.editpassword = false;
-              }else{
-                this.$message.error("修改邮箱失败！");
-              }
-            }).catch(error => {
-              console.log(error);
-            })
-            this.infoform.email = this.infoform_chan.email;
-            // console.log("现在的email：" + this.infoform.email)
-            this.editemail = false;
-          }
-          else{
-            this.$message.error("请输入正确的邮箱格式！");
-          }
+        .catch((error) => {
+          this.isUpdatingHotField = false
+          console.log(error)
         })
-      },
-      goEditpassword(){
-        this.editpassword = true;
-      },
-      Savepassword(){
-        console.log(this.newpassword);
-        if(this.newpassword == ""){
-          this.$message.error("密码不能为空！");
-        }
-        this.$axios({
-          method:'patch',
-          url:'/user/password',
-          params:{
-            
-          },
-          headers: {
-            token: window.localStorage.getItem("token"),
-          },
-          data:{
-            oldpassword:this.oldpassword,
-            newpassword:this.newpassword
+    },
+    updateHotPaper() {
+      this.isUpdatingHotPaper = true
+      this.$axios({
+        method: 'get',
+        url: '/analysis/update/hotpaper',
+        params: {},
+        headers: {},
+      })
+        .then((response) => {
+          var msg = response.data.msg
+          console.log(msg)
+          if (msg === 'success') {
+            this.$message.success('热门文献更新成功')
+          } else {
+            this.$message.error('热门文献更新失败')
           }
-        }).then(response => {
-          console.log(response);
-          if(response.data.msg == "Changed successfully"){
-            this.$message.success("修改密码成功！");
-            this.infoform.password = this.newpassword;
-            this.editpassword = false;
-          }
-          else if(response.data.msg == "Wrong password"){
-            this.$message.error("原密码错误");
-          }
-          
-        }).catch(error => {
-          console.log(error);
+          this.isUpdatingHotPaper = false
         })
-      },
-      handleAvatarSuccess(res) {
-          var tmp = res.filepath;
-          console.log(tmp);
-          this.photo = tmp;
-      },
-      beforeAvatarUpload(file) {
-          const isJPG = file.type === 'image/gif' || 'image/jpeg' || 'image/png' || 'image/jpg';
-          const isLt10M = file.size / 1024 / 1024 / 10;
+        .catch((error) => {
+          this.isUpdatingHotPaper = false
+          console.log(error)
+        })
+    },
+    rebuildIndex() {
+      if (!this.isRebuildIndex) {
+        this.isRebuildIndex = true
 
-          if (!isJPG) {
-              this.$message.error('上传头像图片只能是 JPG 格式!');
-          }
-          if (!isLt10M) {
-              this.$message.error('上传头像图片大小不能超过 10MB!');
-          }
-          return isJPG && isLt10M;
-      },
-      uploadAvator(resource){
-        console.log(resource);
-        let pic = resource.file;
-        let fd = new FormData()
-        fd.append('file', pic)
-        this.$axios({
-          url: 'user/avatar',
-          method: 'patch',
-          headers:{
-            token: window.localStorage.getItem("token"),
-          },
-          data:fd
-        }).then(res =>{
-          console.log(res);
-          this.infoform.avator = res.data.newAvatar;
-        }).catch(err =>{
-          this.$message.error('更新账户头像失败：' + err)
-        })
+        setTimeout(() => {
+          this.isUpdatingData = false
+          this.updateDataDialogVisible = false
+          this.$message.success('数据更新成功')
+        }, 200000)
+      } else {
+        this.rebuildIndexDialogVisible = true
       }
-    }
-};
+    },
+    stopRebuildIndex() {
+      this.isRebuildIndex = false
+      this.rebuildIndexDialogVisible = false
+      this.$message('已停止重建索引')
+    },
+  },
+}
