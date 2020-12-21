@@ -77,7 +77,7 @@
       </div>
 
       <el-table class="message_container" :data="messageData" height="85vh">
-        <el-table-column property="content" label="" width="auto">
+        <el-table-column property="content" label="" width="auto" >
           <template slot-scope="scope">
             <el-collapse class="message_item" accordion>
               <el-avatar :size="30">user</el-avatar>
@@ -117,14 +117,36 @@
 
     <el-dialog title="发送私信" :visible.sync="formsee">
       <el-form :model="form" :label-position="labelPosition">
-        <el-form-item label="用户ID" style="margin-left:30px">
+        <el-form-item label="用户名" style="margin-left:30px">
           <el-input
             v-model="form.name"
             autocomplete="off"
             style="width:400px"
           ></el-input>
-          <el-button style="margin-left:30px">搜索</el-button>
+          <el-button style="margin-left:30px" @click="findUser()">搜索</el-button>
         </el-form-item>
+
+        <el-form-item  v-if="existName"> 
+          <p style="margin-left:30px">向 {{form[0].name}} 发送私信：</p>
+          <el-input
+          type="textarea" style="width:90%; margin-left:40px; margin-top:10px"
+          :autosize="{ minRows: 4, maxRows: 6}"
+          placeholder="请输入内容"
+          v-model="textarea2" @input="change($event)">
+        </el-input>
+        <br>
+        <el-button @click="send_msg()" style="float:right;margin-top:25px; ">发送私信</el-button>
+        </el-form-item>
+        <!-- <el-table :data="form" v-if="existName">
+              <el-table-column prop="avatar" label="头像" width="150"></el-table-column>
+              <el-table-column prop="name" label="用户" width="380"></el-table-column>
+              <el-table-column label="操作" width="150">
+                <template slot-scope="scope">
+                  <el-button @click="send_msg(scope.row.name)">发送私信</el-button>
+                </template>
+              </el-table-column>
+
+            </el-table> -->
       </el-form>
     </el-dialog>
   </div>

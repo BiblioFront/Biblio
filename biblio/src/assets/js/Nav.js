@@ -38,62 +38,60 @@ export default {
       ],
       option: "1",
       searchInput: "",
-      messageData: [
-        {
-          from: "user10086",
-          time: "2020.12.19 16:05",
-          content: "hi!",
-        },
-        {
-          from: "user10087",
-          time: "2020.12.19 16:07",
-          content:
-            "hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!",
-        },
-        {
-          from: "user10086",
-          time: "2020.12.19 16:05",
-          content: "hi!",
-        },
-        {
-          from: "user10086",
-          time: "2020.12.19 16:05",
-          content: "hi!",
-        },
-        {
-          from: "user10086",
-          time: "2020.12.19 16:05",
-          content: "hi!",
-        },
-        {
-          from: "user10086",
-          time: "2020.12.19 16:05",
-          content: "hi!",
-        },
-        {
-          from: "user10086",
-          time: "2020.12.19 16:05",
-          content: "hi!",
-        },
-        {
-          from: "user10086",
-          time: "2020.12.19 16:05",
-          content: "hi!",
-        },
-      ],
+      existName:false,
+      textarea2:"",
+      // messageData: [
+      //   {
+      //     from: "user10086",
+      //     time: "2020.12.19 16:05",
+      //     content: "hi!",
+      //   },
+      //   {
+      //     from: "user10087",
+      //     time: "2020.12.19 16:07",
+      //     content:
+      //       "hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!",
+      //   },
+      //   {
+      //     from: "user10086",
+      //     time: "2020.12.19 16:05",
+      //     content: "hi!",
+      //   },
+      //   {
+      //     from: "user10086",
+      //     time: "2020.12.19 16:05",
+      //     content: "hi!",
+      //   },
+      //   {
+      //     from: "user10086",
+      //     time: "2020.12.19 16:05",
+      //     content: "hi!",
+      //   },
+      //   {
+      //     from: "user10086",
+      //     time: "2020.12.19 16:05",
+      //     content: "hi!",
+      //   },
+      //   {
+      //     from: "user10086",
+      //     time: "2020.12.19 16:05",
+      //     content: "hi!",
+      //   },
+      //   {
+      //     from: "user10086",
+      //     time: "2020.12.19 16:05",
+      //     content: "hi!",
+      //   },
+      // ],
+      messageData:[],
       lg: 1,
       drawer: false,
       formsee: false,
-      form: {
-        name: "nihao",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: "",
-      },
+      form:[{
+        name:'',
+        avatar:'',
+        id:''
+      }],
       formLabelWidth: "100px",
       labelPosition: "right",
     };
@@ -111,6 +109,22 @@ export default {
     }).then(response => {
       console.log(response);
       this.infoform = response.data.information;
+    }).catch(error => {
+      console.log(error);
+    })
+
+    this.$axios({
+      method:'get',
+      url:'/user/message',
+      params:{
+        
+      },
+      headers: {
+        token: window.localStorage.getItem("token"),
+      },
+    }).then(response => {
+      console.log(response);
+      // this.infoform = response.data.information;
     }).catch(error => {
       console.log(error);
     })
@@ -146,5 +160,60 @@ export default {
     showForm() {
       this.formsee = true;
     },
+    findUser(){
+      this.$axios({
+        method:'get',
+        url:'/user/search',
+        params:{
+          username:this.form.name
+        },
+        headers: {
+          token: window.localStorage.getItem("token")
+        },
+      }).then(response => {
+        console.log(response);
+        if(response.data.msg == "Search successfully"){
+          this.form[0].name = response.data.user.username;
+          this.form[0].avatar = response.data.user.avatar;
+          this.form[0].id = response.data.user.id;
+          console.log(this.form);
+          this.existName = true;
+        }
+        
+      }).catch(error => {
+        console.log(error);
+      })
+    },
+    send_msg(){
+      this.$axios({
+        method:'post',
+        url:'/user/message',
+        params:{
+          
+        },
+        headers: {
+          token: window.localStorage.getItem("token")
+        },
+        data:{
+          receiveID:this.form[0].id,
+          content:this.textarea2
+        }
+      }).then(response => {
+        console.log(response);
+        if(response.data.msg == "Send successfully"){
+          this.$message.success("发送成功！");
+          this.formsee = false;
+        }
+        else{
+          this.$message.error("发送失败");
+          this.formsee = false;
+        }
+      }).catch(error => {
+        console.log(error);
+      })
+    },
+    change(e){
+      this.$forceUpdate(e);
+    }
   },
 };
