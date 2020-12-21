@@ -33,13 +33,28 @@ export default {
             })
             .then((response) => {
               if (response.data.msg === "login success") {
+                this.$message({
+                  message: "恭喜你，登录成功",
+                  type: "success",
+                });
                 window.localStorage.setItem("token", response.data.token);
+                // window.localStorage.clear();
                 _this.$router.push("/");
-              } else console.log("login fail");
+              } else {
+                console.log("login fail");
+                this.$message({
+                  message: "发生甚么事了，登录失败",
+                  type: "error",
+                });
+              }
             })
             .catch((error) => {
               console.log(error);
               console.log("请求异常");
+              this.$message({
+                message: "发生甚么事了，登录失败",
+                type: "error",
+              });
             });
         } else console.log("invalid!");
       });
