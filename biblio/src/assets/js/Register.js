@@ -69,7 +69,9 @@ export default {
           }).then(response => {
             // if(response.msg === )
             console.log(response.data.msg);
-            _this.$router.push('/');
+            if(response.data.msg === "register success"){
+              _this.$router.push('/login');
+            }
           }).catch(error => {
             console.log(error);
           });

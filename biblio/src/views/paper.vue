@@ -251,6 +251,7 @@ export default {
         headers: {
           // token: window.localStorage.getItem("token"),
           token:"1bd97ca0-78ec-480c-a28b-f274501c0d4d"
+          // token:window.localStorage.getItem("token")
         },
       }).then(response => {
         if ( response.msg == 'get paper and comment successfully') {
