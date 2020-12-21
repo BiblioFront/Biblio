@@ -43,11 +43,11 @@
           </div>
 
           <div class="bibliopage btns_area">
-            <el-button><svg-icon name="like"></svg-icon>收藏</el-button>
-            <el-button><svg-icon name="quote"></svg-icon>引用</el-button>
-            <el-button><svg-icon name="download"></svg-icon>来源</el-button>
-            <el-button><svg-icon name="warning"></svg-icon>报错</el-button>
-            <el-button><svg-icon name="share"></svg-icon>分享</el-button>
+            <el-button @click="collect"><svg-icon name="like"></svg-icon>收藏</el-button>
+            <el-button @click="reference"><svg-icon name="quote"></svg-icon>引用</el-button>
+            <el-button @click="source"><svg-icon name="download"></svg-icon>来源</el-button>
+            <el-button @click="error"><svg-icon name="warning"></svg-icon>报错</el-button>
+            <el-button @click="share"><svg-icon name="share"></svg-icon>分享</el-button>
           </div>
         </div>
 
@@ -236,7 +236,8 @@ export default {
         keywords: "危险化学品;数据库",
         date:"2020年12月30日",
         organization:"江田岛海军学院"
-      }
+      },
+      comments:[]
     }
   },
   created:function(){
@@ -268,6 +269,35 @@ export default {
         /* 发送私信 */
       }
     },
+    error:function(){
+      console.log("报错");
+    },
+    collect:function(){
+      console.log("收藏");
+      this.$axios({
+        method:'post',
+        url:'/user/favorite',
+        params:{
+          paperID:"5fcece9000f8a0090a697fdb"
+        },
+        headers: {
+          token: window.localStorage.getItem("token"),
+        },
+      }).then(response => {
+        console.log(response.msg);
+      }).catch(error => {
+        console.log(error);
+      })
+    },
+    reference:function(){
+      console.log("引用");
+    },
+    source:function(){
+      console.log("来源");
+    },
+    share:function() {
+      console.log("分享");
+    }
   },
 };
 </script>
