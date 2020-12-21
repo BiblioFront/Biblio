@@ -10,7 +10,7 @@ import axios from "axios";
 import echarts from "echarts";
 
 Vue.use(ElementUI);
-axios.defaults.baseURL = "http://localhost:8083"
+axios.defaults.baseURL = "http://localhost:8989"
 Vue.prototype.$axios = axios;
 Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false;

@@ -33,6 +33,7 @@ export default {
             if(response.msg === "login success")
             {
               window.localStorage.setItem("token",response.token);
+              _this.$router.push('/');
             }
             else console.log("login fail");
           }).catch(error => {
