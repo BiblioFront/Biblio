@@ -226,7 +226,7 @@ export default {
   },
   data:function(){
     return {
-      id:"5fccd17b376ae34bbb980c49",
+      id:"5fccd166376ae34bbb980c42",
       paper:{
         _id:"5fccd17b376ae34bbb980c49",
         author: "李树娟,钟焕荣,于亮,赵军,范伟检,黄伟",
@@ -242,25 +242,31 @@ export default {
   },
   created:function(){
     console.log("created");
+    console.log(this.id);
+    console.log(window.localStorage.getItem("token"));
+    var _this = this;
     this.$axios({
         method: "get",
         url: "/user/paper",
         params: {
-          paperID: this.id,
+          paperID: _this.id,
         },
         headers: {
           // token: window.localStorage.getItem("token"),
-          token:"1bd97ca0-78ec-480c-a28b-f274501c0d4d"
-          // token:window.localStorage.getItem("token")
+          // token:"1bd97ca0-78ec-480c-a28b-f274501c0d4d"
+          token:window.localStorage.getItem("token")
         },
       }).then(response => {
-        if ( response.msg == 'get paper and comment successfully') {
-          this.paper = response.paper;
+        if ( response.data.msg == 'get paper and comment successfully') {
+          console.log("get success");
+          this.paper = response.data.paper;
         }
-        else console.log(response.msg);
+        else console.log(response.data.msg);
       }).catch(error => {
         console.log(error);
       })
+
+
   },
   methods: {
     handleCommand(command) {
