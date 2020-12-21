@@ -168,7 +168,7 @@
                   <el-dropdown-item disabled>{{
                     comment.commenter.username
                   }}</el-dropdown-item>
-                  <el-dropdown-item command="info" divided
+                  <el-dropdown-item command="info" divided 
                     ><svg-icon name="user"></svg-icon>用户信息</el-dropdown-item
                   >
                   <el-dropdown-item command="letter"
@@ -272,8 +272,11 @@ export default {
     handleCommand(command) {
       if (command == "info") {
         /* 跳转至对应用户信息页 */
+        console.log("userinf");
+        this.$router.push('/info');
       } else if (command == "letter") {
         /* 发送私信 */
+        console.log("send letter");
       }
     },
     error: function () {
@@ -327,6 +330,7 @@ export default {
     publish:function(){
       console.log("发布评论");
       console.log(this.newComment);
+      if(this.newComment === '') return;
       this.$axios({
         method:'post',
         url:'/user/comment',
@@ -341,6 +345,9 @@ export default {
         }
       }).then(response => {
         console.log(response.data.msg);
+        if(response.data.msg === 'comment success') {this.comments.push(response.data.comment);
+        this.newComment = "";
+        }
       }).catch(error => {
         console.log(error);
       })
