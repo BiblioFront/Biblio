@@ -71,12 +71,41 @@ export default {
       ],
       value: ["all"],
       searchInput: "",
+      searchResult: {
+        total: 0,
+        paperData: {},
+        patentData: {},
+        projectData: {},
+        scholarData: {},
+      },
     };
   },
   components: {
     Nav,
   },
   methods: {
+    valueExtrat() {
+      switch (this.value[1]) {
+        case "paper_title":
+          return "title";
+        case "paper_author":
+          return "author";
+        case "paper_doi":
+          return "doi";
+        case "paper_keywords":
+          return "keywords";
+        case "patent_title":
+          return "title";
+        case "patent_owner":
+          return "owner";
+        case "project_title":
+          return "title";
+        case "project_author":
+          return "author";
+        case "project_keywords":
+          return "keywords";
+      }
+    },
     route2Search() {
       if (this.searchInput == "") {
         this.$message({
@@ -85,73 +114,123 @@ export default {
           offset: 400,
           message: "请先输入搜索内容",
         });
+        console.log("Searching error: No Input!");
       } else {
+        console.log("Searching '" + this.value[0] + "'...");
         if (this.value[0] == "paper") {
           this.paperSearch();
         } else if (this.value[0] == "patent") {
           this.patentSearch();
         } else if (this.value[0] == "project") {
           this.projectSearch();
+        } else if (this.value[0] == "scholar") {
+          this.scholarSearch();
         } else if (this.value[0] == "all") {
-          this.paperSearch();
+          this.allSearch();
         }
-        this.$router.push({ path: "/search" });
+        console.log("Search Successful!");
+        this.$router.push({
+          path: "/search",
+          query: { wd: this.searchInput },
+        });
       }
     },
     paperSearch() {
-      var field;
-      switch (this.value[1]) {
-        case "paper_title":
-          field = "title";
-          break;
-        case "paper_author":
-          field = "author";
-          break;
-        case "paper_doi":
-          field = "doi";
-          break;
-        case "paper_keywords":
-          field = "keywords";
-      }
       var searchForm = {
-        field: field,
+        field: this.valueExtrat(),
+        words: this.searchInput,
+        page: 1,
+        category: "",
+      };
+      console.log(searchForm);
+      const _this = this;
+      this.$axios.post("/search/paper", searchForm).then((res) => {
+        console.log(res.data);
+        _this.searchResult.total = res.data.total;
+        _this.searchResult.paperData = res.data;
+        _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
+      });
+    },
+    patentSearch() {
+      var searchForm = {
+        field: this.valueExtrat(),
+        words: this.searchInput,
+        page: 1,
+      };
+      //console.log(searchForm);
+      const _this = this;
+      this.$axios.post("/search/patent", searchForm).then((res) => {
+        //console.log(res.data);
+        _this.searchResult.total = res.data.total;
+        _this.searchResult.patentData = res.data;
+        _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
+      });
+    },
+    projectSearch() {
+      var searchForm = {
+        field: this.valueExtrat(),
         words: this.searchInput,
         page: 1,
         category: "",
       };
       //console.log(searchForm);
-      this.$axios.post("/search/paper", searchForm).then((res) => {
+      const _this = this;
+      this.$axios.post("/search/project", searchForm).then((res) => {
         //console.log(res.data);
-        var item = res.data;
-        this.$bus.$emit("getData", item);
+        _this.searchResult.total = res.data.total;
+        _this.searchResult.projectData = res.data;
+        _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
       });
     },
-    patentSearch() {
+    scholarSearch() {
       var searchForm = {
-        field: this.value[2],
+        field: "name",
         words: this.searchInput,
         page: 1,
       };
-      this.$axios
-        .post("http://localhost:8989/search/patent", searchForm)
-        .then((res) => {
-          console.log(res);
-        });
+      //console.log(searchForm);
+      const _this = this;
+      this.$axios.post("/search/researcher", searchForm).then((res) => {
+        //console.log(res.data);
+        _this.searchResult.total = res.data.total;
+        _this.searchResult.scholarData = res.data;
+        _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
+      });
     },
-    projectSearch() {
-      var searchForm = {
-        field: this.value[2],
-        words: this.searchInput,
-        page: 1,
-      };
+    allSearch() {
+      const _this = this;
+      var total = 0;
       this.$axios
-        .post("http://localhost:8989/search/project", searchForm)
+        .post("/search/paper", {
+          field: "title",
+          words: this.searchInput,
+          page: 1,
+          category: "",
+        })
         .then((res) => {
-          console.log(res);
+          //console.log(res);
+          total = res.data.total;
+          _this.searchResult.paperData = res.data;
+          _this.$axios
+            .post("/search/project", {
+              field: "title",
+              words: this.searchInput,
+              page: 1,
+              category: "",
+            })
+            .then((res) => {
+              //console.log(res);
+              total += res.data.total;
+              _this.searchResult.total = total;
+              _this.searchResult.projectData = res.data;
+              _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
+            });
         });
-    },
-    handleChange(value) {
-      console.log(value);
+      // this.$axios.post("/search/patent", searchForm).then((res) => {
+      //   //console.log(res.data);
+      //   total += res.data.total;
+      //   var item = res.data;
+      // });
     },
   },
 };

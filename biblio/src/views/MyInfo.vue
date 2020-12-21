@@ -47,7 +47,6 @@
               ></el-image>
             </el-upload>
             <span id="avatar_tip">点击修改头像</span>
-            <span id="name">{{ infoform.username }}</span>
           </div>
 
           <el-divider direction="vertical" style="height:200px;"></el-divider>

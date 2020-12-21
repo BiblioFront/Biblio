@@ -20,7 +20,6 @@
               :options="searchOptions"
               :props="{ expandTrigger: 'hover' }"
               :show-all-levels="false"
-              @change="handleChange"
             ></el-cascader>
 
             <div id="option_text--divider"></div>
