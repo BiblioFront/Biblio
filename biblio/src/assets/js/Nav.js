@@ -2,29 +2,78 @@
 export default {
   name: "Nav",
   props: {
-    pageState: Number,
+    notHomePage: {
+      type: Number,
+      default: 1,
+    },
   },
   data() {
     return {
       searchOptions: [
         {
-          option: "1",
+          value: "all",
           label: "全站",
         },
         {
-          option: "2",
+          value: "paper",
           label: "论文",
+          children: [
+            {
+              value: "paper_title",
+              label: "标题",
+            },
+            {
+              value: "paper_author",
+              label: "作者",
+            },
+            {
+              value: "paper_doi",
+              label: "DOI",
+            },
+            {
+              value: "paper_keywords",
+              label: "关键词",
+            },
+          ],
         },
         {
-          option: "3",
+          value: "patent",
           label: "专利",
+          children: [
+            {
+              value: "patent_title",
+              label: "标题",
+            },
+            {
+              value: "patent_owner",
+              label: "持有人",
+            },
+          ],
         },
         {
-          option: "4",
+          value: "project",
+          label: "科研项目",
+          children: [
+            {
+              value: "project_title",
+              label: "标题",
+            },
+            {
+              value: "project_author",
+              label: "参与者",
+            },
+            {
+              value: "project_keywords",
+              label: "关键词",
+            },
+          ],
+        },
+        {
+          value: "scholar",
           label: "学者",
         },
       ],
-      option: "1",
+      value: ["all"],
       searchInput: "",
       messageData: [
         {

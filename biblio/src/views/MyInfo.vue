@@ -10,7 +10,11 @@
           </el-col>
 
           <el-col :span="12">
-            <el-button class="gatebtn" icon="el-icon-s-shop" v-if="isAuth" @click="gotoGate()"
+            <el-button
+              class="gatebtn"
+              icon="el-icon-s-shop"
+              v-if="isAuth"
+              @click="gotoGate()"
               >个人门户</el-button
             >
           </el-col>
@@ -44,12 +48,17 @@
               <el-col :span="18">
                 <el-input
                   prefix-icon="el-icon-user"
-                  v-model="infoform.username" :disabled="true"
+                  v-model="infoform.username"
+                  :disabled="true"
                 ></el-input>
               </el-col>
               <el-col :span="6">
-                <el-button type="text" style="margin-left: 30px" @click="goEditname()"
-                  >修改</el-button>
+                <el-button
+                  type="text"
+                  style="margin-left: 30px"
+                  @click="goEditname()"
+                  >修改</el-button
+                >
               </el-col>
             </el-form-item>
 
@@ -57,11 +66,15 @@
               <el-col :span="18">
                 <el-input
                   prefix-icon="el-icon-message"
-                  v-model="infoform.email" :disabled="true"
+                  v-model="infoform.email"
+                  :disabled="true"
                 ></el-input>
               </el-col>
               <el-col :span="6">
-                <el-button type="text" style="margin-left: 30px" @click="goEditemail()"
+                <el-button
+                  type="text"
+                  style="margin-left: 30px"
+                  @click="goEditemail()"
                   >修改</el-button
                 >
               </el-col>
@@ -71,57 +84,88 @@
               <el-col :span="18">
                 <el-input
                   prefix-icon="el-icon-lock"
-                  v-model="infoform.password" :disabled="true" type="password"
+                  v-model="infoform.password"
+                  :disabled="true"
+                  type="password"
                 ></el-input>
               </el-col>
               <el-col :span="6">
-                <el-button type="text" style="margin-left: 30px" @click="goEditpassword()"
+                <el-button
+                  type="text"
+                  style="margin-left: 30px"
+                  @click="goEditpassword()"
                   >修改</el-button
                 >
               </el-col>
             </el-form-item>
           </el-form>
 
-
           <el-dialog title="修改用户名" :visible.sync="editname">
-            <el-form :model="infoform" >
-              <el-form-item label="新昵称" style="margin-left:30px" >
-                <el-input v-model="newname" autocomplete="off" style="width:400px" placeholder="请输入新昵称"></el-input>
-                <el-button style="margin-left:30px" @click="SaveEditname()">保存修改</el-button>
+            <el-form :model="infoform">
+              <el-form-item label="新昵称" style="margin-left:30px">
+                <el-input
+                  v-model="newname"
+                  autocomplete="off"
+                  style="width:400px"
+                  placeholder="请输入新昵称"
+                ></el-input>
+                <el-button style="margin-left:30px" @click="SaveEditname()"
+                  >保存修改</el-button
+                >
               </el-form-item>
             </el-form>
           </el-dialog>
 
-          <el-dialog title="修改邮箱" :visible.sync="editemail" >
+          <el-dialog title="修改邮箱" :visible.sync="editemail">
             <el-form ref="infoform_chan" :model="infoform_chan" :rules="rules">
-              <el-form-item label="输入新邮箱" style="margin-left:30px" prop="email">
-                <el-input v-model="infoform_chan.email" autocomplete="off" style="width:280px" placeholder="请输入新邮箱"></el-input>
-                <el-button style="margin-left:30px" @click="SaveEditemail('infoform_chan')" size="medium" >保存修改</el-button>
+              <el-form-item
+                label="输入新邮箱"
+                style="margin-left:30px"
+                prop="email"
+              >
+                <el-input
+                  v-model="infoform_chan.email"
+                  autocomplete="off"
+                  style="width:280px"
+                  placeholder="请输入新邮箱"
+                ></el-input>
+                <el-button
+                  style="margin-left:30px"
+                  @click="SaveEditemail('infoform_chan')"
+                  size="medium"
+                  >保存修改</el-button
+                >
               </el-form-item>
             </el-form>
           </el-dialog>
 
-          <el-dialog title="修改密码" :visible.sync="editpassword" >
-            <el-form ref="infoform" :model="infoform" >
+          <el-dialog title="修改密码" :visible.sync="editpassword">
+            <el-form ref="infoform" :model="infoform">
               <el-form-item label="输入新密码" style="margin-left:30px">
-                <el-input v-model="newpassword" autocomplete="off" style="width:400px" placeholder="请输入新密码" show-password></el-input>
-                <el-button style="margin-left:30px" @click="Savepassword()">保存修改</el-button>
+                <el-input
+                  v-model="newpassword"
+                  autocomplete="off"
+                  style="width:400px"
+                  placeholder="请输入新密码"
+                  show-password
+                ></el-input>
+                <el-button style="margin-left:30px" @click="Savepassword()"
+                  >保存修改</el-button
+                >
               </el-form-item>
             </el-form>
           </el-dialog>
-
         </div>
       </el-card>
     </div>
   </div>
 </template>
 
-<script type="text/javascript" src="../assets/js/Myinfo.js">
-</script>
+<script src="../assets/js/Myinfo.js"></script>
 
 <style scoped>
 @import "../assets/css/global.css";
-@import "../assets/css/Myinfo.css";
+@import "../assets/css/myinfo.css";
 .user_info {
   width: 100%;
   height: 105px;

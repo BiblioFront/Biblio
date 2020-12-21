@@ -11,7 +11,14 @@ export default {
       extraFound: true,
       achievementActiveType: "first",
       isEnoughResult: true,
+      biblioItem: [],
     };
+  },
+  created() {
+    this.$bus.$on("getData", (item) => {
+      this.biblioItem = item;
+      console.log(this.biblioItem);
+    });
   },
   methods: {
     handleChange(val) {

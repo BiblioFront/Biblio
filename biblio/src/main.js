@@ -8,9 +8,11 @@ import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import axios from "axios";
 import echarts from "echarts";
+import "./utils/bus.js";
+import "./utils/axios.js";
 
 Vue.use(ElementUI);
-axios.defaults.baseURL = "http://localhost:8083"
+
 Vue.prototype.$axios = axios;
 Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false;

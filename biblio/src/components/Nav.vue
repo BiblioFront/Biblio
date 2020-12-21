@@ -6,17 +6,16 @@
           <span @click="route2Home()">biblio</span>
         </div>
 
-        <div v-if="!pageState" class="midarea">
+        <div v-if="notHomePage" class="midarea">
           <div class="navcmp searchbar">
-            <el-select class="search_options" v-model="option">
-              <el-option
-                v-for="item in searchOptions"
-                :key="item.option"
-                :label="item.label"
-                :value="item.option"
-              >
-              </el-option>
-            </el-select>
+            <el-cascader
+              class="search_options"
+              v-model="value"
+              :options="searchOptions"
+              :props="{ expandTrigger: 'hover' }"
+              :show-all-levels="false"
+              @change="handleChange"
+            ></el-cascader>
 
             <div id="option_text--divider"></div>
 

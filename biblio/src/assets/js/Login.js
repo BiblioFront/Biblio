@@ -1,6 +1,6 @@
 export default {
   name: "Login",
-  data: function () {
+  data: function() {
     return {
       loginForm: {
         phone: "",
@@ -18,7 +18,7 @@ export default {
     route2Home() {
       this.$router.push({ path: "/" });
     },
-    login: function () {
+    login: function() {
       console.log("登录");
       console.log(this.loginForm.phone);
       console.log(this.loginForm.password);
@@ -26,23 +26,24 @@ export default {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           console.log("valid!");
-          this.$axios.post('/user/login',{
-            username:_this.loginForm.phone,
-            password:_this.loginForm.password
-          }).then(response => {
-            if(response.msg === "login success")
-            {
-              window.localStorage.setItem("token",response.token);
-            }
-            else console.log("login fail");
-          }).catch(error => {
-            console.log(error);
-            console.log("请求异常");
-          })
+          this.$axios
+            .post("/user/login", {
+              username: _this.loginForm.phone,
+              password: _this.loginForm.password,
+            })
+            .then((response) => {
+              if (response.msg === "login success") {
+                window.localStorage.setItem("token", response.token);
+              } else console.log("login fail");
+            })
+            .catch((error) => {
+              console.log(error);
+              console.log("请求异常");
+            });
         } else console.log("invalid!");
       });
     },
-    reset: function () {
+    reset: function() {
       // console.log("重置");
       this.loginForm.phone = "";
       this.loginForm.password = "";

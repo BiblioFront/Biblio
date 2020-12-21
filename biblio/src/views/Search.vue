@@ -5,9 +5,9 @@
     <div class="menu_above">
       <div class="prompt">
         <span>共找到</span>
-        <span id="result">146,146</span>
+        <span id="result">{{ biblioItem.total }}</span>
         <span>个结果与 “</span>
-        <span id="keyword">马保国</span>
+        <span id="keyword">{{ biblioItem.total }}</span>
         <span>” 相关</span>
       </div>
 
@@ -76,11 +76,15 @@
       <div class="searchpage achievements_box">
         <el-tabs v-model="achievementActiveType" @tab-click="handleClick">
           <el-tab-pane label="论文" name="first">
-            <div class="achievements_item">
+            <div
+              class="achievements_item"
+              v-for="item in biblioItem.item"
+              :key="item.id"
+            >
               <div class="item__above">
                 <div id="title">
-                  <span>[学术期刊]</span>
-                  <span>闪电五连鞭</span>
+                  <span>[论文]</span>
+                  <span>{{ item.title }}</span>
                 </div>
 
                 <div class="item__btns_area">
@@ -91,47 +95,13 @@
               </div>
 
               <div id="author">
-                <span
-                  >马保国1 马保国2 马保国3 马保国4 马保国5 马保国6
-                  马保国6马保国6马保国6马保国6</span
-                >
-                <span>《这是出处》</span>
-                <span>被引量: 100k</span>
+                <span>{{ item.author }}</span>
               </div>
 
               <div id="summary">
                 <button>摘要</button>
                 <p>
-                  二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时日本的军国主义海军非常强大，在当时盛极一时，昭和9年四月，江田岛海军兵学校将培育优秀的海军航空士官，这一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的
-                </p>
-              </div>
-            </div>
-            <div class="achievements_item">
-              <div class="item__above">
-                <div id="title">
-                  <span>[学术期刊]</span>
-                  <span
-                    >健身房的年轻后生不讲武德偷袭马老师，把马保国老师的眼睛给蹭了一下</span
-                  >
-                </div>
-
-                <div class="item__btns_area">
-                  <button>收藏</button>
-                  <button>相关文章</button>
-                  <button>分享</button>
-                </div>
-              </div>
-
-              <div id="author">
-                <span>马保国 90kg年轻人 80kg年轻人</span>
-                <span>《这是出处》</span>
-                <span>被引量: 1000w</span>
-              </div>
-
-              <div id="summary">
-                <button>摘要</button>
-                <p>
-                  二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时日本的军国主义海军非常强大，在当时盛极一时，昭和9年四月，江田岛海军兵学校将培育优秀的海军航空士官，这一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的
+                  {{ item.summary }}
                 </p>
               </div>
             </div>

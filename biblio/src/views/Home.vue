@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <Nav :pageState="isHome" />
+    <Nav :notHomePage="0" />
+
     <div class="img_box">
       <div class="img__main_box">
         <div class="upper_slogen">
@@ -13,22 +14,21 @@
 
         <div class="searchdiv">
           <div class="searchbar">
-            <el-select class="search_options" v-model="option">
-              <el-option
-                v-for="item in searchOptions"
-                :key="item.option"
-                :label="item.label"
-                :value="item.option"
-              >
-              </el-option>
-            </el-select>
+            <el-cascader
+              class="search_options"
+              v-model="value"
+              :options="searchOptions"
+              :props="{ expandTrigger: 'hover' }"
+              :show-all-levels="false"
+              @change="handleChange"
+            ></el-cascader>
 
             <div id="option_text--divider"></div>
 
             <input
               class="search_text"
               type="text"
-              prop="seachInput"
+              v-model="searchInput"
               placeholder="输入搜索内容..."
             />
 

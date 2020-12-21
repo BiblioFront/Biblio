@@ -10,44 +10,52 @@
           <div class="biblio_source">
             <span>论文</span>
             <span>></span>
-            <el-tag>{{paper.title}}</el-tag>
-            <span>{{paper.date}}</span>
+            <el-tag>{{ paper.title }}</el-tag>
+            <span>{{ paper.date }}</span>
           </div>
 
           <div class="biblio_title">
             <h1>
-              {{paper.title}}
+              {{ paper.title }}
             </h1>
           </div>
 
           <div class="author_info">
-            <span id="author">{{paper.author}}</span>
-            <span id="organization">{{paper.organization}}</span>
+            <span id="author">{{ paper.author }}</span>
+            <span id="organization">{{ paper.organization }}</span>
           </div>
 
           <div class="summary">
             <span id="item-title">摘要</span>
-            <span id="text"
-              >{{paper.summary}}</span
-            >
+            <span id="text">{{ paper.summary }}</span>
           </div>
 
           <div class="other_info">
             <span id="item-title">关键词</span>
-            <span id="text">{{paper.keywords}}</span>
+            <span id="text">{{ paper.keywords }}</span>
           </div>
 
           <div class="other_info">
             <span id="item-title">DOI</span>
-            <span id="text">{{paper.url}}</span>
+            <span id="text">{{ paper.url }}</span>
           </div>
 
           <div class="bibliopage btns_area">
-            <el-button @click="collect"><svg-icon name="like"></svg-icon>收藏</el-button>
-            <el-button @click="reference"><svg-icon name="quote"></svg-icon>引用</el-button>
-            <el-button @click="source"><svg-icon name="download"></svg-icon>来源</el-button>
-            <el-button @click="error"><svg-icon name="warning"></svg-icon>报错</el-button>
-            <el-button @click="share"><svg-icon name="share"></svg-icon>分享</el-button>
+            <el-button @click="collect"
+              ><svg-icon name="like"></svg-icon>收藏</el-button
+            >
+            <el-button @click="reference"
+              ><svg-icon name="quote"></svg-icon>引用</el-button
+            >
+            <el-button @click="source"
+              ><svg-icon name="download"></svg-icon>来源</el-button
+            >
+            <el-button @click="error"
+              ><svg-icon name="warning"></svg-icon>报错</el-button
+            >
+            <el-button @click="share"
+              ><svg-icon name="share"></svg-icon>分享</el-button
+            >
           </div>
         </div>
 
@@ -224,42 +232,44 @@ export default {
   components: {
     Nav,
   },
-  data:function(){
+  data: function() {
     return {
-      id:"5fccd17b376ae34bbb980c49",
-      paper:{
-        _id:"5fccd17b376ae34bbb980c49",
+      id: "5fccd17b376ae34bbb980c49",
+      paper: {
+        _id: "5fccd17b376ae34bbb980c49",
         author: "李树娟,钟焕荣,于亮,赵军,范伟检,黄伟",
         title: "危险化学品数据库的发展现状与展望",
-        summary: "为完善我国危险化学品数据库,充分发挥其为化学品安全管理和公众提供可靠的信息服务的作用,通过研究国外危险化学品数据库的发展现状及其特点,分析我国危险化学品数据库目前存在的问题.研究表明:国外危险化学品数据库发展较完善,其数据结构设计较合理,且信息全面、数量多;而我国危险化学品数据库建设还比较落后,存在数据结构设计简单、标准不统一、信息未能共享等问题.因此,在发展我国危险化学品数据库时,应确保数据的数量、质量和多样性,设计合理的数据结构,并实现数据共享,使其为安全评价提供可靠的数据支持.",
-        url: "http://d.wanfangdata.com.cn/periodical/ChlQZXJpb2RpY2FsQ0hJTmV3UzIwMjAxMjAzEhJoY2NsbGh5eXkyMDIwMDEwMzQaCHNneDVrbTNz",
+        summary:
+          "为完善我国危险化学品数据库,充分发挥其为化学品安全管理和公众提供可靠的信息服务的作用,通过研究国外危险化学品数据库的发展现状及其特点,分析我国危险化学品数据库目前存在的问题.研究表明:国外危险化学品数据库发展较完善,其数据结构设计较合理,且信息全面、数量多;而我国危险化学品数据库建设还比较落后,存在数据结构设计简单、标准不统一、信息未能共享等问题.因此,在发展我国危险化学品数据库时,应确保数据的数量、质量和多样性,设计合理的数据结构,并实现数据共享,使其为安全评价提供可靠的数据支持.",
+        url:
+          "http://d.wanfangdata.com.cn/periodical/ChlQZXJpb2RpY2FsQ0hJTmV3UzIwMjAxMjAzEhJoY2NsbGh5eXkyMDIwMDEwMzQaCHNneDVrbTNz",
         keywords: "危险化学品;数据库",
-        date:"2020年12月30日",
-        organization:"江田岛海军学院"
+        date: "2020年12月30日",
+        organization: "江田岛海军学院",
       },
-      comments:[]
-    }
+    };
   },
-  created:function(){
+  created: function() {
     console.log("created");
     this.$axios({
-        method: "get",
-        url: "/user/paper",
-        params: {
-          paperID: this.id,
-        },
-        headers: {
-          // token: window.localStorage.getItem("token"),
-          token:"1bd97ca0-78ec-480c-a28b-f274501c0d4d"
-        },
-      }).then(response => {
-        if ( response.msg == 'get paper and comment successfully') {
+      method: "get",
+      url: "/user/paper",
+      params: {
+        paperID: this.id,
+      },
+      headers: {
+        // token: window.localStorage.getItem("token"),
+        token: "1bd97ca0-78ec-480c-a28b-f274501c0d4d",
+      },
+    })
+      .then((response) => {
+        if (response.msg == "get paper and comment successfully") {
           this.paper = response.paper;
-        }
-        else console.log(response.msg);
-      }).catch(error => {
-        console.log(error);
+        } else console.log(response.msg);
       })
+      .catch((error) => {
+        console.log(error);
+      });
   },
   methods: {
     handleCommand(command) {
@@ -269,35 +279,37 @@ export default {
         /* 发送私信 */
       }
     },
-    error:function(){
+    error: function() {
       console.log("报错");
     },
-    collect:function(){
+    collect: function() {
       console.log("收藏");
       this.$axios({
-        method:'post',
-        url:'/user/favorite',
-        params:{
-          paperID:"5fcece9000f8a0090a697fdb"
+        method: "post",
+        url: "/user/favorite",
+        params: {
+          paperID: "5fcece9000f8a0090a697fdb",
         },
         headers: {
           token: window.localStorage.getItem("token"),
         },
-      }).then(response => {
-        console.log(response.msg);
-      }).catch(error => {
-        console.log(error);
       })
+        .then((response) => {
+          console.log(response.msg);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    reference:function(){
+    reference: function() {
       console.log("引用");
     },
-    source:function(){
+    source: function() {
       console.log("来源");
     },
-    share:function() {
+    share: function() {
       console.log("分享");
-    }
+    },
   },
 };
 </script>

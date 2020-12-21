@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="22fbc861-51ac-4b1b-86e0-a8f8150efe0f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/biblio/src/assets/css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/biblio/src/assets/css/home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biblio/src/assets/js/Gate.js" beforeDir="false" afterPath="$PROJECT_DIR$/biblio/src/assets/js/Gate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biblio/src/assets/js/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/biblio/src/assets/js/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biblio/src/assets/js/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/biblio/src/assets/js/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biblio/src/assets/js/Myinfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/biblio/src/assets/js/Myinfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biblio/src/assets/js/Nav.js" beforeDir="false" afterPath="$PROJECT_DIR$/biblio/src/assets/js/Nav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biblio/src/assets/js/Search.js" beforeDir="false" afterPath="$PROJECT_DIR$/biblio/src/assets/js/Search.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biblio/src/components/Nav.vue" beforeDir="false" afterPath="$PROJECT_DIR$/biblio/src/components/Nav.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biblio/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/biblio/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biblio/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/biblio/src/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biblio/src/utils/bus.js" beforeDir="false" afterPath="$PROJECT_DIR$/biblio/src/utils/bus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biblio/src/views/Gate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/biblio/src/views/Gate.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biblio/src/views/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/biblio/src/views/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biblio/src/views/MyInfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/biblio/src/views/MyInfo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biblio/src/views/Search.vue" beforeDir="false" afterPath="$PROJECT_DIR$/biblio/src/views/Search.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biblio/src/views/paper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/biblio/src/views/paper.vue" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1lxbIaDPqpGcFnNp5SAv4PvW0Bj" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="22fbc861-51ac-4b1b-86e0-a8f8150efe0f" name="Default Changelist" comment="" />
+      <created>1608541639489</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1608541639489</updated>
+      <workItem from="1608541672225" duration="12000" />
+      <workItem from="1608542185962" duration="38000" />
+    </task>
+    <servers />
+  </component>
+</project>
