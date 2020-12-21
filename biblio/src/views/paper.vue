@@ -149,8 +149,8 @@
           <div class="comments_send">
             <el-avatar :size="40">me</el-avatar>
             <div class="textarea_container">
-              <textarea name="comment"></textarea>
-              <button type="submit" class="comments_submit">发表评论</button>
+              <textarea name="comment" v-model="newComment"></textarea>
+              <button type="submit" class="comments_submit" @click="publish">发表评论</button>
             </div>
           </div>
 
@@ -236,6 +236,7 @@ export default {
           id: "",
         },
       ],
+      newComment:""
     };
   },
   created: function () {
@@ -319,6 +320,27 @@ export default {
         console.log(response.data.msg);
         if(response.data.msg === 'Delete successfully') this.isFavorite = false;
         else this.isFavorite = true;
+      }).catch(error => {
+        console.log(error);
+      })
+    },
+    publish:function(){
+      console.log("发布评论");
+      console.log(this.newComment);
+      this.$axios({
+        method:'post',
+        url:'/user/comment',
+        params:{
+          paperID:this.id
+        },
+        headers:{
+          token : window.localStorage.getItem("token")
+        },
+        data:{
+          content:this.newComment
+        }
+      }).then(response => {
+        console.log(response.data.msg);
       }).catch(error => {
         console.log(error);
       })
