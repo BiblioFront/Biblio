@@ -18,17 +18,19 @@
 
         <div class="info--main-content">
           <div class="info-table">
-            <div class="info-avatar">
-              <img src="../assets/img/scholar_avatar.jpg" alt="" />
-              <!-- <el-upload class="avatar-uploader" action="/apis/account/upload_photo" name="photo"
-                  :show-file-list="false" :on-success="handleAvatarSuccess"
-                  :before-upload="beforeAvatarUpload" accept="image/*">
-                  <img v-if="ruleForm.photo" :src="ruleForm.photo" class="avatar">
-                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-              </el-upload> -->
-            </div>
+            <!-- <div v-if="!info.photo">暂无</div>
+                            <el-image style="width: 100px; height: 100px" :src="infoform.avatar" v-if="info.photo"></el-image> -->
+            
+              <!-- <img src="../assets/img/scholar_avatar.jpg" alt="" /> -->
+              <!-- <el-image style="width: 100px; height: 100px" :src="infoform.avatar" v-if="infoform.avatar"></el-image> -->
+              <el-upload class="avatar-uploader" action="/user" name="avator" style="width: 100px; height: 100px"
+                                    :show-file-list="false" :on-success="handleAvatarSuccess" :http-request="uploadAvator"
+                                    :before-upload="beforeAvatarUpload" accept="image/*">
+                                    <div v-if="!infoform.avatar" class="info-avatar">暂无</div>
+                                    <el-image v-if="infoform.avatar" style="width: 100px; height: 100px; border-radius: 50%;" :src="infoform.avatar" class="avatar"></el-image>
+                                </el-upload>
             <span id="avatar_tip">点击修改头像</span>
-            <span id="name">马保国</span>
+            <span id="name" >{{infoform.username}}</span>
           </div>
 
           <el-divider direction="vertical" style="height:200px;"></el-divider>
@@ -71,7 +73,7 @@
               <el-col :span="18">
                 <el-input
                   prefix-icon="el-icon-lock"
-                  v-model="infoform.password" :disabled="true" type="password"
+                  v-model="password" :disabled="true" type="password"
                 ></el-input>
               </el-col>
               <el-col :span="6">
@@ -103,6 +105,9 @@
 
           <el-dialog title="修改密码" :visible.sync="editpassword" >
             <el-form ref="infoform" :model="infoform" >
+              <el-form-item label="输入原密码" style="margin-left:30px">
+                <el-input v-model="oldpassword" autocomplete="off" style="width:400px" placeholder="请输入新密码" show-password></el-input>
+              </el-form-item>
               <el-form-item label="输入新密码" style="margin-left:30px">
                 <el-input v-model="newpassword" autocomplete="off" style="width:400px" placeholder="请输入新密码" show-password></el-input>
                 <el-button style="margin-left:30px" @click="Savepassword()">保存修改</el-button>

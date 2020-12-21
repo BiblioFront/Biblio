@@ -6,6 +6,18 @@ export default {
   },
   data() {
     return {
+      infoform: {
+        username:'',
+        password:'',
+        email: '',
+        nickname: '',
+        avator: '',
+        auth: '',
+        admin: false,
+        token:'',
+        id:'',
+        verification_code:''
+      },
       searchOptions: [
         {
           option: "1",
@@ -85,6 +97,23 @@ export default {
       formLabelWidth: "100px",
       labelPosition: "right",
     };
+  },
+  mounted: function () {
+    this.$axios({
+      method:'get',
+      url:'/user',
+      params:{
+        
+      },
+      headers: {
+        token: window.localStorage.getItem("token"),
+      },
+    }).then(response => {
+      console.log(response);
+      this.infoform = response.data.information;
+    }).catch(error => {
+      console.log(error);
+    })
   },
   methods: {
     handleCommand(command) {
