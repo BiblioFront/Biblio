@@ -6,6 +6,18 @@ export default {
   },
   data() {
     return {
+      infoform: {
+        username:'',
+        password:'',
+        email: '',
+        nickname: '',
+        avator: '',
+        auth: '',
+        admin: false,
+        token:'',
+        id:'',
+        verification_code:''
+      },
       searchOptions: [
         {
           option: "1",
@@ -86,11 +98,31 @@ export default {
       labelPosition: "right",
     };
   },
+  mounted: function () {
+    this.$axios({
+      method:'get',
+      url:'/user',
+      params:{
+        
+      },
+      headers: {
+        token: window.localStorage.getItem("token"),
+      },
+    }).then(response => {
+      console.log(response);
+      this.infoform = response.data.information;
+    }).catch(error => {
+      console.log(error);
+    })
+  },
   methods: {
     handleCommand(command) {
       if (command == "info") this.$router.push({ path: "/info" });
       else if (command == "gate") this.$router.push({ path: "/gate" });
-      else if (command == "lgout");
+      else if (command == "lgout") {
+          window.localStorage.clear();
+          this.$router.push({ path: "/login" });
+      }
     },
     deleteRow(index, rows) {
       rows.splice(index, 1);

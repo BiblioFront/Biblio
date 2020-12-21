@@ -38,7 +38,7 @@
         <div class="navcmp btns_area">
           <div class="afterlg" v-if="lg == 1">
             <el-dropdown @command="handleCommand">
-              <el-avatar>个人</el-avatar>
+              <el-avatar :src = "infoform.avatar">个人</el-avatar>
               <el-dropdown-menu class="navcmp" slot="dropdown">
                 <el-dropdown-item command="info">账号信息</el-dropdown-item>
                 <el-dropdown-item command="gate">学者信息</el-dropdown-item>

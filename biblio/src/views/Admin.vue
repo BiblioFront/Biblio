@@ -23,12 +23,6 @@
             
               <!-- <img src="../assets/img/scholar_avatar.jpg" alt="" /> -->
               <!-- <el-image style="width: 100px; height: 100px" :src="infoform.avatar" v-if="infoform.avatar"></el-image> -->
-              <el-upload class="avatar-uploader" action="/user" name="avator" style="width: 100px; height: 100px"
-                                    :show-file-list="false" :on-success="handleAvatarSuccess" :http-request="uploadAvator"
-                                    :before-upload="beforeAvatarUpload" accept="image/*">
-                                    <div v-if="!infoform.avatar" class="info-avatar">暂无</div>
-                                    <el-image v-if="infoform.avatar" style="width: 100px; height: 100px; border-radius: 50%;" :src="infoform.avatar" class="avatar"></el-image>
-                                </el-upload>
             <span id="avatar_tip">点击修改头像</span>
             <span id="name" >{{infoform.username}}</span>
           </div>
@@ -121,12 +115,12 @@
   </div>
 </template>
 
-<script type="text/javascript" src="../assets/js/Myinfo.js">
+<script type="text/javascript" src="../assets/js/Admin.js">
 </script>
 
 <style scoped>
 @import "../assets/css/global.css";
-@import "../assets/css/Myinfo.css";
+@import "../assets/css/Admin.css";
 .user_info {
   width: 100%;
   height: 105px;
