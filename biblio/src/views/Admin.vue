@@ -115,7 +115,7 @@
   </div>
 </template>
 
-<script type="text/javascript" src="../assets/js/Myinfo.js">
+<script type="text/javascript" src="../assets/js/Admin.js">
 </script>
 
 <style scoped>
