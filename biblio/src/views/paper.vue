@@ -41,8 +41,11 @@
           </div>
 
           <div class="bibliopage btns_area">
-            <el-button @click="collect"
+            <el-button @click="collect" v-if="!isFavorite"
               ><svg-icon name="like"></svg-icon>收藏</el-button
+            >
+            <el-button @click="discollect" v-else
+              ><svg-icon name="like"></svg-icon>取消收藏</el-button
             >
             <el-button @click="reference"
               ><svg-icon name="quote"></svg-icon>引用</el-button
@@ -146,21 +149,29 @@
           <div class="comments_send">
             <el-avatar :size="40">me</el-avatar>
             <div class="textarea_container">
-              <textarea name="comment"></textarea>
-              <button type="submit" class="comments_submit">发表评论</button>
+              <textarea name="comment" v-model="newComment"></textarea>
+              <button type="submit" class="comments_submit" @click="publish">
+                发表评论
+              </button>
             </div>
           </div>
 
           <div class="comments_content">
-            <div class="comments_item">
+            <div
+              class="comments_item"
+              v-for="comment in comments"
+              :key="comment.id"
+            >
               <el-dropdown @command="handleCommand" :hide-on-click="false">
                 <span class="el-dropdown-link">
-                  <el-avatar :size="40">others</el-avatar>
+                  <el-avatar :size="40"
+                    ><img :src="comment.commenter.avator"
+                  /></el-avatar>
                 </span>
                 <el-dropdown-menu class="from_user" slot="dropdown">
-                  <el-dropdown-item disabled
-                    >usernameusernameusername</el-dropdown-item
-                  >
+                  <el-dropdown-item disabled>{{
+                    comment.commenter.username
+                  }}</el-dropdown-item>
                   <el-dropdown-item command="info" divided
                     ><svg-icon name="user"></svg-icon>用户信息</el-dropdown-item
                   >
@@ -173,42 +184,10 @@
 
               <div class="text_container">
                 <p class="text_content">
-                  《赛博朋克2077》是知名游戏《巫师》系列开发商CD Projekt
-                  RED（简称CDPR）开发制作的一款角色扮演游戏。故事设定在黑暗腐败、科技高度发达的未来世界中，并且兼有开放世界元素与RPG机制。游戏支持包括波兰语、汉语、英语、法语、德语、葡萄牙语（巴西）、日语等10种不同语言的配音，所有配音都有相应的口型动画
-                  [1] 。 该款游戏于2019年6月在E3游戏展展出。 [2]
-                  2020年6月19日，CD
-                  Projekt将游戏的发布时间推迟至2020年11月19日。 [3]
-                  同年10月28日，CD
-                  Projekt再次将游戏发布时间推迟至2020年12月10日，现已发售
+                  {{ comment.content }}
                 </p>
 
-                <p class="comment_time">xxxx年xx月xx日 xx:xx:xx</p>
-              </div>
-            </div>
-
-            <div class="comments_item">
-              <el-dropdown @command="handleCommand" :hide-on-click="false">
-                <span class="el-dropdown-link">
-                  <el-avatar :size="40">others</el-avatar>
-                </span>
-                <el-dropdown-menu class="from_user" slot="dropdown">
-                  <el-dropdown-item disabled>username</el-dropdown-item>
-                  <el-dropdown-item divided
-                    ><svg-icon name="user"></svg-icon>用户信息</el-dropdown-item
-                  >
-                  <el-dropdown-item
-                    ><svg-icon name="promotion"></svg-icon
-                    >私信</el-dropdown-item
-                  >
-                </el-dropdown-menu>
-              </el-dropdown>
-
-              <div class="text_container">
-                <p class="text_content">
-                  《赛博朋克2077》是知名游戏《巫师》系列开发商波兰蠢驴《赛博朋克2077》是知名游戏《巫师》系列开发商波兰蠢驴《赛博朋克2077》是知名游戏《巫师》系列开发商波兰蠢驴《赛博朋克2077》是知名游戏《巫师》系列开发商波兰蠢驴《赛博朋克2077》是知名游戏《巫师》系列开发商波兰蠢驴
-                </p>
-
-                <p class="comment_time">xxxx年xx月xx日 xx:xx:xx</p>
+                <p class="comment_time">{{ comment.time }}</p>
               </div>
             </div>
           </div>
@@ -234,7 +213,8 @@ export default {
   },
   data: function() {
     return {
-      id: "5fccd17b376ae34bbb980c49",
+      id: "5fccd166376ae34bbb980c42",
+      isFavorite: false,
       paper: {
         _id: "5fccd17b376ae34bbb980c49",
         author: "李树娟,钟焕荣,于亮,赵军,范伟检,黄伟",
@@ -247,25 +227,46 @@ export default {
         date: "2020年12月30日",
         organization: "江田岛海军学院",
       },
+      comments: [
+        {
+          commenterID: "",
+          commenter: {
+            username: "森上下士",
+            avator: "",
+          },
+          paperID: "",
+          content: "我是四年级学生森上下士",
+          time: "2020年12月21日",
+          id: "",
+        },
+      ],
+      newComment: "",
     };
   },
   created: function() {
     console.log("created");
+    console.log(this.id);
+    console.log(window.localStorage.getItem("token"));
+    var _this = this;
     this.$axios({
       method: "get",
       url: "/user/paper",
       params: {
-        paperID: this.id,
+        paperID: _this.id,
       },
       headers: {
-        // token: window.localStorage.getItem("token"),
-        token: "1bd97ca0-78ec-480c-a28b-f274501c0d4d",
+        token: window.localStorage.getItem("token"),
       },
     })
       .then((response) => {
-        if (response.msg == "get paper and comment successfully") {
-          this.paper = response.paper;
-        } else console.log(response.msg);
+        if (response.data.msg == "get paper and comment successfully") {
+          console.log("get success");
+          // console.log(this.paper);
+          this.paper = response.data.paper;
+          this.comments = response.data.commentList;
+          this.isFavorite = response.data.isFavorite;
+          console.log(response.data.isFavorite);
+        } else console.log(response.data.msg);
       })
       .catch((error) => {
         console.log(error);
@@ -275,8 +276,11 @@ export default {
     handleCommand(command) {
       if (command == "info") {
         /* 跳转至对应用户信息页 */
+        console.log("userinf");
+        this.$router.push("/info");
       } else if (command == "letter") {
         /* 发送私信 */
+        console.log("send letter");
       }
     },
     error: function() {
@@ -284,18 +288,79 @@ export default {
     },
     collect: function() {
       console.log("收藏");
+      var _this = this;
       this.$axios({
         method: "post",
         url: "/user/favorite",
         params: {
-          paperID: "5fcece9000f8a0090a697fdb",
+          // paperID: "5fcece9000f8a0090a697fdb",
+          paperId: _this.id,
         },
         headers: {
           token: window.localStorage.getItem("token"),
         },
       })
         .then((response) => {
+          console.log(response.data.msg);
+          if (response.data.msg === "Collected successfully") {
+            this.isFavorite = true;
+          } else this.isFavorite = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    discollect: function() {
+      console.log("取消收藏");
+      this.$axios({
+        method: "delete",
+        url: "/user/favorite/delete",
+        params: {
+          paperId: this.id,
+        },
+        headers: {
+          token: window.localStorage.getItem("token"),
+        },
+      })
+        .then((response) => {
+          console.log(response.data.msg);
+          if (response.data.msg === "Delete successfully")
+            this.isFavorite = false;
+          else this.isFavorite = true;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .then((response) => {
           console.log(response.msg);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    publish: function() {
+      console.log("发布评论");
+      console.log(this.newComment);
+      if (this.newComment === "") return;
+      this.$axios({
+        method: "post",
+        url: "/user/comment",
+        params: {
+          paperID: this.id,
+        },
+        headers: {
+          token: window.localStorage.getItem("token"),
+        },
+        data: {
+          content: this.newComment,
+        },
+      })
+        .then((response) => {
+          console.log(response.data.msg);
+          if (response.data.msg === "comment success") {
+            this.comments.push(response.data.comment);
+            this.newComment = "";
+          }
         })
         .catch((error) => {
           console.log(error);

@@ -68,7 +68,10 @@ export default {
             nickname:_this.registerForm.nickname
           }).then(response => {
             // if(response.msg === )
-            console.log(response.msg);
+            console.log(response.data.msg);
+            if(response.data.msg === "register success"){
+              _this.$router.push('/login');
+            }
           }).catch(error => {
             console.log(error);
           });

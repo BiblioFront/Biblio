@@ -32,8 +32,9 @@ export default {
               password: _this.loginForm.password,
             })
             .then((response) => {
-              if (response.msg === "login success") {
-                window.localStorage.setItem("token", response.token);
+              if (response.data.msg === "login success") {
+                window.localStorage.setItem("token", response.data.token);
+                _this.$router.push("/");
               } else console.log("login fail");
             })
             .catch((error) => {
