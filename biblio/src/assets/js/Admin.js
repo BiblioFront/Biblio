@@ -23,7 +23,7 @@ export default {
     updateData() {
       if (!this.isUpdatingData) {
         this.isUpdatingData = true
-        setTimeout(() => {
+        this.updateTimeOutLoading = window.setTimeout(() => {
           this.isUpdatingData = false
           this.updateDataDialogVisible = false
           this.$message.success('数据更新成功')
@@ -35,6 +35,7 @@ export default {
     stopUpdateData() {
       this.isUpdatingData = false
       this.updateDataDialogVisible = false
+      window.clearTimeout(this.updateTimeOutLoading)
       this.$message('已停止数据更新')
     },
     updateHotFiled() {
@@ -87,11 +88,11 @@ export default {
       if (!this.isRebuildIndex) {
         this.isRebuildIndex = true
 
-        setTimeout(() => {
-          this.isUpdatingData = false
-          this.updateDataDialogVisible = false
-          this.$message.success('数据更新成功')
-        }, 200000)
+        this.rebuildTimeOutLoading = window.setTimeout(() => {
+          this.isRebuildIndex = false
+          this.rebuildIndexDialogVisible = false
+          this.$message.success('索引重建成功')
+        }, 30000)
       } else {
         this.rebuildIndexDialogVisible = true
       }
@@ -99,6 +100,7 @@ export default {
     stopRebuildIndex() {
       this.isRebuildIndex = false
       this.rebuildIndexDialogVisible = false
+      window.clearTimeout(this.rebuildTimeOutLoading)
       this.$message('已停止重建索引')
     },
   },
