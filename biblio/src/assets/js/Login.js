@@ -38,7 +38,7 @@ export default {
                   type: "success",
                 });
                 window.localStorage.setItem("token", response.data.token);
-                // window.localStorage.clear();
+                
                 _this.$router.push("/");
               } else {
                 console.log("login fail");
@@ -58,6 +58,8 @@ export default {
             });
         } else console.log("invalid!");
       });
+
+      
     },
     reset: function() {
       // console.log("重置");
