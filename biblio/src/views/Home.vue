@@ -37,6 +37,12 @@
               </button>
             </div>
           </div>
+
+          <div id="cutline1"></div>
+
+          <button id="advanced_search" @click="advancedSearchBox = true">
+            高级搜索
+          </button>
         </div>
       </div>
 
@@ -179,6 +185,245 @@
     <div class="footer">
       <span>footer</span>
     </div>
+
+    <el-dialog
+      title="高级搜索"
+      :visible.sync="advancedSearchBox"
+      width="600px"
+      class="advanced_search-box"
+    >
+      <el-form label-width="80px" :model="advancedSearchInput">
+        <el-form-item label="搜索范围">
+          <el-select
+            v-model="advancedSearchSelectValue"
+            placeholder="学术成果类型"
+          >
+            <el-option label="论文" value="paper"></el-option>
+            <el-option label="专利" value="patent"></el-option>
+            <el-option label="科研项目" value="project"></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form
+          label-width="80px"
+          :model="advancedSearchInput"
+          v-if="advancedSearchSelectValue == 'paper'"
+        >
+          <el-form
+            label-width="80px"
+            :inline="true"
+            :model="advancedSearchInput"
+          >
+            <el-form-item label="标题">
+              <el-input
+                v-model="advancedSearchInput.paper.title"
+                style="width:200px"
+                placeholder="标题"
+              ></el-input>
+            </el-form-item>
+
+            <el-form-item label-width="40px" label="作者">
+              <el-input
+                v-model="advancedSearchInput.paper.author"
+                style="width:200px"
+                placeholder="作者"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+
+          <el-form
+            label-width="80px"
+            :inline="false"
+            :model="advancedSearchInput"
+          >
+            <el-form-item label="期刊名">
+              <el-input
+                v-model="advancedSearchInput.paper.journal"
+                style="width:450px"
+                placeholder="期刊名"
+              ></el-input>
+            </el-form-item>
+
+            <el-form
+              label-width="80px"
+              :inline="true"
+              :model="advancedSearchInput"
+            >
+              <el-form-item label="发布年份">
+                <el-input
+                  v-model="advancedSearchInput.paper.date.lower"
+                  style="width:100px"
+                  placeholder="下限"
+                ></el-input>
+              </el-form-item>
+
+              <el-form-item label="">
+                <el-input
+                  v-model="advancedSearchInput.paper.date.upper"
+                  style="width:100px"
+                  placeholder="上限"
+                ></el-input>
+              </el-form-item>
+            </el-form>
+          </el-form>
+
+          <el-form-item label="关键词">
+            <el-input
+              v-model="advancedSearchInput.keywords"
+              style="width:450px"
+              placeholder="关键词"
+            ></el-input>
+          </el-form-item>
+        </el-form>
+
+        <el-form
+          label-width="80px"
+          :model="advancedSearchInput"
+          v-if="advancedSearchSelectValue == 'patent'"
+        >
+          <el-form-item label-width="80px" label="标题">
+            <el-input
+              v-model="advancedSearchInput.patent.title"
+              style="width:450px"
+              placeholder="标题"
+            ></el-input>
+          </el-form-item>
+
+          <el-form :inline="true" :model="advancedSearchInput">
+            <el-form-item label-width="80px" label="设计者">
+              <el-input
+                v-model="advancedSearchInput.patent.designer"
+                style="width:190px"
+                placeholder="发明人"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label-width="60px" label="持有人">
+              <el-input
+                v-model="advancedSearchInput.patent.owner"
+                style="width:190px"
+                placeholder="持有人"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+
+          <el-form
+            label-width="80px"
+            :inline="true"
+            :model="advancedSearchInput"
+          >
+            <el-form-item label="申请年份">
+              <el-input
+                v-model="advancedSearchInput.patent.applyDate.lower"
+                style="width:100px"
+                placeholder="下限"
+              ></el-input>
+            </el-form-item>
+
+            <el-form-item label="">
+              <el-input
+                v-model="advancedSearchInput.patent.applyDate.upper"
+                style="width:100px"
+                placeholder="上限"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+
+          <el-form
+            label-width="80px"
+            :inline="true"
+            :model="advancedSearchInput"
+          >
+            <el-form-item label="公开年份">
+              <el-input
+                v-model="advancedSearchInput.patent.publicDate.lower"
+                style="width:100px"
+                placeholder="下限"
+              ></el-input>
+            </el-form-item>
+
+            <el-form-item label="">
+              <el-input
+                v-model="advancedSearchInput.patent.publicDate.upper"
+                style="width:100px"
+                placeholder="上限"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+        </el-form>
+
+        <el-form
+          label-width="80px"
+          :model="advancedSearchInput"
+          v-if="advancedSearchSelectValue == 'project'"
+        >
+          <el-form
+            label-width="80px"
+            :inline="true"
+            :model="advancedSearchInput"
+          >
+            <el-form-item label="标题">
+              <el-input
+                v-model="advancedSearchInput.project.title"
+                style="width:200px"
+                placeholder="标题"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label-width="40px" label="作者">
+              <el-input
+                v-model="advancedSearchInput.project.author"
+                style="width:200px"
+                placeholder="作者"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+
+          <el-form-item label="工作单位">
+            <el-input
+              v-model="advancedSearchInput.project.company"
+              style="width:450px"
+              placeholder="工作单位"
+            ></el-input>
+          </el-form-item>
+
+          <el-form-item label="关键词">
+            <el-input
+              v-model="advancedSearchInput.project.keywords"
+              style="width:450px"
+              placeholder="关键词"
+            ></el-input>
+          </el-form-item>
+
+          <el-form
+            label-width="80px"
+            :inline="true"
+            :model="advancedSearchInput"
+          >
+            <el-form-item label="立项年份">
+              <el-input
+                v-model="advancedSearchInput.project.year.lower"
+                style="width:100px"
+                placeholder="下限"
+              ></el-input>
+            </el-form-item>
+
+            <el-form-item label="">
+              <el-input
+                v-model="advancedSearchInput.project.year.upper"
+                style="width:100px"
+                placeholder="上限"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+        </el-form>
+
+        <el-form-item>
+          <el-button @click="advancedSearchBox = false">取 消</el-button>
+          <el-button type="primary" @click="advancedSearchBox = false"
+            >搜 索</el-button
+          >
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 

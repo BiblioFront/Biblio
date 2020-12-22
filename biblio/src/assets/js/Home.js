@@ -5,6 +5,7 @@ export default {
   name: "Home",
   data() {
     return {
+      //SearchParams:
       searchOptions: [
         {
           value: "all",
@@ -71,6 +72,45 @@ export default {
       ],
       value: ["all"],
       searchInput: "",
+
+      //advancedSearchParams:
+      advancedSearchSelectValue: "paper",
+      advancedSearchBox: false,
+      advancedSearchInput: {
+        paper: {
+          title: "",
+          author: "",
+          journal: "",
+          date: {
+            upper: 2020,
+            lower: 1900,
+          },
+          keywords: "",
+        },
+        patent: {
+          title: "",
+          designer: "",
+          owner: "",
+          applyDate: {
+            upper: 2020,
+            lower: 1900,
+          },
+          publicDate: {
+            upper: 2020,
+            lower: 1900,
+          },
+        },
+        project: {
+          title: "",
+          author: "",
+          company: "",
+          keywords: "",
+          year: {
+            upper: 2020,
+            lower: 1900,
+          },
+        },
+      },
       searchResult: {
         total: 0,
         paperData: {},

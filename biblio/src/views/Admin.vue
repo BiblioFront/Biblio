@@ -17,7 +17,7 @@
               isUpdatingHotField || isUpdatingHotPaper || isRebuildIndex
             "
           >
-            {{ isUpdatingData === false ? '更新数据' : '更新数据中' }}
+            {{ isUpdatingData === false ? "更新数据" : "更新数据中" }}
           </el-button>
           <el-button
             @click="updateHotFiled"
@@ -25,7 +25,7 @@
             :disabled="isUpdatingData || isUpdatingHotPaper || isRebuildIndex"
           >
             {{
-              isUpdatingHotField === false ? '更新热点领域' : '更新热点领域中'
+              isUpdatingHotField === false ? "更新热点领域" : "更新热点领域中"
             }}
           </el-button>
           <el-button
@@ -34,7 +34,7 @@
             :disabled="isUpdatingData || isUpdatingHotField || isRebuildIndex"
           >
             {{
-              isUpdatingHotPaper === false ? '更新热门文献' : '更新热门文献中'
+              isUpdatingHotPaper === false ? "更新热门文献" : "更新热门文献中"
             }}
           </el-button>
           <el-button
@@ -44,7 +44,7 @@
               isUpdatingData || isUpdatingHotField || isUpdatingHotPaper
             "
           >
-            {{ isRebuildIndex === false ? '重建索引' : '重建索引中' }}
+            {{ isRebuildIndex === false ? "重建索引" : "重建索引中" }}
           </el-button>
         </div>
 
@@ -83,6 +83,6 @@
 <script type="text/javascript" src="../assets/js/Admin.js"></script>
 
 <style scoped>
-@import '../assets/css/global.css';
-@import '../assets/css/Admin.css';
+@import "../assets/css/global.css";
+@import "../assets/css/Admin.css";
 </style>
