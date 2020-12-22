@@ -11,6 +11,7 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Admin from "../views/Admin.vue";
 import PaperAdd from "../views/PaperAdd.vue";
+import PatentAdd from "../views/PatentAdd.vue";
 
 Vue.use(VueRouter);
 
@@ -70,6 +71,11 @@ const routes = [
     name : "PaperAdd",
     component : PaperAdd
   },
+  {
+    path:"/patentadd",
+    name :"PatentAdd",
+    component:PatentAdd
+  }
 ];
 
 const router = new VueRouter({

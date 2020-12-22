@@ -67,6 +67,8 @@ export default {
   methods: {
     onSubmit: function () {
         console.log("onsubmit");
+        // console.log(this.paper.title);
+        console.log(this.paper);
       if (
         this.paper.title === "" ||
         this.paper.summary === "" ||
