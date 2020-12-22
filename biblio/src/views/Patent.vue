@@ -145,8 +145,13 @@
 </template>
 
 <script>
+import Nav from "@/components/Nav.vue";
+
 export default {
   name:'Patent',
+  components:{
+    Nav
+  },
   data:function(){
     return {
       id:"",

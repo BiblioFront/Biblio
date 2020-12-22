@@ -10,41 +10,41 @@
           <div class="biblio_source">
             <span>科研项目</span>
             <span>></span>
-            <el-tag>这里是所属计划名称</el-tag>
-            <span>立项于xxxx年（立项年份）</span>
+            <el-tag>{{project.title}}</el-tag>
+            <span>立项于{{project.year}}年</span>
           </div>
 
           <div class="biblio_title">
             <h1>
-              全球抗疫为推动构建人类命运共同体顺势塑局全球抗疫为推动构建人类命运共同体顺势塑局全球抗疫为推动构建
+              {{project.title}}
             </h1>
           </div>
 
           <div class="author_info">
-            <span id="author">平田一郎</span>
-            <span id="company">江田岛海军学院</span>
+            <span id="author">{{project.author}}</span>
+            <span id="company">{{project.company}}</span>
           </div>
 
           <div class="summary">
             <span id="item-title">摘要</span>
             <span id="text"
-              >新冠肺炎疫情在全球的蔓延,再次证明了人类是一个休戚与共的命运共同体,昭示着人类命运共同体不仅是一种理念,更是一种实践。尽管目前还没有足够的客观条件推动人类命运共同体图景的完全实现,但全球抗疫为人类命运共同体明晰了构建框架。当前,全球抗疫可从主体、圈层、内容、路径等多个维度入手统筹设计:主体之维,要从人类命运共同体的主体到中介,协同构建;圈层之维,要从中华民族共同体到人类命运共同体,合力打造;内容之维,要从政治共同体到卫生健康共同体,全方位构建;路径之维,要从达成共识到保障机制,层层推进。</span
+              >{{project.summary}}</span
             >
           </div>
 
           <div class="other_info">
             <span id="item-title">关键词</span>
-            <span id="text">人类命运共同体;实践进路;多维视角;</span>
+            <span id="text">{{project.keywords}}</span>
           </div>
 
           <div class="other_info">
             <span id="item-title">公开范围</span>
-            <span id="text">10.15981/j.cnki.dongyueluncong.2020.11.006</span>
+            <span id="text">{{project.scope}}</span>
           </div>
 
           <div class="other_info">
             <span id="item-title">所属计划</span>
-            <span id="text">10.15981/j.cnki.dongyueluncong.2020.11.006</span>
+            <span id="text">{{project.plan}}</span>
           </div>
 
           <div class="bibliopage btns_area">
@@ -140,7 +140,60 @@
   </el-container>
 </template>
 
-<script src="../assets/js/Project.js"></script>
+<script>
+import Nav from "@/components/Nav.vue";
+
+export default {
+  name:'Project',
+  components:{
+    Nav
+  },
+  data:function(){
+    return {
+      id:'',
+      project:{
+        _id:'',
+        author:"王修田,李金山,夏冬明,姜秀萍,宋鹏",
+        title:"基于模型的地震并行与交互处理技术研究最终报告",
+        summary:'本研究以射线理论、波动理论以及绕射理论为基础，以正反演实时检验分析为工具，重点研发了炮集域海水鸣震等强规则干扰波的压制技术、炮集域叠前偏移速度分析技术、地震波速反演技术、地震模型建立技术、炮集域叠前时间/深度偏移技术、成像道集生成与后处理技术、多次波的模拟检验与剔除技术、多次波的多域联合压制技术、地震同相轴多域检测技术以及各种相关的并行与交互处理技术，形成了一套具有自主知识产权的“基于模型的地震勘探数据处理系统（Model Based Processing，简称MBP）V2.0”。 MBP V2.0系统集交互与并行运算于一体，可同时在混合操作系统（Unix和Linux）、不同CPU架构的微机群、工作站/服务器等集群环境下运行。该系统现已含有150余个主要功能模块组合，其中Basic Processing应用板块主要包含：观测系统的定义，SEGY-MBP数据格式转换，炮集记录的重抽样、嵌入、相对振幅控制、炮（道）能量均衡，炮集记录的频谱分析、带通滤波/反褶积处理，固定频率信号压制，野值噪音压制，初至噪音及废道与废炮切除处理，强相干噪音交互剔除，海水鸣震等多次波追踪识别与压制，基于双界面模型的多次波追踪压制，基于叠加速度曲线/低速能量扫描的多次波压制，基于有效波偏移速度的多次波压制，高速异常多次波的压制，以及静校正与反静校等功能模块组合；Image Processing应用板块主要包含：偏移速度谱生成与分析、基于速度成像剖面的偏移速度误差分析、基于速度成像道集的偏移速度误差分析，浅层速度结构的波动方程反演，层控块体速度模型和网格化速度模型的交互建立，炮集域叠前时间/深度偏移成像处理，共绕射点成像道集处理，以及基于地震剖面/模型的残余多次波追踪识别与地震剖面的时深转换、深时转换、能量均衡、频谱分析、带通滤波/反褶积处理等功能模块组合；Model Testing应用板块，主要包含多域地震同相轴检测、基于所建模型的炮集记录的模拟、海水鸣震的模拟、自激自收剖面的模拟和垂向入射剖面的模拟等功能模块组合。此外，系统配有各种图像显示、图形输出以及并行作业运行状态检测、进程查杀与信息浏览等功能模块；通过LAN_Resource功能板块用户可实现系统对局域网计算机节点资源的加载、卸载和配置管理。 该系统推出了“叠前时间偏移”、“叠前深度偏移”和“叠前深度+时间偏移”三套处理模式，在海水鸣震等多次波的多域联合压制、叠前深度+时间偏移速度分析、变偏移孔径叠前时间/深度偏移、地震模型检验和多域地震同相轴检测等多方面具有显著特色。',
+        company:'中国海洋大学,中国海洋大学,中国海洋大学,中国海洋大学,中国海洋大学',
+        keywords:'基于模型的地震数据处理;并行与交互处理技术;多次波压制;偏移速度分析;地震交互建模;叠前偏移成像;多域地震同相轴检测;即时地震模拟检验',
+        year: 2006,
+        scope: '公开',
+        plan:'国家高技术研究发展计划',
+        read:0,
+        change:false,
+        sort:null
+
+      }
+    }
+  },
+  methods:{
+
+  },
+  created:function(){
+    console.log("project");
+    this.$axios({
+      method:'get',
+      params:{
+        projectID:this.id
+      },
+      headers:{
+        token:window.localStorage.getItem("token")
+      }
+    }).then(response => {
+      console.log(response.data.msg);
+      if(response.data.msg === 'successfully')
+      {
+        console.log("get success");
+        this.project = response.data.project;
+      }
+    }).catch(error => {
+      console.log(error);
+    })
+  }
+}
+</script>
 
 <style scoped>
 @import "../assets/css/global.css";
