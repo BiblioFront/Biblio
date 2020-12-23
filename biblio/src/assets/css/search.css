@@ -79,7 +79,7 @@
 }
 .searchpage.scholar_info:hover {
   box-shadow: 0 4px 5px 0 rgba(165, 165, 165, 0.7);
-  transform: scale(1.05, 1.05);
+  transform: scale(1.02, 1.02);
   transition: 0.2s ease-in-out;
   -webkit-transition: 0.2s ease-in-out;
   -moz-transition: 0.2s ease-in-out;

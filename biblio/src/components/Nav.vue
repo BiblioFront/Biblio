@@ -35,14 +35,119 @@
 
         <div class="navcmp btns_area">
           <div class="afterlg" v-if="lg == 1">
-            <el-dropdown @command="handleCommand">
-              <el-avatar :src="infoform.avatar">个人</el-avatar>
+            <el-dropdown @command="userCommand">
+              <el-avatar :src="infoform.avatar" @click="route2Info">
+                <svg-icon name="user"></svg-icon>
+              </el-avatar>
               <el-dropdown-menu class="navcmp" slot="dropdown">
                 <el-dropdown-item command="info">账号信息</el-dropdown-item>
                 <el-dropdown-item command="gate">学者信息</el-dropdown-item>
                 <el-dropdown-item command="lgout" divided
                   >退出登录</el-dropdown-item
                 >
+              </el-dropdown-menu>
+            </el-dropdown>
+
+            <el-dropdown @command="subscribeCommand">
+              <el-button class="inform" circle icon="el-icon-files"></el-button>
+              <el-dropdown-menu class="navcmp" slot="dropdown">
+                <el-dropdown-item
+                  :command="item.scholarID"
+                  v-for="item in subscribeList"
+                  :key="item.scholarID"
+                  divided
+                >
+                  <div class="subscirbeScholar">
+                    <div id="avatar">
+                      <img
+                        src="../assets/img/scholar_avatar_default.jpg"
+                        alt="scholar_avatar"
+                      />
+                    </div>
+
+                    <div class="details">
+                      <span id="name">{{ item.name }}</span>
+                      <span id="institution" v-if="item.organization">{{
+                        item.organization
+                      }}</span>
+                      <span id="subject" v-if="item.field">{{
+                        item.field
+                      }}</span>
+                    </div>
+
+                    <el-button
+                      @click="deleteSubscirbe"
+                      type="text"
+                      class="message_delete"
+                      icon="el-icon-error"
+                      >删除</el-button
+                    >
+                  </div>
+                </el-dropdown-item>
+                <el-dropdown-item divided>
+                  <el-button
+                    @click="clearSubscribeList"
+                    type="text"
+                    class="message_deleteALL subscribe_clear"
+                    icon="el-icon-delete-solid"
+                    >全部删除</el-button
+                  >
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+
+            <el-dropdown @command="likeCommand">
+              <el-button
+                class="inform"
+                circle
+                icon="el-icon-star-off"
+              ></el-button>
+              <el-dropdown-menu class="navcmp" slot="dropdown">
+                <el-dropdown-item
+                  :command="item._id"
+                  v-for="item in likeList"
+                  :key="item._id"
+                  divided
+                >
+                  <div class="likeBiblio">
+                    <div class="item__above">
+                      <div id="title">
+                        <span>[论文]</span>
+                        <span>{{ item.title }}</span>
+                      </div>
+
+                      <el-button
+                        @click="deleteLike"
+                        type="text"
+                        class="message_delete"
+                        icon="el-icon-error"
+                        >删除</el-button
+                      >
+                    </div>
+
+                    <div id="author">
+                      <span>{{ item.author }}</span>
+                      <span v-if="item.doi">{{ item.doi }}</span>
+                      <span v-if="item.year">{{ item.year }}</span>
+                    </div>
+
+                    <div id="summary" v-if="item.summary">
+                      <p>
+                        {{ item.summary }}
+                      </p>
+                    </div>
+                  </div>
+                </el-dropdown-item>
+
+                <el-dropdown-item divided>
+                  <el-button
+                    @click="clearLike"
+                    type="text"
+                    class="message_deleteALL subscribe_clear"
+                    icon="el-icon-delete-solid"
+                    >全部删除</el-button
+                  >
+                </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
 
@@ -75,7 +180,7 @@
       </div>
 
       <el-table class="message_container" :data="messageData" height="85vh">
-        <el-table-column property="content" label="" width="auto" >
+        <el-table-column property="content" label="" width="auto">
           <template slot-scope="scope">
             <el-collapse class="message_item" accordion>
               <el-avatar :size="30">user</el-avatar>
@@ -121,30 +226,27 @@
             autocomplete="off"
             style="width:400px"
           ></el-input>
-          <el-button style="margin-left:30px" @click="findUser()">搜索</el-button>
+          <el-button style="margin-left:30px" @click="findUser()"
+            >搜索</el-button
+          >
         </el-form-item>
 
-        <el-form-item  v-if="existName"> 
-          <p style="margin-left:30px">向 {{form[0].name}} 发送私信：</p>
+        <el-form-item v-if="existName">
+          <p style="margin-left:30px">向 {{ form[0].name }} 发送私信：</p>
           <el-input
-          type="textarea" style="width:90%; margin-left:40px; margin-top:10px"
-          :autosize="{ minRows: 4, maxRows: 6}"
-          placeholder="请输入内容"
-          v-model="textarea2" @input="change($event)">
-        </el-input>
-        <br>
-        <el-button @click="send_msg()" style="float:right;margin-top:25px; ">发送私信</el-button>
+            type="textarea"
+            style="width:90%; margin-left:40px; margin-top:10px"
+            :autosize="{ minRows: 4, maxRows: 6 }"
+            placeholder="请输入内容"
+            v-model="textarea2"
+            @input="change($event)"
+          >
+          </el-input>
+          <br />
+          <el-button @click="send_msg()" style="float:right;margin-top:25px; "
+            >发送私信</el-button
+          >
         </el-form-item>
-        <!-- <el-table :data="form" v-if="existName">
-              <el-table-column prop="avatar" label="头像" width="150"></el-table-column>
-              <el-table-column prop="name" label="用户" width="380"></el-table-column>
-              <el-table-column label="操作" width="150">
-                <template slot-scope="scope">
-                  <el-button @click="send_msg(scope.row.name)">发送私信</el-button>
-                </template>
-              </el-table-column>
-
-            </el-table> -->
       </el-form>
     </el-dialog>
   </div>

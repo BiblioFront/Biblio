@@ -210,7 +210,7 @@
   margin-top: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
 }
 .box_info {
@@ -243,6 +243,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  cursor: pointer;
+}
+.left_box__item:hover {
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.16);
+  border-radius: 2px;
 }
 .left_box__item span {
   height: 23px;
@@ -252,55 +257,45 @@
   color: rgba(85, 85, 85, 1);
 }
 .left_box__item span:nth-child(1) {
-  width: 50px;
+  width: 35px;
+  margin: 0 15px;
+  text-align: right;
 }
 .left_box__item span:nth-child(2) {
-  width: 380px;
+  width: 365px;
 }
 .left_box__item span:nth-child(3) {
   width: 120px;
   text-align: center;
 }
-.right_box__inner {
+.right_box__item {
   width: 550px;
-  height: 180px;
-  background: rgba(255, 255, 255, 1);
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-}
-.right_box .inner_header {
-  width: 550px;
-  height: 40px;
-  background: rgba(245, 245, 245, 1);
+  height: 50px;
+  margin: 2px 0;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-}
-.right_box #inner_title {
-  padding-left: 15px;
+  background-color: #964bb4;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 18px;
-  color: rgba(85, 85, 85, 1);
 }
-.more_btn {
-  width: 0;
-  height: 0;
-  margin: 2px 2px;
-  position: relative;
-  border: none;
-  border-right: 35px solid rgba(150, 75, 180, 1);
-  border-bottom: 35px solid rgba(245, 245, 245, 1);
-  outline: none;
-  cursor: pointer;
+.right_box__item:hover {
+  color: rgba(255, 255, 255);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  border-radius: 3px;
+  background-color: #a359c0;
 }
-.svg-icon--more {
-  width: 21px !important;
-  height: 21px !important;
-  fill: rgba(255, 255, 255, 1) !important;
-  position: absolute;
-  top: -1px;
-  left: 13px;
+.right_box__item span:first-child {
+  width: 60%;
+  margin-left: 30px;
 }
-.inner_content {
+.right_box__item span:last-child {
+  width: calc(40% - 60px);
+  text-align: right;
+  margin-right: 30px;
+}
+.right_box__item span .inner_content {
   width: 550px;
   height: 140px;
   display: flex;

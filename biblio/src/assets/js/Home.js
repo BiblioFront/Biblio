@@ -145,34 +145,34 @@ export default {
         projectData: {},
         scholarData: {},
       },
+
+      //hotspot:
+      hotspot: {
+        biblio: [
+          {
+            _id: "1231",
+            type: "paper",
+            title: "奥术大师多的",
+            read: 123,
+          },
+        ],
+        category: [
+          {
+            sort: "物理学",
+            count: 1231,
+          },
+          {
+            sort: "化学",
+            count: 1123,
+          },
+        ],
+      },
     };
   },
   components: {
     Nav,
   },
   methods: {
-    valueExtrat() {
-      switch (this.value[1]) {
-        case "paper_title":
-          return "title";
-        case "paper_author":
-          return "author";
-        case "paper_doi":
-          return "doi";
-        case "paper_keywords":
-          return "keywords";
-        case "patent_title":
-          return "title";
-        case "patent_owner":
-          return "owner";
-        case "project_title":
-          return "title";
-        case "project_author":
-          return "author";
-        case "project_keywords":
-          return "keywords";
-      }
-    },
     route2Search() {
       if (this.searchInput == "") {
         this.$message({
@@ -294,6 +294,14 @@ export default {
     },
     bootAS() {
       this.advancedSearchBox = false;
+    },
+    route2Biblio(type, id) {
+      this.$router.push({
+        path: "/" + type,
+        query: {
+          id: id,
+        },
+      });
     },
   },
 };

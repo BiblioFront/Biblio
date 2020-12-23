@@ -59,15 +59,20 @@
     <div class="homepage main_content">
       <div class="left_box">
         <div class="box_info">
-          <span id="title">热门领域</span>
+          <span id="title">热门文献</span>
           <span id="degree">热度</span>
         </div>
 
         <div class="left_box__content">
-          <div class="left_box__item">
+          <div
+            class="left_box__item"
+            v-for="item in hotspot.biblio"
+            :key="item._id"
+            @click="route2Biblio(item.type, item._id)"
+          >
             <span>1</span>
-            <span>啊！海军</span>
-            <span>300000000</span>
+            <span>{{ item.title }}</span>
+            <span>{{ item.read }}</span>
           </div>
           <div class="left_box__item">
             <span>2</span>
@@ -121,62 +126,17 @@
 
       <div class="right_box">
         <div class="box_info">
-          <span id="title">最新动态</span>
+          <span id="title">热门领域</span>
         </div>
 
         <div class="rigth_box__content">
-          <div class="right_box__inner paper_box">
-            <div class="inner_header">
-              <span id="inner_title">期刊论文</span>
-              <button class="more_btn">
-                <svg-icon name="more"></svg-icon>
-              </button>
-            </div>
-
-            <div class="inner_content">
-              <div class="inner_item">
-                <div id="linesign"></div>
-                <span>啊！海军</span>
-              </div>
-              <div class="inner_item">
-                <div id="linesign"></div>
-                <span>啊！海军</span>
-              </div>
-              <div class="inner_item">
-                <div id="linesign"></div>
-                <span>啊！海军</span>
-              </div>
-              <div class="inner_item">
-                <div id="linesign"></div>
-                <span>啊！海军</span>
-              </div>
-            </div>
-          </div>
-          <div class="right_box__inner research_box">
-            <div class="inner_header">
-              <span id="inner_title">科研专利</span>
-              <button class="more_btn">
-                <svg-icon name="more"></svg-icon>
-              </button>
-            </div>
-            <div class="inner_content">
-              <div class="inner_item">
-                <div id="linesign"></div>
-                <span>啊！海军</span>
-              </div>
-              <div class="inner_item">
-                <div id="linesign"></div>
-                <span>啊！海军</span>
-              </div>
-              <div class="inner_item">
-                <div id="linesign"></div>
-                <span>啊！海军</span>
-              </div>
-              <div class="inner_item">
-                <div id="linesign"></div>
-                <span>啊！海军</span>
-              </div>
-            </div>
+          <div
+            class="right_box__item"
+            v-for="item in hotspot.category"
+            :key="item.sort"
+          >
+            <span>{{ item.sort }}</span>
+            <span>{{ item.count }}</span>
           </div>
         </div>
       </div>

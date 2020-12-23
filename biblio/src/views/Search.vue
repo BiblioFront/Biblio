@@ -37,8 +37,8 @@
                 v-if="resList.scholarData.item[0].organization"
                 >{{ resList.scholarData.item[0].organization }}</span
               >
-              <span id="subject" v-if="resList.scholarData.item[0].field">{{
-                resList.scholarData.item[0].field
+              <span id="subject" v-if="resList.scholarData.item[0].sort">{{
+                resList.scholarData.item[0].sort
               }}</span>
             </div>
           </div>
@@ -70,8 +70,8 @@
             <div
               class="achievements_item"
               v-for="item in resList.paperData.item"
-              :key="item.id"
-              @click="route2Page(item.id)"
+              :key="item._id"
+              @click="route2Page(item._id)"
             >
               <div class="item__above">
                 <div id="title">
@@ -121,7 +121,6 @@
               </div>
 
               <div id="summary">
-                <button>摘要</button>
                 <p>
                   {{ item.summary }}
                 </p>
@@ -136,7 +135,7 @@
             <div
               class="achievements_item"
               v-for="item in resList.projectData.item"
-              :key="item.id"
+              :key="item._id"
             >
               <div class="item__above">
                 <div id="title">
@@ -156,7 +155,6 @@
               </div>
 
               <div id="summary">
-                <button>摘要</button>
                 <p>
                   {{ item.summary }}
                 </p>
@@ -165,32 +163,25 @@
           </el-tab-pane>
           <el-tab-pane label="学者" name="scholar" v-if="resList.hasScholar">
             <div
-              class="achievements_item"
+              class="achievements_item scholar_info"
               v-for="item in resList.scholarData.item"
-              :key="item.id"
+              :key="item._id"
+              @click="route2Gate(item._id)"
             >
-              <div class="item__above">
-                <div id="title">
-                  <span>[学者]</span>
-                  <span>{{ item.name }}</span>
-                </div>
-
-                <div class="item__btns_area">
-                  <button><svg-icon name="like"></svg-icon></button>
-                  <button><svg-icon name="relative"></svg-icon></button>
-                  <button><svg-icon name="share"></svg-icon></button>
-                </div>
+              <div id="avatar">
+                <img
+                  src="../assets/img/scholar_avatar_default.jpg"
+                  alt="scholar_avatar"
+                />
               </div>
 
-              <div id="author">
-                <span>{{ item.organization }}</span>
-              </div>
-
-              <div id="summary">
-                <button>摘要</button>
-                <p>
-                  {{ item.summary }}
-                </p>
+              <div class="details">
+                <span id="name">{{ item.name }}</span>
+                <div id="verified" v-if="item.userID"></div>
+                <span id="institution" v-if="item.organization">{{
+                  item.organization
+                }}</span>
+                <span id="subject" v-if="item.sort">{{ item.sort }}</span>
               </div>
             </div>
           </el-tab-pane>
