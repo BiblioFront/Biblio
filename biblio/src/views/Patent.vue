@@ -154,7 +154,7 @@ export default {
   },
   data:function(){
     return {
-      id:"",
+      id:"5fccd1a1376ae34bbb980c58",
       patent:{
         _id:"",
         title:"基于二维快速自旋回波的磁共振成像方法和装置",
@@ -193,11 +193,16 @@ export default {
       },
     })
       .then((response) => {
-        if (response.data.msg == "successfully") {
+        if (response.data.patent !== undefined) {
           console.log("get success");
-          // console.log(this.paper);
-          this.patent = response.data.patent;
-        } else console.log(response.data.msg);
+          _this.patent = response.data.patent;
+        } else {
+          console.log(response.data.msg);
+          this.$message({
+            message:"您所访问的专利不存在",
+            type:"error"
+          })
+        }
       })
       .catch((error) => {
         console.log(error);

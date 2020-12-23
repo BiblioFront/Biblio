@@ -6,24 +6,31 @@
 
     <el-main class="bibliopage">
       <el-card>
-        <el-form label-width="80px" :model="paper">
-          <el-form-item label="论文标题">
-            <el-input v-model="paper.title"></el-input>
-          </el-form-item>
-          <el-form-item label="组织">
-            <el-input v-model="paper.organization"></el-input>
+        <el-form label-width="80px" :model="project">
+          <el-form-item label="项目标题">
+            <el-input v-model="project.title"></el-input>
           </el-form-item>
           <el-form-item label="摘要">
-            <el-input v-model="paper.summary" type="textarea" autosize></el-input>
+            <el-input
+              v-model="project.summary"
+              type="textarea"
+              autosize
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="公司">
+            <el-input v-model="project.company"></el-input>
           </el-form-item>
           <el-form-item label="关键字">
-            <el-input v-model="paper.keywords"></el-input>
+            <el-input v-model="project.keywords"></el-input>
           </el-form-item>
-          <el-form-item label="期刊">
-            <el-input v-model="paper.journal"></el-input>
+          <el-form-item label="年份">
+            <el-input v-model="project.year"></el-input>
           </el-form-item>
-          <el-form-item label="url">
-            <el-input v-model="paper.url"></el-input>
+          <el-form-item label="所属计划">
+            <el-input v-model="project.plan"></el-input>
+          </el-form-item>
+          <el-form-item label="是否公开">
+            <el-input v-model="project.scope"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -45,7 +52,7 @@
 import Nav from "@/components/Nav.vue";
 
 export default {
-  name: "PaperAdd",
+  name: "ProjectAdd",
   components: {
     Nav,
   },
@@ -53,29 +60,30 @@ export default {
     return {
       researcherID: "",
       author: "",
-      paper: {
+      project: {
         author: "",
         title: "",
         summary: "",
-        url: "",
+        company: "",
         keywords: "",
-        journal: "",
-        organization: "",
+        year: "",
+        scope: "",
+        plan: "",
       },
     };
   },
   methods: {
     onSubmit: function () {
-        console.log("onsubmit");
-        // console.log(this.paper.title);
-        console.log(this.paper);
+      console.log("onsubmit");
+      // console.log(this.project.title);
+      console.log(this.project);
       if (
-        this.paper.title === "" ||
-        this.paper.summary === "" ||
-        this.paper.url === "" ||
-        this.paper.keywords === "" ||
-        this.paper.journal === "" ||
-        this.paper.organization === ""
+        this.project.title === "" ||
+        this.project.summary === "" ||
+        this.project.keywords === "" ||
+        this.project.year === "" ||
+        this.project.scope === "" || 
+        this.project.plan === ""
       ) {
         this.$message({
           message: "请填写完整信息",
@@ -86,7 +94,7 @@ export default {
 
       this.$axios({
         method: "post",
-        url: "/user/paper/add",
+        url: "/user/project/add",
         headers: {
           token: window.localStorage.getItem("token"),
         },
@@ -94,14 +102,13 @@ export default {
           ResearcherID: this.researcherID,
         },
         data: {
-          // author: this.author,
-          author:this.researcherID,
-          title: this.paper.title,
-          summary: this.paper.summary,
-          url: this.paper.url,
-          keywords: this.paper.keywords,
-          journal: this.paper.journal,
-          organization: this.paper.organization,
+          author: this.author,
+          title: this.project.title,
+          summary: this.project.summary,
+          keywords: this.project.keywords,
+          year: this.project.year,
+          scope: this.project.scope,
+          plan:this.project.plan
         },
       })
         .then((response) => {
@@ -111,7 +118,7 @@ export default {
               message: "添加成功",
               type: "success",
             });
-            this.$router.push("/paper");
+            this.$router.push("/project");
           }
           else {
             this.$message({
@@ -124,9 +131,9 @@ export default {
           console.log(error);
         });
     },
-    onReset:function(){
-        console.log("reset");
-    }
+    onReset: function () {
+      console.log("reset");
+    },
   },
   created: function () {
     this.$axios({
@@ -141,7 +148,6 @@ export default {
         if (response.data.msg === "get information successfully") {
           this.researcherID = response.data.information.id;
           this.author = response.data.information.username;
-          console.log(this.author);
         }
       })
       .catch((error) => {
