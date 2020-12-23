@@ -24,20 +24,9 @@ export default {
       }, 100);
     };
     return {
-      infoform: {
-        username: "马保国",
-        password: "123",
-        email: "123@qq.com",
-        nickname: "haha",
-        avatar: "",
-        auth: "",
-        admin: false,
-        token: "",
-        id: "",
-        verification_code: "",
-      },
+      userInfo: this.$store.getters.getUser,
       password: "123456",
-      infoform_chan: {
+      userInfo_chan: {
         email: "",
       },
       newname: "",
@@ -49,146 +38,206 @@ export default {
       editname: false,
       editemail: false,
       editpassword: false,
-      emailright: false,
       rules: {
         email: [{ required: false, validator: checkEmail, trigger: "blur" }],
       },
     };
   },
-  mounted: function() {
-    this.$axios({
-      method: "get",
-      url: "/user",
-      params: {},
-      headers: {
-        token: window.localStorage.getItem("token"),
-      },
-    })
-      .then((response) => {
-        console.log(response);
-        this.infoform = response.data.information;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // this.$http.get('/user').then(res => {
-
-    //     this.infoform = res.information;
-    //     if(this.infoform.auth != null){
-    //       this.isAuth = true;
-    //     }
-    // })
-  },
   methods: {
-    onSubmit() {
-      console.log("submit!");
-    },
-    gotoGate() {
-      this.$router.push("/gate");
+    route2Gate() {
+      this.$router.push({ path: "/gate", query: { id: this.userInfo.auth } });
     },
     goEditname() {
-      console.log("editname");
+      console.log("Infopage Requsting...  [Edit nickname]");
       this.editname = true;
     },
     SaveEditname() {
+      console.log(
+        "Infopage Requsting...  [Nickname: " +
+          this.userInfo.nickname +
+          "to" +
+          this.newname +
+          "]"
+      );
+
+      const _this = this;
       this.$axios({
         method: "patch",
         url: "/user",
-        params: {},
         headers: {
           token: window.localStorage.getItem("token"),
         },
         data: {
-          username: this.newname,
+          nickname: this.newname,
         },
       })
         .then((response) => {
-          console.log(response);
+          //Changed successfully
           if (response.data.msg == "Changed successfully") {
-            this.$message.success("修改用户名成功！");
-            this.infoform.username = this.newname;
-            this.editname = false;
-          } else {
-            this.$message.error("用户名已存在，请重新修改");
+            console.log("Infopage Requst for Edit Nickname SUCCESS!");
+            _this.$message.success("修改成功！");
+
+            _this.userInfo.nickname = _this.newname;
+            _this.$store.commit("SET_USERINFO", _this.userInfo);
+            _this.editname = false;
+          }
+          //please login first
+          else if (response.data.msg == "please login first") {
+            console.log(
+              "Infopage Requst failed! [Error: " + response.data.msg + "]"
+            );
+
+            _this.$message.error("未登录！");
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.log("Infopage Requst failed! [Error: " + error + "]");
+
+          _this.$message.error("系统错误！ [" + error + "]");
         });
     },
     goEditemail() {
-      this.emailright = false;
+      console.log("Infopage Requsting...  [Edit email]");
       this.editemail = true;
     },
-    SaveEditemail(infoform_chan) {
-      // console.log(this.emailright+" （emairight的值")
-      // console.log(this.infoform_chan.email+" （email的值")
-      this.$refs[infoform_chan].validate((valid) => {
+    SaveEditemail(userInfo_chan) {
+      console.log(
+        "Infopage Requsting...  [Email: " +
+          this.userInfo.email +
+          "to" +
+          this.userInfo_chan.email +
+          "]"
+      );
+
+      const _this = this;
+      this.$refs[userInfo_chan].validate((valid) => {
         if (valid) {
           this.$axios({
             method: "patch",
             url: "/user",
-            params: {},
             headers: {
               token: window.localStorage.getItem("token"),
             },
             data: {
-              email: this.infoform_chan.email,
+              email: _this.userInfo_chan.email,
             },
           })
             .then((response) => {
-              console.log(response);
+              //Changed successfully
               if (response.data.msg == "Changed successfully") {
-                this.$message.success("修改邮箱成功！");
-                this.infoform.password = this.newpassword;
-                this.editpassword = false;
-              } else {
-                this.$message.error("修改邮箱失败！");
+                console.log("Infopage Requst for Email SUCCESS!");
+
+                _this.$message.success("修改成功！");
+                _this.userInfo.email = _this.userInfo_chan.email;
+                _this.$store.commit("SET_USERINFO", _this.userInfo);
+                _this.editemail = false;
+              }
+              //please login first
+              else if (response.data.msg == "please login first") {
+                console.log(
+                  "Infopage Requst failed! [Error: " + response.data.msg + "]"
+                );
+
+                _this.$message.error("未登录！");
               }
             })
             .catch((error) => {
-              console.log(error);
+              console.log("Infopage Requst failed! [Error: " + error + "]");
+
+              _this.$message.error("系统错误！ [" + error + "]");
             });
-          this.infoform.email = this.infoform_chan.email;
-          // console.log("现在的email：" + this.infoform.email)
-          this.editemail = false;
         } else {
+          console.log("Infopage Requst failed! [Error: invalid input]");
+
           this.$message.error("请输入正确的邮箱格式！");
         }
       });
     },
     goEditpassword() {
+      console.log("Infopage Requsting...  [Edit password]");
       this.editpassword = true;
     },
     Savepassword() {
-      console.log(this.newpassword);
+      console.log(
+        "Infopage Requsting...  [Password changed" + this.newpassword + "]"
+      );
+
       if (this.newpassword == "") {
+        console.log("Infopage Requst failed! [Error: invalid input]");
+
         this.$message.error("密码不能为空！");
       }
+
+      const _this = this;
       this.$axios({
         method: "patch",
         url: "/user/password",
-        params: {},
         headers: {
           token: window.localStorage.getItem("token"),
         },
         data: {
-          oldpassword: this.oldpassword,
-          newpassword: this.newpassword,
+          oldpassword: _this.oldpassword,
+          newpassword: _this.newpassword,
         },
       })
         .then((response) => {
-          console.log(response);
+          //Changed successfully
           if (response.data.msg == "Changed successfully") {
-            this.$message.success("修改密码成功！");
-            this.infoform.password = this.newpassword;
-            this.editpassword = false;
-          } else if (response.data.msg == "Wrong password") {
-            this.$message.error("原密码错误");
+            console.log("Infopage Requst for Password SUCCESS!");
+
+            _this.userInfo.password = _this.newpassword;
+            _this.$message.success("修改成功！");
+
+            //get userInfo
+            _this.$axios
+              .get("/user", {
+                headers: { token: window.localStorage.getItem("token") },
+              })
+              .then((response) => {
+                console.log(
+                  "Pulling userInfo...  [token: " +
+                    window.localStorage.getItem("token") +
+                    "]"
+                );
+
+                if (response.data.msg == "get information successfully") {
+                  console.log("UserInfo: Get Information SUCCESSFULLY");
+
+                  if (response.data.information.avatar == null)
+                    response.data.information.avatar =
+                      "../assets/img/scholar_avatar_default.jpg";
+                  _this.$store.commit(
+                    "SET_USERINFO",
+                    response.data.information
+                  );
+                } else if (response.data.msg == "please login first") {
+                  console.log("Pull request failed!");
+                }
+              });
+
+            _this.editpassword = false;
+          }
+          //Wrong password
+          else if (response.data.msg == "Wrong password") {
+            console.log(
+              "Infopage Requst failed! [Error: " + response.data.msg + "]"
+            );
+
+            _this.$message.error("原密码有误！");
+          }
+          //please login first
+          else if (response.data.msg == "please login first") {
+            console.log(
+              "Infopage Requst failed! [Error: " + response.data.msg + "]"
+            );
+
+            _this.$message.error("未登录！");
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.log("Infopage Requst failed! [Error: " + error + "]");
+
+          _this.$message.error("系统错误！ [" + error + "]");
         });
     },
     handleAvatarSuccess(res) {
@@ -197,23 +246,50 @@ export default {
       this.photo = tmp;
     },
     beforeAvatarUpload(file) {
-      const isJPG =
-        file.type === "image/gif" || "image/jpeg" || "image/png" || "image/jpg";
+      const format =
+        file.type === "image/gif" ||
+        "image/jpeg" ||
+        "image/png" ||
+        "image/jpg" ||
+        "image/bmp" ||
+        "image/tif" ||
+        "image/pcx" ||
+        "image/tga" ||
+        "image/exif" ||
+        "image/fpx" ||
+        "image/svg" ||
+        "image/psd" ||
+        "image/cdr" ||
+        "image/pcd" ||
+        "image/dxf" ||
+        "image/ufo" ||
+        "image/eps" ||
+        "image/ai" ||
+        "image/raw" ||
+        "image/WMF" ||
+        "image/webp";
       const isLt10M = file.size / 1024 / 1024 / 10;
 
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
+      if (!format) {
+        this.$message.error(
+          "图像格式错误！\n上传头像图片格式可为jpeg,bmp,jpg,png,tif,gif,pcx,tga,exif,fpx,svg,psd,cdr,pcd,dxf,ufo,eps,ai,raw,WMF,webp"
+        );
       }
       if (!isLt10M) {
         this.$message.error("上传头像图片大小不能超过 10MB!");
       }
-      return isJPG && isLt10M;
+      return format && isLt10M;
     },
     uploadAvatar(resource) {
-      console.log(resource);
+      console.log(
+        "Infopage Requsting...  [Avatar: " + JSON.stringify(resource.file) + "]"
+      );
+
       let pic = resource.file;
       let fd = new FormData();
       fd.append("file", pic);
+
+      const _this = this;
       this.$axios({
         url: "user/avatar",
         method: "patch",
@@ -223,11 +299,35 @@ export default {
         data: fd,
       })
         .then((res) => {
-          console.log(res);
-          this.infoform.avatar = res.data.newAvatar;
+          if (res.data.msg == "successfully") {
+            console.log("Infopage Requst for Avatar SUCCESS!");
+
+            _this.userInfo.avatar = res.data.newAvatar;
+            _this.$store.commit("SET_USERINFO", _this.userInfo);
+          } else if (res.data.msg == "This file is not a photo") {
+            console.log(
+              "Infopage Requst failed! [Error: " + res.data.msg + "]"
+            );
+
+            _this.$message({
+              message: "文件格式有误！",
+              type: "error",
+            });
+          } else if (res.data.msg == "please login first") {
+            console.log(
+              "Infopage Requst failed! [Error: " + res.data.msg + "]"
+            );
+
+            _this.$message({
+              message: "未登录！",
+              type: "error",
+            });
+          }
         })
-        .catch((err) => {
-          this.$message.error("更新账户头像失败：" + err);
+        .catch((error) => {
+          console.log("Infopage Requst failed! [Error: " + error + "]");
+
+          this.$message.error("系统错误！ [" + error + "]");
         });
     },
   },

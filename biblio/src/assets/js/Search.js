@@ -29,8 +29,21 @@ export default {
       category: [""],
     };
   },
-  mounted() {
-    this.$nextTick(() => {
+  created: function() {
+    console.log(1);
+  },
+  mounted: function() {
+    console.log(2);
+    this.initResult();
+  },
+  activated: function() {
+    console.log(3);
+  },
+  deactivated: function() {
+    console.log(4);
+  },
+  methods: {
+    initResult() {
       var searchResult = this.$store.getters.getSearchResult;
 
       this.resList.total = searchResult.total;
@@ -76,30 +89,6 @@ export default {
         searchResult.isAll
       )
         this.extraFound = true;
-    });
-  },
-  methods: {
-    valueExtrat() {
-      switch (this.value[1]) {
-        case "paper_title":
-          return "title";
-        case "paper_author":
-          return "author";
-        case "paper_doi":
-          return "doi";
-        case "paper_keywords":
-          return "keywords";
-        case "patent_title":
-          return "title";
-        case "patent_owner":
-          return "owner";
-        case "project_title":
-          return "title";
-        case "project_author":
-          return "author";
-        case "project_keywords":
-          return "keywords";
-      }
     },
     handleChange(val) {
       console.log(val);

@@ -13,7 +13,7 @@
             type="text"
             v-model="registerForm.username"
             auto-complete="off"
-            placeholder="用户名"
+            placeholder="用户名(用于登录)"
           ></el-input>
         </el-form-item>
         <el-form-item prop="password">

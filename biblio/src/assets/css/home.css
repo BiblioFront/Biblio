@@ -239,34 +239,85 @@
 }
 .left_box__item {
   width: 550px;
-  height: 40px;
+  height: 50px;
+  margin: 2px 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   cursor: pointer;
 }
-.left_box__item:hover {
-  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.16);
-  border-radius: 2px;
+.left_box__item:hover .left_box__item--main span:first-child {
+  color: #964bb4;
+  font-weight: bold;
 }
-.left_box__item span {
-  height: 23px;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 23px;
-  color: rgba(85, 85, 85, 1);
-}
-.left_box__item span:nth-child(1) {
-  width: 35px;
-  margin: 0 15px;
-  text-align: right;
-}
-.left_box__item span:nth-child(2) {
+.left_box__item--main {
   width: 365px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
-.left_box__item span:nth-child(3) {
+.left_box__item #number {
+  width: 35px;
+  height: 100%;
+  margin: 0 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+.left_box__item #number .svg-icon--hexagon {
+  width: 30px !important;
+  height: 30px !important;
+  color: rgb(230, 230, 230);
+  transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  z-index: 1;
+}
+.left_box__item:nth-child(1) #number .svg-icon--hexagon {
+  color: rgb(240, 211, 116);
+}
+.left_box__item:nth-child(2) #number .svg-icon--hexagon {
+  color: rgb(212, 211, 207);
+}
+.left_box__item:nth-child(3) #number .svg-icon--hexagon {
+  color: rgb(194, 168, 121);
+}
+.left_box__item #number span {
+  width: 100%;
+  height: 100%;
+  color: #808080;
+  text-align: center;
+  position: absolute;
+  top: 4px;
+  left: 0;
+  z-index: 2;
+}
+.left_box__item:nth-child(1) #number span,
+.left_box__item:nth-child(2) #number span,
+.left_box__item:nth-child(3) #number span {
+  color: #fff;
+}
+.left_box__item #read {
   width: 120px;
   text-align: center;
+  color: #555555;
+}
+.left_box__item--main span:first-child {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 16px;
+  color: rgba(85, 85, 85, 1);
+}
+.left_box__item--main span:last-child {
+  width: 70%;
+  font-size: 14px;
+  color: #bebebe;
 }
 .right_box__item {
   width: 550px;

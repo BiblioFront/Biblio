@@ -5,11 +5,11 @@
     <div class="img_box">
       <div class="img__main_box">
         <div class="upper_slogen">
-          THIS IS A SMALLER POSTER.
+          {{ slogen.upper }}
         </div>
 
         <div class="lower_slogen">
-          this is a larger poster.
+          {{ slogen.lower }}
         </div>
 
         <div class="searchdiv">
@@ -66,58 +66,21 @@
         <div class="left_box__content">
           <div
             class="left_box__item"
-            v-for="item in hotspot.biblio"
+            v-for="item in hotspot.paper"
             :key="item._id"
-            @click="route2Biblio(item.type, item._id)"
+            @click="route2Paper(item._id)"
           >
-            <span>1</span>
-            <span>{{ item.title }}</span>
-            <span>{{ item.read }}</span>
-          </div>
-          <div class="left_box__item">
-            <span>2</span>
-            <span>啊！海军</span>
-            <span>0</span>
-          </div>
-          <div class="left_box__item">
-            <span>3</span>
-            <span>啊！海军</span>
-            <span>30</span>
-          </div>
-          <div class="left_box__item">
-            <span>4</span>
-            <span>啊！海军</span>
-            <span>300</span>
-          </div>
-          <div class="left_box__item">
-            <span>5</span>
-            <span>啊！海军</span>
-            <span>3000</span>
-          </div>
-          <div class="left_box__item">
-            <span>6</span>
-            <span>啊！海军</span>
-            <span>30000</span>
-          </div>
-          <div class="left_box__item">
-            <span>7</span>
-            <span>啊！海军</span>
-            <span>3000000</span>
-          </div>
-          <div class="left_box__item">
-            <span>8</span>
-            <span>啊！海军</span>
-            <span>30000000</span>
-          </div>
-          <div class="left_box__item">
-            <span>9</span>
-            <span>啊！海军</span>
-            <span>300000000</span>
-          </div>
-          <div class="left_box__item">
-            <span>10</span>
-            <span>啊！海军</span>
-            <span>3000W</span>
+            <div id="number">
+              <span>1</span>
+              <svg-icon name="hexagon"></svg-icon>
+            </div>
+
+            <div class="left_box__item--main">
+              <span>{{ item.title }}</span>
+              <span>{{ item.author }}</span>
+            </div>
+
+            <span id="read">{{ item.read }}</span>
           </div>
         </div>
       </div>
@@ -132,11 +95,11 @@
         <div class="rigth_box__content">
           <div
             class="right_box__item"
-            v-for="item in hotspot.category"
-            :key="item.sort"
+            v-for="item in hotspot.hotfield"
+            :key="item.id"
           >
-            <span>{{ item.sort }}</span>
-            <span>{{ item.count }}</span>
+            <span>{{ item.name }}</span>
+            <span>{{ item.heat }}</span>
           </div>
         </div>
       </div>

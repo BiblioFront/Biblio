@@ -1,12 +1,12 @@
 export default {
-  name:"Register",
-  data:function(){
+  name: "Register",
+  data: function() {
     return {
-      registerForm:{
-        username:"",
-        password:"",
-        email:"",
-        nickname:""
+      registerForm: {
+        username: "",
+        password: "",
+        email: "",
+        nickname: "",
       },
       fieldRules: {
         username: [
@@ -19,31 +19,27 @@ export default {
         password: [
           {
             required: true,
-            // validator: validatePass,
-            message: '密码不能为空',
+            message: "密码不能为空",
             trigger: "blur",
           },
         ],
         email: [
           {
             required: true,
-            // validator: validateEmail,
-            message: '邮箱不能为空',
+            message: "邮箱不能为空",
             trigger: "blur",
           },
         ],
         nickname: [
           {
             required: true,
-            // validator: validateEmail,
-            // message: '请输入正确完整的邮箱号',
             trigger: "blur",
           },
         ],
       },
-    }
+    };
   },
-  methods:{
+  methods: {
     reset() {
       this.registerForm.username = "";
       this.$refs.registerForm.resetFields();
@@ -51,47 +47,111 @@ export default {
     route2Home() {
       this.$router.push({ path: "/" });
     },
-    register:function() {
-      console.log("register");
-      console.log(this.registerForm.username);
-      console.log(this.registerForm.password);
-      console.log(this.registerForm.email);
-      console.log(this.registerForm.nickname);
+    register: function() {
+      console.log(
+        "Register...  [username: " +
+          this.registerForm.username +
+          ", password: " +
+          this.registerForm.password +
+          ", password: " +
+          this.registerForm.password +
+          ", email: " +
+          this.registerForm.email +
+          ", nickname: " +
+          this.registerForm.nickname +
+          "]"
+      );
+
       var _this = this;
-      this.$refs.registerForm.validate(valid => {
-        if(valid) {
-          console.log("验证通过");
-          this.$axios.post('/user/register',{
-            username:_this.registerForm.username,
-            password:_this.registerForm.password,
-            email:_this.registerForm.email,
-            nickname:_this.registerForm.nickname
-          }).then(response => {
-            // if(response.msg === )
-            console.log(response.data.msg);
-            if(response.data.msg === "register success"){
+      this.$refs.registerForm.validate((valid) => {
+        if (valid) {
+          console.log("Register: Input Valid!");
+
+          this.$axios
+            .post("/user/register", {
+              username: _this.registerForm.username,
+              password: _this.registerForm.password,
+              email: _this.registerForm.email,
+              nickname: _this.registerForm.nickname,
+            })
+            .then((response) => {
+              //register success
+              if (response.data.msg === "register success") {
+                this.$message({
+                  message: "注册成功!",
+                  type: "success",
+                });
+
+                //auto Login
+                this.$axios
+                  .post("/user/login", {
+                    username: _this.registerForm.username,
+                    password: _this.registerForm.password,
+                  })
+                  .then((response) => {
+                    console.log("Register SUCCESS!");
+                    _this.$store.commit("SET_TOKEN", response.data.token);
+                    //get userInfo
+                    _this.$axios
+                      .get("/user", {
+                        headers: {
+                          token: window.localStorage.getItem("token"),
+                        },
+                      })
+                      .then((response) => {
+                        console.log(
+                          "Pulling userInfo SUCCESSFULLY!  [token: " +
+                            window.localStorage.getItem("token") +
+                            "]"
+                        );
+
+                        if (response.data.information.avatar == null)
+                          response.data.information.avatar =
+                            "../assets/img/scholar_avatar_default.jpg";
+                        _this.$store.commit(
+                          "SET_USERINFO",
+                          response.data.information
+                        );
+                      });
+
+                    _this.$router.push("/");
+                  });
+
+                _this.$router.push("/");
+              }
+              //Username already exists
+              else if (response.data.msg === "Username already exists") {
+                console.log(
+                  "Register failed! [Error: " + response.data.msg + "]"
+                );
+
+                this.$message({
+                  message: "用户名已存在！",
+                  type: "error",
+                });
+              }
+              //Mailbox is already occupied
+              else if (response.data.msg === "Mailbox is already occupied") {
+                console.log(
+                  "Register failed! [Error: " + response.data.msg + "]"
+                );
+
+                this.$message({
+                  message: "用户名已存在！",
+                  type: "error",
+                });
+              }
+            })
+            .catch((error) => {
+              console.log("Register failed! [Error:\n" + error + "\n]");
+
               this.$message({
-                message:'恭喜你，注册成功',
-                type: 'success'
+                message: "系统错误！",
+                type: "error",
               });
-              _this.$router.push('/login');
-            }
-            else {
-              this.$message({
-                message:'发生甚么事了，注册失败',
-                type: 'error'
-              });
-            }
-          }).catch(error => {
-            console.log(error);
-            this.$message({
-              message:'发生甚么事了，注册失败',
-              type: 'error'
             });
-          });
-        }
-        else console.log("验证失败");
-      })
-    }
-  }
-}
+        } else console.log("Login failed! [Error: Input INVALID!]");
+      });
+    },
+  },
+};

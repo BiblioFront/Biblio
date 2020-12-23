@@ -3,6 +3,9 @@ import Nav from "@/components/Nav.vue";
 
 export default {
   name: "Home",
+  components: {
+    Nav,
+  },
   data() {
     var validateTime = (rule, value, callback) => {
       if (value == "") {
@@ -147,30 +150,21 @@ export default {
       },
 
       //hotspot:
-      hotspot: {
-        biblio: [
-          {
-            _id: "1231",
-            type: "paper",
-            title: "奥术大师多的",
-            read: 123,
-          },
-        ],
-        category: [
-          {
-            sort: "物理学",
-            count: 1231,
-          },
-          {
-            sort: "化学",
-            count: 1123,
-          },
-        ],
+      hotspot: {},
+
+      //slogen:
+      slogen: {
+        upper: "This is upper slogen",
+        lower: "THIS IS LOWER SLOGEN",
       },
     };
   },
-  components: {
-    Nav,
+  mounted() {
+    const _this = this;
+    this.$axios.get("analysis/index").then((res) => {
+      _this.hotspot = res.data;
+      console.log(res.data);
+    });
   },
   methods: {
     route2Search() {
