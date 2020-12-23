@@ -12,6 +12,7 @@ import Register from "../views/Register.vue";
 import Admin from "../views/Admin.vue";
 import PaperAdd from "../views/PaperAdd.vue";
 import PatentAdd from "../views/PatentAdd.vue";
+import ProjectAdd from "../views/ProjectAdd.vue";
 
 Vue.use(VueRouter);
 
@@ -75,6 +76,11 @@ const routes = [
     path:"/patentadd",
     name :"PatentAdd",
     component:PatentAdd
+  },
+  {
+    path:"/projectadd",
+    name:"ProjectAdd",
+    component:ProjectAdd
   }
 ];
 

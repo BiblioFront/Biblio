@@ -121,7 +121,7 @@ export default {
         this.status === ''
       ) {
         this.$message({
-          massage: "请填写完整信息",
+          message: "请填写完整信息",
           type: "error",
         });
         return;
@@ -161,6 +161,12 @@ export default {
               type: "success",
             });
             this.$router.push("/patent");
+          }
+          else {
+            this.$message({
+              message:response.data.msg,
+              type:"error"
+            });
           }
         })
         .catch((error) => {

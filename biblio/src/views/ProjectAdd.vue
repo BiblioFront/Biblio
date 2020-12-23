@@ -86,7 +86,7 @@ export default {
         this.project.plan === ""
       ) {
         this.$message({
-          massage: "请填写完整信息",
+          message: "请填写完整信息",
           type: "error",
         });
         return;
@@ -120,6 +120,12 @@ export default {
             });
             this.$router.push("/project");
           }
+          else {
+            this.$message({
+              message:response.data.msg,
+              type:"error"
+            })
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -150,3 +156,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.el-input {
+  width: 800px;
+}
+</style>

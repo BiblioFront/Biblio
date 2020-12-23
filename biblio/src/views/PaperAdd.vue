@@ -17,7 +17,7 @@
             <el-input v-model="paper.summary" type="textarea" autosize></el-input>
           </el-form-item>
           <el-form-item label="关键字">
-            <el-input v-model="paper.title"></el-input>
+            <el-input v-model="paper.keywords"></el-input>
           </el-form-item>
           <el-form-item label="期刊">
             <el-input v-model="paper.journal"></el-input>
@@ -78,7 +78,7 @@ export default {
         this.paper.organization === ""
       ) {
         this.$message({
-          massage: "请填写完整信息",
+          message: "请填写完整信息",
           type: "error",
         });
         return;
@@ -94,7 +94,8 @@ export default {
           ResearcherID: this.researcherID,
         },
         data: {
-          author: this.author,
+          // author: this.author,
+          author:this.researcherID,
           title: this.paper.title,
           summary: this.paper.summary,
           url: this.paper.url,
@@ -111,6 +112,12 @@ export default {
               type: "success",
             });
             this.$router.push("/paper");
+          }
+          else {
+            this.$message({
+              message:response.data.msg,
+              type:"error"
+            })
           }
         })
         .catch((error) => {
@@ -134,6 +141,7 @@ export default {
         if (response.data.msg === "get information successfully") {
           this.researcherID = response.data.information.id;
           this.author = response.data.information.username;
+          console.log(this.author);
         }
       })
       .catch((error) => {
