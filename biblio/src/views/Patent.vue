@@ -10,39 +10,45 @@
           <div class="biblio_source">
             <span>专利</span>
             <span>></span>
-            <el-tag>这里是期刊名</el-tag>
-            <span>xxxx年xx月xx日（线上发表日期）</span>
+            <el-tag>{{patent.title}}</el-tag>
+            <span>{{patent.publicDate}}</span>
           </div>
 
           <div class="biblio_title">
             <h1>
-              全球抗疫为推动构建人类命运共同体顺势塑局全球抗疫为推动构建人类命运共同体顺势塑局全球抗疫为推动构建
+              {{patent.title}}
             </h1>
           </div>
 
           <div class="author_info">
             <span id="author" style="font-weight: bold;"
-              >平田一郎（发明人）</span
+              >{{patent.desinger}}</span
             >
-            <span id="author">平田一郎（代理人）</span>
-            <span id="agency">江田岛海军学院</span>
+            <span id="author">{{patent.owner}}</span>
+            <span id="agency">{{patent.agency}}</span>
           </div>
 
           <div class="summary">
             <span id="item-title">摘要</span>
             <span id="text"
-              >新冠肺炎疫情在全球的蔓延,再次证明了人类是一个休戚与共的命运共同体,昭示着人类命运共同体不仅是一种理念,更是一种实践。尽管目前还没有足够的客观条件推动人类命运共同体图景的完全实现,但全球抗疫为人类命运共同体明晰了构建框架。当前,全球抗疫可从主体、圈层、内容、路径等多个维度入手统筹设计:主体之维,要从人类命运共同体的主体到中介,协同构建;圈层之维,要从中华民族共同体到人类命运共同体,合力打造;内容之维,要从政治共同体到卫生健康共同体,全方位构建;路径之维,要从达成共识到保障机制,层层推进。</span
+              >{{patent.summary}}</span
+            >
+          </div>
+          <div class="summary">
+            <span id="item-title">描述</span>
+            <span id="text"
+              >{{patent.description}}</span
             >
           </div>
 
           <div class="other_info">
-            <span id="item-title">关键词</span>
-            <span id="text">人类命运共同体;实践进路;多维视角;</span>
+            <span id="item-title">类型</span>
+            <span id="text">{{patent.type}}</span>
           </div>
 
           <div class="other_info">
-            <span id="item-title">DOI</span>
-            <span id="text">10.15981/j.cnki.dongyueluncong.2020.11.006</span>
+            <span id="item-title">状态</span>
+            <span id="text">{{patent.status}}</span>
           </div>
 
           <div class="bibliopage btns_area">
@@ -138,8 +144,70 @@
   </el-container>
 </template>
 
-<script src="../assets/js/Patent.js"></script>
+<script>
+import Nav from "@/components/Nav.vue";
 
+export default {
+  name:'Patent',
+  components:{
+    Nav
+  },
+  data:function(){
+    return {
+      id:"",
+      patent:{
+        _id:"",
+        title:"基于二维快速自旋回波的磁共振成像方法和装置",
+        summary:"",
+        type:"发明专利",
+        patentID:'CN201811618720.9',
+        applyDate:'西门子(深圳)磁共振有限公司',
+        publishID:"CN111381204A",
+        publicDate:"王玉宇,翁得河,周堃,张乐",
+        mainTypeNumber:"G01R33/54(2006.01) G G01 G01R G01R33",
+        typeNumber:"G01R33/54(2006.01), A61B5/055(2006.01), G01R33/54, A61B5/055",
+        owner:"王玉宇,翁得河,周堃,张乐",
+        desinger:"森上下士",
+        address:"518057 广东省深圳市高新区中区高新中二道西门子磁共振园",
+        agency:"",
+        agent:"",
+        code : '广东;44',
+        description:"",
+        status:"在审",
+        read:0,
+        change:false,
+        sort:null
+      }
+    }
+  },
+  created:function(){
+    var _this = this;
+    this.$axios({
+      method: "get",
+      url: "/user/patent",
+      params: {
+        patentID: _this.id,
+      },
+      headers: {
+        token: window.localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.data.msg == "successfully") {
+          console.log("get success");
+          // console.log(this.paper);
+          this.patent = response.data.patent;
+        } else console.log(response.data.msg);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+  methods:{
+    
+  }
+}
+</script>
 <style scoped>
 @import "../assets/css/global.css";
 @import "../assets/css/biblio.css";
