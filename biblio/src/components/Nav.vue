@@ -184,7 +184,7 @@
         <el-table-column property="content" label="" width="auto">
           <template slot-scope="scope">
             <el-collapse class="message_item" accordion>
-              <el-avatar :size="30">user</el-avatar>
+              <el-avatar :size="30" :src="scope.row.avatar"></el-avatar>
               <el-collapse-item
                 class="message_content"
                 :title="scope.row.from"
