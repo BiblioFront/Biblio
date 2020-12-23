@@ -13,14 +13,16 @@
         label-width="0px"
       >
         <h2 class="login-title"><b>登录</b></h2>
-        <el-form-item prop="phone">
+
+        <el-form-item prop="username">
           <el-input
             type="text"
-            v-model="loginForm.phone"
+            v-model="loginForm.username"
             auto-complete="off"
-            placeholder="手机号/邮箱号"
+            placeholder="用户名"
           ></el-input>
         </el-form-item>
+
         <el-form-item prop="password">
           <el-input
             type="password"
@@ -29,6 +31,7 @@
             placeholder="密码"
           ></el-input>
         </el-form-item>
+
         <el-form-item class="button-item" style="margin-bottom: 10px">
           <el-button
             class="mainbtns"
@@ -36,6 +39,7 @@
             @click.native.prevent="reset"
             >重 置</el-button
           >
+
           <el-button
             class="mainbtns"
             type="primary"
@@ -44,6 +48,7 @@
             >登 录</el-button
           >
         </el-form-item>
+
         <el-form-item class="register-item" style="margin: 0 0 0 2px">
           <el-checkbox
             class="login_remember"
@@ -51,7 +56,9 @@
             label-position="left"
             ><span>记住密码</span>
           </el-checkbox>
+
           <span style="color: #505458; margin-left: 130px">还没有账号?</span>
+
           <router-link to="/register">
             <el-button id="regbtn" type="text">立即注册</el-button>
           </router-link>
@@ -62,7 +69,6 @@
 </template>
 
 <script src="../assets/js/Login.js"></script>
-
 
 <style scoped>
 @import "../assets/css/global.css";

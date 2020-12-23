@@ -34,14 +34,15 @@
         </div>
 
         <div class="navcmp btns_area">
-          <div class="afterlg" v-if="lg == 1">
+          <div class="afterlg" v-if="isLogin">
             <el-dropdown @command="userCommand">
-              <el-avatar :src="infoform.avatar" @click="route2Info">
-                <svg-icon name="user"></svg-icon>
+              <el-avatar :src="userInfo.avatar" @click.native="route2Info">
               </el-avatar>
               <el-dropdown-menu class="navcmp" slot="dropdown">
                 <el-dropdown-item command="info">账号信息</el-dropdown-item>
-                <el-dropdown-item command="gate">学者信息</el-dropdown-item>
+                <el-dropdown-item command="gate" v-if="userInfo.auth"
+                  >学者信息</el-dropdown-item
+                >
                 <el-dropdown-item command="lgout" divided
                   >退出登录</el-dropdown-item
                 >
@@ -159,7 +160,7 @@
             ></el-button>
           </div>
 
-          <div class="beforelg" v-else-if="lg == 0">
+          <div class="beforelg" v-if="!isLogin">
             <span id="welcome">欢迎</span>
             <el-button @click.native="route2Login()">登录</el-button>
             <el-button @click.native="route2Register()">注册</el-button>
@@ -183,7 +184,7 @@
         <el-table-column property="content" label="" width="auto">
           <template slot-scope="scope">
             <el-collapse class="message_item" accordion>
-              <el-avatar :size="30">user</el-avatar>
+              <el-avatar :size="30" :src="scope.row.avatar"></el-avatar>
               <el-collapse-item
                 class="message_content"
                 :title="scope.row.from"

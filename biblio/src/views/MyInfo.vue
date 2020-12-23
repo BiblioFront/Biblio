@@ -13,8 +13,8 @@
             <el-button
               class="gatebtn"
               icon="el-icon-s-shop"
-              v-if="isAuth"
-              @click="gotoGate()"
+              v-if="userInfo.auth"
+              @click="route2Gate()"
               >个人门户</el-button
             >
           </el-col>
@@ -22,27 +22,21 @@
 
         <div class="info--main-content">
           <div class="info-table">
-            <!-- <div v-if="!info.photo">暂无</div>
-                            <el-image style="width: 100px; height: 100px" :src="infoform.avatar" v-if="info.photo"></el-image> -->
-
-            <!-- <img src="../assets/img/scholar_avatar.jpg" alt="" /> -->
-            <!-- <el-image style="width: 100px; height: 100px" :src="infoform.avatar" v-if="infoform.avatar"></el-image> -->
             <el-upload
-              class="avatar-uploader"
               action="/user"
-              name="avator"
+              name="avatar"
               style="width: 100px; height: 100px"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
-              :http-request="uploadAvator"
+              :http-request="uploadAvatar"
               :before-upload="beforeAvatarUpload"
               accept="image/*"
             >
-              <div v-if="!infoform.avatar" class="info-avatar">暂无</div>
+              <div v-if="!userInfo.avatar" class="info-avatar">暂无</div>
               <el-image
-                v-if="infoform.avatar"
+                v-if="userInfo.avatar"
                 style="width: 100px; height: 100px; border-radius: 50%;"
-                :src="infoform.avatar"
+                :src="userInfo.avatar"
                 class="avatar"
               ></el-image>
             </el-upload>
@@ -52,17 +46,17 @@
           <el-divider direction="vertical" style="height:200px;"></el-divider>
 
           <el-form
-            ref="infoform"
-            :model="infoform"
+            ref="userInfo"
+            :model="userInfo"
             :rules="rules"
             label-width="80px"
             style="width:60%;margin-left:2vw;"
           >
-            <el-form-item label="用户名" style="" prop="username">
+            <el-form-item label="昵称" style="" prop="nickname">
               <el-col :span="18">
                 <el-input
                   prefix-icon="el-icon-user"
-                  v-model="infoform.username"
+                  v-model="userInfo.nickname"
                   :disabled="true"
                 ></el-input>
               </el-col>
@@ -80,7 +74,7 @@
               <el-col :span="18">
                 <el-input
                   prefix-icon="el-icon-message"
-                  v-model="infoform.email"
+                  v-model="userInfo.email"
                   :disabled="true"
                 ></el-input>
               </el-col>
@@ -98,7 +92,7 @@
               <el-col :span="18">
                 <el-input
                   prefix-icon="el-icon-lock"
-                  v-model="infoform.password"
+                  v-model="userInfo.password"
                   :disabled="true"
                   type="password"
                 ></el-input>
@@ -115,7 +109,7 @@
           </el-form>
 
           <el-dialog title="修改用户名" :visible.sync="editname">
-            <el-form :model="infoform">
+            <el-form :model="userInfo">
               <el-form-item label="新昵称" style="margin-left:30px">
                 <el-input
                   v-model="newname"
@@ -131,21 +125,21 @@
           </el-dialog>
 
           <el-dialog title="修改邮箱" :visible.sync="editemail">
-            <el-form ref="infoform_chan" :model="infoform_chan" :rules="rules">
+            <el-form ref="userInfo_chan" :model="userInfo_chan" :rules="rules">
               <el-form-item
                 label="输入新邮箱"
                 style="margin-left:30px"
                 prop="email"
               >
                 <el-input
-                  v-model="infoform_chan.email"
+                  v-model="userInfo_chan.email"
                   autocomplete="off"
                   style="width:280px"
                   placeholder="请输入新邮箱"
                 ></el-input>
                 <el-button
                   style="margin-left:30px"
-                  @click="SaveEditemail('infoform_chan')"
+                  @click="SaveEditemail('userInfo_chan')"
                   size="medium"
                   >保存修改</el-button
                 >
@@ -154,7 +148,7 @@
           </el-dialog>
 
           <el-dialog title="修改密码" :visible.sync="editpassword">
-            <el-form ref="infoform" :model="infoform">
+            <el-form ref="userInfo" :model="userInfo">
               <el-form-item label="输入原密码" style="margin-left:30px">
                 <el-input
                   v-model="oldpassword"
@@ -188,7 +182,7 @@
 
 <style scoped>
 @import "../assets/css/global.css";
-@import "../assets/css/myinfo.css";
+@import "../assets/css/Myinfo.css";
 .user_info {
   width: 100%;
   height: 105px;

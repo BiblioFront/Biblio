@@ -10,6 +10,11 @@ export default {
   },
   data() {
     return {
+      //userInfo:
+      userInfo: this.$store.getters.getUser,
+      defaultAvatar: "../assets/img/scholar_avatar_default.jpg",
+      isLogin: this.$store.getters.isLogin,
+
       //searchParams:
       searchOptions: [
         {
@@ -79,20 +84,6 @@ export default {
       searchInput: this.$route.query.wd || "",
       searchResult: this.inheritSearchResult,
 
-      //userParams:
-      infoform: {
-        username: "",
-        password: "",
-        email: "",
-        nickname: "",
-        avator: "",
-        auth: "",
-        admin: false,
-        token: "",
-        id: "",
-        verification_code: "",
-      },
-
       //messageParams:
       messageData: [
         {
@@ -137,7 +128,6 @@ export default {
           content: "hi!",
         },
       ],
-      lg: 1,
       drawer: false,
       formsee: false,
       form: [
@@ -183,36 +173,29 @@ export default {
   mounted() {
     this.$axios({
       method: "get",
-      url: "/user",
-      params: {},
-      headers: {
-        token: window.localStorage.getItem("token"),
-      },
-    });
-
-    this.$axios({
-      method: "get",
       url: "/user/message",
       params: {},
       headers: {
         token: window.localStorage.getItem("token"),
       },
-    })
-      .then((response) => {
-        console.log(response);
-        // this.infoform = response.data.information;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    });
+    // .then((response) => {
+    //   //console.log(response);
+    // })
+    // .catch((error) => {
+    //   //console.log(error);
+    // });
+
+    //console.log(this.isLogin);
   },
   methods: {
     userCommand(command) {
-      if (command == "info") this.$router.push({ path: "/info" });
-      else if (command == "gate") this.$router.push({ path: "/gate" });
+      if (command == "info") this.route2Info();
+      else if (command == "gate") this.route2Gate();
       else if (command == "lgout") {
-        window.localStorage.clear();
-        this.$router.push({ path: "/login" });
+        this.$store.commit("REMOVE_USERINFO");
+        this.$router.push({ path: "/" });
+        this.$router.go(0);
       }
     },
     subscribeCommand() {},
@@ -221,14 +204,52 @@ export default {
     deleteLike() {},
     clearSubscribeList() {},
     clearLike() {},
-    route2Info() {
-      this.$router.push({ path: "/info" });
-    },
     deleteRow(index, rows) {
-      rows.splice(index, 1);
+      if(rows==this.messageData){
+        this.$axios({
+          method:'delete',
+          url:'/user/message',
+          params:{
+            messageID:this.messageData[index].id
+          },
+          headers: {
+            token: window.localStorage.getItem("token"),
+          },
+        }).then(response => {
+          if(response.data.msg=="Delete successfully"){
+            rows.splice(index, 1);
+          }
+          else
+            this.$message.error("删除失败");
+        }).catch(error => {
+          console.log(error);
+          this.$message.error("删除失败");
+        })
+      }
+
     },
     deleteAll() {
-      this.messageData.splice();
+      for(var i=this.messageData.length-1;i>=0;i--){
+        this.$axios({
+          method:'delete',
+          url:'/user/message',
+          params:{
+            messageID:this.messageData[i].id
+          },
+          headers: {
+            token: window.localStorage.getItem("token"),
+          },
+        }).then(response => {
+          if(response.data.msg=="Delete successfully"){
+            this.messageData.splice(i, 1);
+          }
+          else
+            this.$message.error("删除失败");
+        }).catch(error => {
+          console.log(error);
+          this.$message.error("删除失败");
+        })
+      }
     },
     route2Home() {
       this.$router.push({ path: "/" });
@@ -239,37 +260,53 @@ export default {
     route2Register() {
       this.$router.push({ path: "/register" });
     },
+    route2Info() {
+      this.$router.push({
+        path: "/info",
+        query: {
+          id: this.userInfo.id,
+        },
+      });
+    },
     route2Gate() {
-      this.$router.push({ path: "/gate" });
+      this.$router.push({
+        path: "/gate",
+        query: {
+          id: this.userInfo.auth,
+        },
+      });
     },
     setdrawer() {
       this.drawer = true;
       console.log(this.drawer);
+      this.messageData=[];
+      this.$axios({
+        method:'get',
+        url:'/user/message',
+        params:{
+          
+        },
+        headers: {
+          token: window.localStorage.getItem("token"),
+        },
+      }).then(response => {
+        var messages=response.data.messageList
+        for(var i=0;i<messages.length;i++){
+          var messageObject={};
+          messageObject.from=messages[i].sender.username;
+          messageObject.time=messages[i].date;
+          messageObject.id=messages[i].id;
+          messageObject.content=messages[i].content;
+          messageObject.avator=messages[i].sender.avator;
+          this.messageData.push(messageObject);
+        }
+      }).catch(error => {
+        console.log(error);
+      })
     },
     showForm() {
       this.formsee = true;
-    },
-    valueExtrat() {
-      switch (this.value[1]) {
-        case "paper_title":
-          return "title";
-        case "paper_author":
-          return "author";
-        case "paper_doi":
-          return "doi";
-        case "paper_keywords":
-          return "keywords";
-        case "patent_title":
-          return "title";
-        case "patent_owner":
-          return "owner";
-        case "project_title":
-          return "title";
-        case "project_author":
-          return "author";
-        case "project_keywords":
-          return "keywords";
-      }
+      
     },
     route2Search() {
       if (this.searchInput == "") {
@@ -281,114 +318,8 @@ export default {
         });
         console.log("Searching error: No Input!");
       } else {
-        console.log("Searching '" + this.value + "'...");
-        if (this.value[0] == "paper") {
-          this.paperSearch();
-        } else if (this.value[0] == "patent") {
-          this.patentSearch();
-        } else if (this.value[0] == "project") {
-          this.projectSearch();
-        } else if (this.value[0] == "scholar") {
-          this.scholarSearch();
-        } else if (this.value[0] == "all") {
-          this.allSearch();
-        }
-        console.log("Search Successful!");
-        this.$router.push({
-          path: "/search",
-          query: { wd: this.searchInput },
-        });
+        this.$search.$boot(this.value, this.searchInput, 1, "");
       }
-    },
-    paperSearch() {
-      var searchForm = {
-        field: this.valueExtrat(),
-        words: this.searchInput,
-        page: 1,
-        category: "",
-      };
-      //console.log(searchForm);
-      const _this = this;
-      this.$axios.get("/search/paper", searchForm).then((res) => {
-        //console.log(res.data);
-        _this.searchResult.total = res.data.total;
-        _this.searchResult.paperData = res.data;
-        _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
-      });
-    },
-    patentSearch() {
-      var searchForm = {
-        field: this.valueExtrat(),
-        words: this.searchInput,
-        page: 1,
-      };
-      //console.log(searchForm);
-      const _this = this;
-      this.$axios.get("/search/patent", searchForm).then((res) => {
-        //console.log(res.data);
-        _this.searchResult.total = res.data.total;
-        _this.searchResult.patentData = res.data;
-        _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
-      });
-    },
-    projectSearch() {
-      var searchForm = {
-        field: this.valueExtrat(),
-        words: this.searchInput,
-        page: 1,
-        category: "",
-      };
-      //console.log(searchForm);
-      const _this = this;
-      this.$axios.get("/search/project", searchForm).then((res) => {
-        //console.log(res.data);
-        _this.searchResult.total = res.data.total;
-        _this.searchResult.projectData = res.data;
-        _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
-      });
-    },
-    scholarSearch() {
-      var searchForm = {
-        field: "name",
-        words: this.searchInput,
-        page: 1,
-      };
-      console.log(searchForm);
-      const _this = this;
-      this.$axios.get("/search/researcher", searchForm).then((res) => {
-        console.log(res.data);
-        _this.searchResult.total = res.data.total;
-        _this.searchResult.scholarData = res.data;
-        _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
-      });
-    },
-    allSearch() {
-      var searchForm = {
-        field: "title",
-        words: this.searchInput,
-        page: 1,
-        category: "",
-      };
-      //console.log(searchForm);
-      const _this = this;
-      var total = 0;
-      this.$axios.get("/search/paper", searchForm).then((res) => {
-        //console.log(res);
-        total = res.data.total;
-        _this.searchResult.paperData = res.data;
-        _this.$axios.get("/search/project", searchForm).then((res) => {
-          //console.log(res);
-          total += res.data.total;
-          _this.searchResult.total = total;
-          _this.searchResult.projectData = res.data;
-          _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
-        });
-      });
-      // this.$axios.post("/search/patent", searchForm).then((res) => {
-      //   //console.log(res.data);
-      //   total += res.data.total;
-      //   var item = res.data;
-      // });
     },
     findUser() {
       this.$axios({
