@@ -192,7 +192,11 @@
       width="600px"
       class="advanced_search-box"
     >
-      <el-form label-width="80px" :model="advancedSearchInput">
+      <el-form
+        label-width="80px"
+        :rules="advancedSearchInputRules"
+        :model="advancedSearchInput"
+      >
         <el-form-item label="搜索范围">
           <el-select
             v-model="advancedSearchSelectValue"
@@ -207,6 +211,7 @@
         <el-form
           label-width="80px"
           :model="advancedSearchInput"
+          :rules="advancedSearchInputRules"
           v-if="advancedSearchSelectValue == 'paper'"
         >
           <el-form
@@ -234,6 +239,7 @@
           <el-form
             label-width="80px"
             :inline="false"
+            :rules="advancedSearchInputRules"
             :model="advancedSearchInput"
           >
             <el-form-item label="期刊名">
@@ -247,19 +253,21 @@
             <el-form
               label-width="80px"
               :inline="true"
+              status-icon=""
+              :rules="advancedSearchInputRules"
               :model="advancedSearchInput"
             >
-              <el-form-item label="发布年份">
+              <el-form-item label="发布年份" prop="time">
                 <el-input
-                  v-model="advancedSearchInput.paper.date.lower"
+                  v-model.number="advancedSearchInput.paper.date.lower"
                   style="width:100px"
                   placeholder="下限"
                 ></el-input>
               </el-form-item>
 
-              <el-form-item label="">
+              <el-form-item label="" prop="time">
                 <el-input
-                  v-model="advancedSearchInput.paper.date.upper"
+                  v-model.number="advancedSearchInput.paper.date.upper"
                   style="width:100px"
                   placeholder="上限"
                 ></el-input>
@@ -269,7 +277,7 @@
 
           <el-form-item label="关键词">
             <el-input
-              v-model="advancedSearchInput.keywords"
+              v-model="advancedSearchInput.paper.keywords"
               style="width:450px"
               placeholder="关键词"
             ></el-input>
@@ -418,9 +426,8 @@
 
         <el-form-item>
           <el-button @click="advancedSearchBox = false">取 消</el-button>
-          <el-button type="primary" @click="advancedSearchBox = false"
-            >搜 索</el-button
-          >
+          <el-button @click="resetAS">重 置</el-button>
+          <el-button type="primary" @click="bootAS">搜 索</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -432,6 +439,7 @@
 <style scoped>
 @import "../assets/css/global.css";
 @import "../assets/css/home.css";
+
 .el-select-dropdown__item {
   width: 100%;
   height: 40px;

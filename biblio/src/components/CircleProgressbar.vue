@@ -1,6 +1,11 @@
 <template>
   <div class="frame">
-    <div ref="circleProgressbar" :id="id" :class="className"></div>
+    <div
+      ref="circleProgressbar"
+      :id="id"
+      :class="className"
+      :progress="progress"
+    ></div>
     <div id="circle-background--outside">
       <div id="circle-background--inner"></div>
     </div>

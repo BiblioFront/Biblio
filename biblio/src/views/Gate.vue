@@ -10,18 +10,21 @@
 
         <div class="gatepage scholar_info">
           <div>
-            <span id="name">马保国</span>
-            <svg-icon name="verify"></svg-icon>
+            <span id="name">{{ all.scholarInfo.name }}</span>
+            <svg-icon name="verify" v-if="all.isFollow"></svg-icon>
           </div>
 
-          <span id="institution">混元形意太极门</span>
-          <span id="subject">学科：掌门人</span>
+          <span id="institution">{{ all.scholarInfo.organization }}</span>
+          <span id="subject">{{ all.scholarInfo.field }}</span>
         </div>
 
         <div class="scholar_btns_area">
-          <button @click="verification">我要认证</button>
+          <button @click="verification" v-if="!all.isFollow">我要认证</button>
           <button>关注</button>
-          <button @click="uploadAchievementDialogVisible = true">
+          <button
+            @click="uploadAchievementDialogVisible = true"
+            v-if="all.isAuth"
+          >
             上传成果
           </button>
         </div>
@@ -29,24 +32,24 @@
 
       <div class="research_info">
         <div class="achievements statisticbar">
-          <CircleProgressbar title="论文" />
-          <CircleProgressbar title="专利" />
-          <CircleProgressbar title="科研项目" />
+          <CircleProgressbar title="论文" :progress="paperProgress" />
+          <CircleProgressbar title="专利" :progress="patentProgress" />
+          <CircleProgressbar title="科研项目" :progress="projectProgress" />
 
           <div class="statistic_table">
             <span>总篇数</span>
-            <span>被引数</span>
-            <span>3</span>
+            <span>阅读量</span>
+            <span>{{ biblioCount }}</span>
             <span>500k</span>
           </div>
         </div>
 
         <div class="achievements">
-          <WordsCloud :data="scholarKeywords" />
-          <LineMap :yearIndex="yearIndex" :biblioIndex="biblioIndex" />
+          <WordsCloud :data="all.scholarKeywords" />
+          <LineMap :data="all.publishYear" />
         </div>
 
-        <Collaborator :data="collaborators" />
+        <Collaborator :data="all.collaborators" />
       </div>
     </div>
 
@@ -373,11 +376,15 @@
       </div>
 
       <div class="achievements_content">
-        <div class="achievements_item">
+        <div
+          class="achievements_item"
+          v-for="item in all.paper.info"
+          :key="item._id"
+        >
           <div class="item__above">
             <div id="title">
-              <span>[学术期刊]</span>
-              <span>闪电五连鞭</span>
+              <span>[论文]</span>
+              <span>{{ item.title }}</span>
             </div>
 
             <div class="item__btns_area">
@@ -388,54 +395,88 @@
           </div>
 
           <div id="author">
-            <span
-              >马保国1 马保国2 马保国3 马保国4 马保国5 马保国6
-              马保国6马保国6马保国6马保国6</span
-            >
-            <span>《这是出处》</span>
-            <span>被引量: 100k</span>
+            <span>{{ item.author }}</span>
+            <span>{{ item.journal }}</span>
+            <span v-if="item.read">{{ item.read }}阅读</span>
+            <span v-if="item.like">{{ item.like }}收藏</span>
           </div>
 
           <div id="summary">
-            <button>摘要</button>
-            <p>
-              二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时日本的军国主义海军非常强大，在当时盛极一时，昭和9年四月，江田岛海军兵学校将培育优秀的海军航空士官，这一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的
-            </p>
+            <p>{{ item.summary }}</p>
           </div>
         </div>
-        <div class="achievements_item">
+
+        <div
+          class="achievements_item"
+          v-for="item in all.patent.info"
+          :key="item._id"
+        >
           <div class="item__above">
             <div id="title">
-              <span>[学术期刊]</span>
-              <span
-                >健身房的年轻后生不讲武德偷袭马老师，把马保国老师的眼睛给蹭了一下</span
-              >
+              <span>[专利]</span>
+              <span>{{ item.title }}</span>
             </div>
 
             <div class="item__btns_area">
-              <button>收藏</button>
-              <button>相关文章</button>
-              <button>分享</button>
+              <button><svg-icon name="like"></svg-icon></button>
+              <button><svg-icon name="relative"></svg-icon></button>
+              <button><svg-icon name="share"></svg-icon></button>
             </div>
           </div>
 
           <div id="author">
-            <span>马保国 90kg年轻人 80kg年轻人</span>
-            <span>《这是出处》</span>
-            <span>被引量: 1000w</span>
+            <span>{{ item.designer }}</span>
+            <span>{{ item.owner }}</span>
+            <span v-if="item.read">{{ item.read }}阅读</span>
+            <span v-if="item.like">{{ item.like }}收藏</span>
           </div>
 
           <div id="summary">
-            <button>摘要</button>
-            <p>
-              二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时日本的军国主义海军非常强大，在当时盛极一时，昭和9年四月，江田岛海军兵学校将培育优秀的海军航空士官，这一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的
-            </p>
+            <p>{{ item.summary }}</p>
+          </div>
+        </div>
+
+        <div
+          class="achievements_item"
+          v-for="item in all.project.info"
+          :key="item._id"
+        >
+          <div class="item__above">
+            <div id="title">
+              <span>[科研项目]</span>
+              <span>{{ item.title }}</span>
+            </div>
+
+            <div class="item__btns_area">
+              <button><svg-icon name="like"></svg-icon></button>
+              <button><svg-icon name="relative"></svg-icon></button>
+              <button><svg-icon name="share"></svg-icon></button>
+            </div>
+          </div>
+
+          <div id="author">
+            <span>{{ item.author }}</span>
+            <span>{{ item.company }}</span>
+            <span>{{ item.year }}</span>
+            <span v-if="item.read">{{ item.read }}阅读</span>
+          </div>
+
+          <div id="summary">
+            <p>{{ item.summary }}</p>
           </div>
         </div>
       </div>
 
-      <div class="pageturn">
-        <span>&#60; 1 2 3 4 5 6 7 ... 50 &#62;</span>
+      <div class="pageturn" v-if="biblioCount > 20">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="biblioCount"
+          :pager-count="11"
+          :page-size="20"
+          @current-change="pageTurnTo"
+        >
+        </el-pagination>
       </div>
     </div>
 
@@ -448,7 +489,7 @@
 <script src="../assets/js/Gate.js"></script>
 
 <style scoped>
-@import '../assets/css/global.css';
-@import '../assets/css/gate_main.css';
-@import '../assets/css/achievements.css';
+@import "../assets/css/global.css";
+@import "../assets/css/gate_main.css";
+@import "../assets/css/achievements.css";
 </style>

@@ -75,8 +75,8 @@ export default {
           label: "学者",
         },
       ],
-      value: ["all"],
-      searchInput: this.$route.query.wd,
+      value: this.$route.query.fd || ["all"],
+      searchInput: this.$route.query.wd || "",
       searchResult: this.inheritSearchResult,
 
       //userParams:
