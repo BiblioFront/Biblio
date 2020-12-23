@@ -4,6 +4,22 @@ import Nav from "@/components/Nav.vue";
 export default {
   name: "Home",
   data() {
+    var validateTime = (rule, value, callback) => {
+      if (value == "") {
+        return callback(new Error("年份不能为空"));
+      }
+      setTimeout(() => {
+        if (!Number.isInteger(value)) {
+          callback(new Error("年份必须为数字"));
+        } else {
+          if (value < 1900 || value > 2020) {
+            callback(new Error("请输入正确的年份"));
+          } else {
+            callback();
+          }
+        }
+      }, 1000);
+    };
     return {
       //SearchParams:
       searchOptions: [
@@ -82,8 +98,8 @@ export default {
           author: "",
           journal: "",
           date: {
-            upper: 2020,
-            lower: 1900,
+            upper: "",
+            lower: "",
           },
           keywords: "",
         },
@@ -111,12 +127,45 @@ export default {
           },
         },
       },
+      advancedSearchInputRules: {
+        time: [
+          {
+            validator: validateTime,
+            trigger: "blur",
+          },
+        ],
+      },
+
+      //searchResult:
       searchResult: {
         total: 0,
+        isAll: false,
         paperData: {},
         patentData: {},
         projectData: {},
         scholarData: {},
+      },
+
+      //hotspot:
+      hotspot: {
+        biblio: [
+          {
+            _id: "1231",
+            type: "paper",
+            title: "奥术大师多的",
+            read: 123,
+          },
+        ],
+        category: [
+          {
+            sort: "物理学",
+            count: 1231,
+          },
+          {
+            sort: "化学",
+            count: 1123,
+          },
+        ],
       },
     };
   },
@@ -124,28 +173,6 @@ export default {
     Nav,
   },
   methods: {
-    valueExtrat() {
-      switch (this.value[1]) {
-        case "paper_title":
-          return "title";
-        case "paper_author":
-          return "author";
-        case "paper_doi":
-          return "doi";
-        case "paper_keywords":
-          return "keywords";
-        case "patent_title":
-          return "title";
-        case "patent_owner":
-          return "owner";
-        case "project_title":
-          return "title";
-        case "project_author":
-          return "author";
-        case "project_keywords":
-          return "keywords";
-      }
-    },
     route2Search() {
       if (this.searchInput == "") {
         this.$message({
@@ -156,121 +183,125 @@ export default {
         });
         console.log("Searching error: No Input!");
       } else {
-        console.log("Searching '" + this.value[0] + "'...");
-        if (this.value[0] == "paper") {
-          this.paperSearch();
-        } else if (this.value[0] == "patent") {
-          this.patentSearch();
-        } else if (this.value[0] == "project") {
-          this.projectSearch();
-        } else if (this.value[0] == "scholar") {
-          this.scholarSearch();
-        } else if (this.value[0] == "all") {
-          this.allSearch();
-        }
-        console.log("Search Successful!");
-        this.$router.push({
-          path: "/search",
-          query: { wd: this.searchInput },
-        });
+        this.$search.$boot(this.value, this.searchInput, 1, "");
       }
     },
-    paperSearch() {
-      var searchForm = {
-        field: this.valueExtrat(),
-        words: this.searchInput,
-        page: 1,
-        category: "",
+    resetAS() {
+      console.log("Home Action: Reset advanced search.");
+      const paperDefault = {
+        title: "",
+        author: "",
+        journal: "",
+        date: {
+          upper: 2020,
+          lower: 1900,
+        },
+        keywords: "",
       };
-      console.log(searchForm);
-      const _this = this;
-      this.$axios.post("/search/paper", searchForm).then((res) => {
-        console.log(res.data);
-        _this.searchResult.total = res.data.total;
-        _this.searchResult.paperData = res.data;
-        _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
-      });
-    },
-    patentSearch() {
-      var searchForm = {
-        field: this.valueExtrat(),
-        words: this.searchInput,
-        page: 1,
+      const patentDefault = {
+        title: "",
+        designer: "",
+        owner: "",
+        applyDate: {
+          upper: 2020,
+          lower: 1900,
+        },
+        publicDate: {
+          upper: 2020,
+          lower: 1900,
+        },
       };
-      //console.log(searchForm);
-      const _this = this;
-      this.$axios.post("/search/patent", searchForm).then((res) => {
-        //console.log(res.data);
-        _this.searchResult.total = res.data.total;
-        _this.searchResult.patentData = res.data;
-        _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
-      });
-    },
-    projectSearch() {
-      var searchForm = {
-        field: this.valueExtrat(),
-        words: this.searchInput,
-        page: 1,
-        category: "",
+      const projectDefault = {
+        title: "",
+        author: "",
+        company: "",
+        keywords: "",
+        year: {
+          upper: 2020,
+          lower: 1900,
+        },
       };
-      //console.log(searchForm);
       const _this = this;
-      this.$axios.post("/search/project", searchForm).then((res) => {
-        //console.log(res.data);
-        _this.searchResult.total = res.data.total;
-        _this.searchResult.projectData = res.data;
-        _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
-      });
-    },
-    scholarSearch() {
-      var searchForm = {
-        field: "name",
-        words: this.searchInput,
-        page: 1,
-      };
-      //console.log(searchForm);
-      const _this = this;
-      this.$axios.post("/search/researcher", searchForm).then((res) => {
-        //console.log(res.data);
-        _this.searchResult.total = res.data.total;
-        _this.searchResult.scholarData = res.data;
-        _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
-      });
-    },
-    allSearch() {
-      const _this = this;
-      var total = 0;
-      this.$axios
-        .post("/search/paper", {
-          field: "title",
-          words: this.searchInput,
-          page: 1,
-          category: "",
-        })
-        .then((res) => {
-          //console.log(res);
-          total = res.data.total;
-          _this.searchResult.paperData = res.data;
-          _this.$axios
-            .post("/search/project", {
-              field: "title",
-              words: this.searchInput,
-              page: 1,
-              category: "",
-            })
-            .then((res) => {
-              //console.log(res);
-              total += res.data.total;
-              _this.searchResult.total = total;
-              _this.searchResult.projectData = res.data;
-              _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
+
+      var isModified = true;
+      switch (this.advancedSearchSelectValue) {
+        case "paper":
+          if (
+            JSON.stringify(_this.advancedSearchInput.paper) ==
+            JSON.stringify(paperDefault)
+          )
+            isModified = false;
+          break;
+        case "patent":
+          if (
+            JSON.stringify(_this.advancedSearchInput.patent) ==
+            JSON.stringify(patentDefault)
+          )
+            isModified = false;
+          break;
+        case "project":
+          if (
+            JSON.stringify(_this.advancedSearchInput.project) ==
+            JSON.stringify(projectDefault)
+          )
+            isModified = false;
+      }
+
+      console.log(
+        "Current advancedSearchInput.paper:" +
+          JSON.stringify(_this.advancedSearchInput.paper)
+      );
+      console.log(
+        "Current advancedSearchInput.patent:" +
+          JSON.stringify(_this.advancedSearchInput.patent)
+      );
+      console.log(
+        "Current advancedSearchInput.project:" +
+          JSON.stringify(_this.advancedSearchInput.project)
+      );
+      if (isModified) {
+        this.$confirm("", "您确定要重置填写的信息吗？", {
+          center: true,
+          confirmButtonText: "确认重置",
+          cancelButtonText: "取 消",
+          callback: (action) => {
+            if (action == "confirm") {
+              switch (this.advancedSearchSelectValue) {
+                case "paper":
+                  _this.advancedSearchInput.paper = paperDefault;
+                  break;
+                case "patent":
+                  _this.advancedSearchInput.patent = patentDefault;
+                  break;
+                case "project":
+                  _this.advancedSearchInput.project = projectDefault;
+              }
+            }
+            console.log("Home Action: Reset advanced search SUCCESS!");
+            this.$message({
+              type: "info",
+              message: "信息已重置",
             });
+          },
         });
-      // this.$axios.post("/search/patent", searchForm).then((res) => {
-      //   //console.log(res.data);
-      //   total += res.data.total;
-      //   var item = res.data;
-      // });
+      } else {
+        console.log(
+          "[isModified:" +
+            isModified +
+            "] AS warning: No modifications were detected!"
+        );
+      }
+    },
+    bootAS() {
+      this.advancedSearchBox = false;
+    },
+    route2Biblio(type, id) {
+      this.$router.push({
+        path: "/" + type,
+        query: {
+          id: id,
+        },
+      });
     },
   },
 };

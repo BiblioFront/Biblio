@@ -15,19 +15,31 @@
         <div class="scholar_found">
           <span id="interact">您是否要寻找该学者？</span>
 
-          <div class="searchpage scholar_info">
+          <div
+            class="searchpage scholar_info"
+            @click="route2Gate(resList.scholarData.item[0]._id)"
+          >
             <div id="avatar">
               <img
-                src="../assets/img/scholar_avatar.jpg"
+                src="../assets/img/scholar_avatar_default.jpg"
                 alt="scholar_avatar"
               />
             </div>
 
             <div class="details">
-              <span id="name">马保国</span>
-              <div id="verified"></div>
-              <span id="institution">混元形意太极门</span>
-              <span id="subject">学科：掌门人</span>
+              <span id="name">{{ resList.scholarData.item[0].name }}</span>
+              <div
+                id="verified"
+                v-if="resList.scholarData.item[0].userID"
+              ></div>
+              <span
+                id="institution"
+                v-if="resList.scholarData.item[0].organization"
+                >{{ resList.scholarData.item[0].organization }}</span
+              >
+              <span id="subject" v-if="resList.scholarData.item[0].sort">{{
+                resList.scholarData.item[0].sort
+              }}</span>
             </div>
           </div>
         </div>
@@ -38,25 +50,28 @@
       <div id="block"></div>
 
       <el-checkbox-group
-        v-if="isEnoughResult"
+        v-if="isEnoughResult && notScholar"
         class="filters"
         v-model="category"
       >
         <el-checkbox-button
           v-for="category in filters"
           :label="category"
-          :key="category"
-          >{{ category }}</el-checkbox-button
+          :key="category.sort"
         >
+          <span>{{ category.sort }}</span>
+          <span>{{ category.count }}</span>
+        </el-checkbox-button>
       </el-checkbox-group>
 
       <div class="searchpage achievements_box">
-        <el-tabs v-model="achievementActiveType">
+        <el-tabs v-model="achievementActiveType" @tab-click="handleClick">
           <el-tab-pane label="论文" name="paper" v-if="resList.hasPaper">
             <div
               class="achievements_item"
               v-for="item in resList.paperData.item"
-              :key="item.id"
+              :key="item._id"
+              @click="route2Page(item._id)"
             >
               <div class="item__above">
                 <div id="title">
@@ -76,7 +91,6 @@
               </div>
 
               <div id="summary">
-                <button>摘要</button>
                 <p>
                   {{ item.summary }}
                 </p>
@@ -107,7 +121,6 @@
               </div>
 
               <div id="summary">
-                <button>摘要</button>
                 <p>
                   {{ item.summary }}
                 </p>
@@ -122,7 +135,7 @@
             <div
               class="achievements_item"
               v-for="item in resList.projectData.item"
-              :key="item.id"
+              :key="item._id"
             >
               <div class="item__above">
                 <div id="title">
@@ -142,17 +155,47 @@
               </div>
 
               <div id="summary">
-                <button>摘要</button>
                 <p>
                   {{ item.summary }}
                 </p>
               </div>
             </div>
           </el-tab-pane>
+          <el-tab-pane label="学者" name="scholar" v-if="resList.hasScholar">
+            <div
+              class="achievements_item scholar_info"
+              v-for="item in resList.scholarData.item"
+              :key="item._id"
+              @click="route2Gate(item._id)"
+            >
+              <div id="avatar">
+                <img
+                  src="../assets/img/scholar_avatar_default.jpg"
+                  alt="scholar_avatar"
+                />
+              </div>
+
+              <div class="details">
+                <span id="name">{{ item.name }}</span>
+                <div id="verified" v-if="item.userID"></div>
+                <span id="institution" v-if="item.organization">{{
+                  item.organization
+                }}</span>
+                <span id="subject" v-if="item.sort">{{ item.sort }}</span>
+              </div>
+            </div>
+          </el-tab-pane>
         </el-tabs>
 
-        <div class="pageturn">
-          <el-pagination layout="prev, pager, next" :total="1000">
+        <div class="pageturn" v-if="pagesTotal > 1">
+          <el-pagination
+            background
+            layout="prev, pager, next"
+            :total="pagesTotal * 20"
+            :pager-count="11"
+            :page-size="20"
+            @current-change="pageTurnTo"
+          >
           </el-pagination>
         </div>
       </div>

@@ -2,7 +2,6 @@
 .achievements_box {
   width: 100%;
   min-height: 670px;
-  max-height: 1880px;
   background: rgba(235, 235, 235, 1);
   display: flex;
   flex-direction: column;
@@ -17,28 +16,79 @@
 .achievements_content {
   width: 100%;
   min-height: 510px;
-  max-height: 1700px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
 }
 .achievements_item {
-  width: 920px;
-  height: 150px;
+  width: 880px;
+  max-height: 150px;
   margin-bottom: 20px;
+  padding: 10px 20px;
   background-color: rgba(255, 255, 255, 1);
+  transition: 0.2s ease-in-out;
+  -webkit-transition: 0.2s ease-in-out;
+  -moz-transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+.achievements_item:hover {
+  border-radius: 3px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  transition: 0.1s ease-in-out;
+  -webkit-transition: 0.1s ease-in-out;
+  -moz-transition: 0.1s ease-in-out;
+}
+.achievements_item.scholar_info {
+  width: 600px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.achievements_item.scholar_info .details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.achievements_item.scholar_info .svg-icon--verify {
+  width: 15px !important;
+  height: 15px !important;
+  position: absolute;
+  color: #ecd712;
+}
+.achievements_item.scholar_info span {
+  width: 100% !important;
+  height: 20px !important;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: rgba(85, 85, 85, 1);
+}
+.achievements_item.scholar_info #name {
+  width: 100%;
+  height: 34px;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 34px;
+  letter-spacing: 2px;
+}
+.achievements_item.scholar_info #institution {
+  margin-bottom: 10px;
+  color: rgba(150, 150, 150, 1);
+}
+.achievements_item.scholar_info #subject {
+  font-size: 15px;
 }
 .achievements_item > * {
-  margin: 11px 22px;
+  margin: 11px 0;
 }
 .searchpage.achievements_box .achievements_item:nth-child(1) {
   margin-top: 20px;
 }
 .item__above {
   width: 876px;
-  margin: 0 22px;
-  margin-top: 12px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -139,23 +189,9 @@
   display: flex;
   flex-direction: column;
 }
-#summary button {
-  width: 40px;
-  height: 16px;
-  margin-bottom: 8px;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16px;
-  text-align: left;
-  color: rgba(0, 115, 152, 1);
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  outline: none;
-}
 #summary p {
   width: 876px;
-  height: 40px;
+  max-height: 60px;
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
@@ -165,7 +201,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   text-overflow: -o-ellipsis-lastline;
-  line-clamp: 2;
-  -webkit-line-clamp: 2;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }

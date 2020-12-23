@@ -75,8 +75,8 @@ export default {
           label: "学者",
         },
       ],
-      value: ["all"],
-      searchInput: this.$route.query.wd,
+      value: this.$route.query.fd || ["all"],
+      searchInput: this.$route.query.wd || "",
       searchResult: this.inheritSearchResult,
 
       //userParams:
@@ -149,6 +149,35 @@ export default {
       ],
       formLabelWidth: "100px",
       labelPosition: "right",
+
+      //subscribe:
+      subscribeList: [
+        {
+          scholarID: "2",
+          name: "Li",
+          field: "IT",
+          origanization: "buaa",
+          id: 2,
+        },
+      ],
+
+      //like:
+      likeList: [
+        {
+          author: "Li",
+          title: "new2022",
+          summary:
+            "goodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgood",
+          url: "IT",
+          keywords: null,
+          year: 2022,
+          likes: 0,
+          read: 0,
+          change: false,
+          id: 1,
+          doi: "Li",
+        },
+      ],
     };
   },
   mounted() {
@@ -178,13 +207,22 @@ export default {
       });
   },
   methods: {
-    handleCommand(command) {
+    userCommand(command) {
       if (command == "info") this.$router.push({ path: "/info" });
       else if (command == "gate") this.$router.push({ path: "/gate" });
       else if (command == "lgout") {
         window.localStorage.clear();
         this.$router.push({ path: "/login" });
       }
+    },
+    subscribeCommand() {},
+    likeCommand() {},
+    deleteSubscirbe() {},
+    deleteLike() {},
+    clearSubscribeList() {},
+    clearLike() {},
+    route2Info() {
+      this.$router.push({ path: "/info" });
     },
     deleteRow(index, rows) {
       rows.splice(index, 1);

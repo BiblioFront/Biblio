@@ -1,4 +1,5 @@
 import Vue from "vue";
+import Base from "./base.js";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -11,6 +12,7 @@ import "./utils/bus.js";
 import "./http/axios.js";
 
 Vue.use(ElementUI);
+Vue.use(Base);
 
 Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false;

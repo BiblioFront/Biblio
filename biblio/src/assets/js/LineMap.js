@@ -9,13 +9,14 @@ export default {
       type: String,
       default: "linemap",
     },
-    yearIndex: {
+    data: {
       type: Array,
-      default: [],
-    },
-    biblioIndex: {
-      type: Array,
-      default: [],
+      default: [
+        {
+          year: 0,
+          value: 0,
+        },
+      ],
     },
   },
   data() {
@@ -43,7 +44,7 @@ export default {
         },
         xAxis: {
           type: "category",
-          data: this.yearIndex,
+          data: this.data.year,
           boundaryGap: true,
           axisLine: {
             symbol: "pin",
@@ -107,7 +108,7 @@ export default {
           {
             type: "line",
             name: "发文数",
-            data: this.biblioIndex,
+            data: this.data.value,
             itemStyle: {
               color: "#f0eff8",
             },
