@@ -155,7 +155,7 @@
   margin-top: 58px;
   margin-bottom: 20px;
 }
-.filters .el-checkbox-button .el-checkbox-button__inner {
+.filters .el-radio-button .el-radio-button__inner {
   width: 250px;
   height: 40px;
   padding: 12px 0 !important;
@@ -170,17 +170,17 @@
   -webkit-transition: 0.2s ease-in-out;
   -moz-transition: 0.2s ease-in-out;
 }
-.filters .el-checkbox-button .el-checkbox-button__inner span:first-child {
+.filters .el-radio-button .el-radio-button__inner span:first-child {
   letter-spacing: 2px;
   margin-left: 30px;
   float: left;
 }
-.filters .el-checkbox-button .el-checkbox-button__inner span:last-child {
+.filters .el-radio-button .el-radio-button__inner span:last-child {
   margin-right: 30px;
   float: right;
 }
-.filters .el-checkbox-button .el-checkbox-button__inner:hover,
-.filters .el-checkbox-button.is-checked .el-checkbox-button__inner {
+.filters .el-radio-button .el-radio-button__inner:hover,
+.filters .el-radio-button__orig-radio:checked + .el-radio-button__inner {
   border: none;
   border-radius: 3px !important;
   background-color: #964bb4;
@@ -190,6 +190,9 @@
   transition: 0.1s ease-in-out;
   -webkit-transition: 0.1s ease-in-out;
   -moz-transition: 0.1s ease-in-out;
+}
+.filters .el-radio-button:focus:not(.is-focus):not(:active):not(.is-disabled) {
+  box-shadow: none !important;
 }
 #block {
   width: 100%;

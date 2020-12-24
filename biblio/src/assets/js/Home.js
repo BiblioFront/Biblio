@@ -160,13 +160,40 @@ export default {
     };
   },
   mounted() {
-    const _this = this;
-    this.$axios.get("analysis/index").then((res) => {
-      _this.hotspot = res.data;
-      console.log(res.data);
-    });
+    this.initHomepage();
   },
   methods: {
+    initHomepage() {
+      //init Hotsspot
+      console.log("Pulling Request...  [Hotspot]");
+
+      const _this = this;
+      this.$axios
+        .get("analysis/index")
+        .then((res) => {
+          //success
+          if (res.data.msg == "success") {
+            console.log("Pulling Hotspot SUCCESS! ");
+
+            _this.hotspot = res.data;
+          }
+          //failed
+          else if (res.data.msg == "failed") {
+            console.log("Pulling Hotspot Failed! [Error: other error]");
+
+            _this.hotspot = {};
+            _this.$message.error("发生了一些错误！");
+          }
+        })
+        .catch((error) => {
+          console.log(
+            "Pulling Hotspot Failed! [Error: system error... " + error + "]"
+          );
+
+          _this.hotspot = {};
+          _this.$message.error("发生了一些错误！");
+        });
+    },
     route2Search() {
       if (this.searchInput == "") {
         this.$message({
@@ -289,9 +316,9 @@ export default {
     bootAS() {
       this.advancedSearchBox = false;
     },
-    route2Biblio(type, id) {
+    route2Paper(id) {
       this.$router.push({
-        path: "/" + type,
+        path: "/paper",
         query: {
           id: id,
         },

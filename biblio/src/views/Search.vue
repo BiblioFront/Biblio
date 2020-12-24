@@ -49,20 +49,21 @@
     <div class="searchpage main_content">
       <div id="block"></div>
 
-      <el-checkbox-group
+      <el-radio-group
         v-if="isEnoughResult && notScholar"
         class="filters"
         v-model="category"
       >
-        <el-checkbox-button
-          v-for="category in filters"
-          :label="category"
-          :key="category.sort"
+        <el-radio-button
+          v-for="item in filters"
+          :label="item.sort"
+          :key="item.sort"
+          @click.native.prevent="categoryChange(item.sort)"
         >
-          <span>{{ category.sort }}</span>
-          <span>{{ category.count }}</span>
-        </el-checkbox-button>
-      </el-checkbox-group>
+          <span>{{ item.sort }}</span>
+          <span>{{ item.count }}</span>
+        </el-radio-button>
+      </el-radio-group>
 
       <div class="searchpage achievements_box">
         <el-tabs v-model="achievementActiveType" @tab-click="handleClick">
@@ -71,18 +72,23 @@
               class="achievements_item"
               v-for="item in resList.paperData.item"
               :key="item._id"
-              @click="route2Page(item._id)"
             >
               <div class="item__above">
-                <div id="title">
+                <div id="title" @click="route2Paper(item._id)">
                   <span>[论文]</span>
                   <span>{{ item.title }}</span>
                 </div>
 
                 <div class="item__btns_area">
-                  <button><svg-icon name="like"></svg-icon></button>
-                  <button><svg-icon name="relative"></svg-icon></button>
-                  <button><svg-icon name="share"></svg-icon></button>
+                  <button @click="likeActivate">
+                    <svg-icon name="like"></svg-icon>
+                  </button>
+                  <button @click="relativeActivate">
+                    <svg-icon name="relative"></svg-icon>
+                  </button>
+                  <button @click="shareVisible = true">
+                    <svg-icon name="share"></svg-icon>
+                  </button>
                 </div>
               </div>
 
@@ -102,6 +108,7 @@
               class="achievements_item"
               v-for="item in resList.patentData.item"
               :key="item.id"
+              @click="route2Patent(item._id)"
             >
               <div class="item__above">
                 <div id="title">
@@ -136,6 +143,7 @@
               class="achievements_item"
               v-for="item in resList.projectData.item"
               :key="item._id"
+              @click="route2Project(item._id)"
             >
               <div class="item__above">
                 <div id="title">
@@ -178,10 +186,10 @@
               <div class="details">
                 <span id="name">{{ item.name }}</span>
                 <div id="verified" v-if="item.userID"></div>
-                <span id="institution" v-if="item.organization">{{
-                  item.organization
-                }}</span>
-                <span id="subject" v-if="item.sort">{{ item.sort }}</span>
+                <p id="institution" v-if="item.organization">
+                  {{ item.organization }}
+                </p>
+                <p id="subject" v-if="item.sort">{{ item.sort }}</p>
               </div>
             </div>
           </el-tab-pane>
@@ -194,7 +202,8 @@
             :total="pagesTotal * 20"
             :pager-count="11"
             :page-size="20"
-            @current-change="pageTurnTo"
+            :current-page="currentPage"
+            @current-change="pageTurn"
           >
           </el-pagination>
         </div>

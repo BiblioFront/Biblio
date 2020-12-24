@@ -72,38 +72,44 @@ const routes = [
   },
   {
     path: "/paperadd",
-    name : "PaperAdd",
-    component : PaperAdd
+    name: "PaperAdd",
+    component: PaperAdd,
   },
   {
-    path:"/patentadd",
-    name :"PatentAdd",
-    component:PatentAdd
+    path: "/patentadd",
+    name: "PatentAdd",
+    component: PatentAdd,
   },
   {
-    path:"/projectadd",
-    name:"ProjectAdd",
-    component:ProjectAdd
+    path: "/projectadd",
+    name: "ProjectAdd",
+    component: ProjectAdd,
   },
   {
-    path:"/projectedit",
-    name:"ProjectEdit",
-    component:ProjectEdit
+    path: "/projectedit",
+    name: "ProjectEdit",
+    component: ProjectEdit,
   },
   {
-    path:"/patentedit",
-    name:"PatentEdit",
-    component:PatentEdit
+    path: "/patentedit",
+    name: "PatentEdit",
+    component: PatentEdit,
   },
   {
-    path:"/paperedit",
-    name:"PaperEdit",
-    component:PaperEdit
-  }
+    path: "/paperedit",
+    name: "PaperEdit",
+    component: PaperEdit,
+  },
 ];
 
 const router = new VueRouter({
   routes,
+  scrollBehavior() {
+    return {
+      x: 0,
+      y: 0,
+    };
+  },
 });
 
 const VueRouterPush = VueRouter.prototype.push;

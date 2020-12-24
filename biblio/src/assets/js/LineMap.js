@@ -9,14 +9,13 @@ export default {
       type: String,
       default: "linemap",
     },
-    data: {
+    xAxis: {
       type: Array,
-      default: [
-        {
-          year: 0,
-          value: 0,
-        },
-      ],
+      default: [],
+    },
+    yAxis: {
+      type: Array,
+      default: [],
     },
   },
   data() {
@@ -44,7 +43,7 @@ export default {
         },
         xAxis: {
           type: "category",
-          data: this.data.year,
+          data: this.xAxis,
           boundaryGap: true,
           axisLine: {
             symbol: "pin",
@@ -108,7 +107,7 @@ export default {
           {
             type: "line",
             name: "发文数",
-            data: this.data.value,
+            data: this.yAxis,
             itemStyle: {
               color: "#f0eff8",
             },
