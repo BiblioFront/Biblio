@@ -97,7 +97,7 @@
               </el-dropdown-menu>
             </el-dropdown>
 
-            <el-dropdown @visible-change="likeCommand">
+            <el-dropdown @visible-change="likeCommand" @command="likePaper">
               <el-button
                 class="inform"
                 circle
@@ -169,7 +169,7 @@
       </div>
     </div>
 
-    <el-drawer title="information" :visible.sync="drawer" :with-header="false">
+    <el-drawer title="information" :visible.sync="drawer" :with-header="false" :append-to-body="true">
       <div class="drawer-title">
         <span id="drawer-title--circle"
           ><i class="el-icon-message-solid"></i
@@ -219,7 +219,7 @@
       >
     </el-drawer>
 
-    <el-dialog title="发送私信" :visible.sync="formsee">
+    <el-dialog title="发送私信" :visible.sync="formsee" :append-to-body="true">
       <el-form :model="form">
         <el-form-item label="用户名" style="margin-left:30px">
           <el-input
