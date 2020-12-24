@@ -120,7 +120,7 @@ export default {
     //   },
     // });
     this.subscribeCommand();
-    
+    this.likeCommand();
   },
   methods: {
     userCommand(command) {
@@ -185,28 +185,28 @@ export default {
         });
       this.subscribeCommand();
     },
-    deleteLike(index, rows) {
-      if (rows == this.likeList) {
-        this.$axios({
-          method: "delete",
-          url: "/user/favorite/delete",
-          params: {
-            likeID: this.likeList[index].id,
-          },
-          headers: {
-            token: window.localStorage.getItem("token"),
-          },
+    deleteLike(id) {
+      this.$axios({
+        method: "delete",
+        url: "/user/favorite/delete",
+        params: {
+          paperId: id,
+        },
+        headers: {
+          token: window.localStorage.getItem("token"),
+        },
+      })
+        .then((response) => {
+          if (response.data.msg == "Delete successfully") {
+            this.likeCommand();
+            this.$message.success("删除成功！");
+          } else this.$message.error("Delete failed");
         })
-          .then((response) => {
-            if (response.data.msg == "Delete successfully") {
-              rows.splice(index, 1);
-            } else this.$message.error("Delete failed");
-          })
-          .catch((error) => {
-            console.log(error);
-            this.$message.error("please login first");
-          });
-      }
+        .catch((error) => {
+          console.log(error);
+          this.$message.error("please login first");
+        });
+      
     },
     clearSubscribeList() {
       // xyy
@@ -223,27 +223,23 @@ export default {
       this.subscribeCommand();
     },
     clearLike() {
-      for (var i = this.likeList.length - 1; i >= 0; i--) {
-        this.$axios({
-          method: "delete",
-          url: "/user/favorite/delete/all",
-          params: {
-            likeID: this.likeList[i].id,
-          },
-          headers: {
-            token: window.localStorage.getItem("token"),
-          },
+      this.$axios({
+        method: "delete",
+        url: "/user/favorite/delete/all",
+        params: {},
+        headers: {
+          token: window.localStorage.getItem("token"),
+        },
+      })
+        .then((response) => {
+          if (response.data.msg == "Delete all successfully") {
+            this.$message.success("删除成功！");
+          } else this.$message.error("Delete all failed");
         })
-          .then((response) => {
-            if (response.data.msg == "Delete all successfully") {
-              this.likeList.splice(i, 1);
-            } else this.$message.error("Delete all failed");
-          })
-          .catch((error) => {
-            console.log(error);
-            this.$message.error("please login first");
-          });
-      }
+        .catch((error) => {
+          console.log(error);
+          this.$message.error("please login first");
+        });
     },
     deleteRow(index, rows) {
       if (rows == this.messageData) {
