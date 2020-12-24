@@ -52,11 +52,11 @@
             label-width="80px"
             style="width:60%;margin-left:2vw;"
           >
-            <el-form-item label="昵称" style="" prop="nickname">
+            <el-form-item label="昵称" style="" prop="username">
               <el-col :span="18">
                 <el-input
                   prefix-icon="el-icon-user"
-                  v-model="userInfo.nickname"
+                  v-model="userInfo.username"
                   :disabled="true"
                 ></el-input>
               </el-col>
