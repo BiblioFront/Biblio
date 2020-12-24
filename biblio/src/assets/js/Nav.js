@@ -107,47 +107,7 @@ export default {
       subscribeList: [{}],
 
       //like:
-      likeList: [
-        {
-          author: "Li",
-          title: "new2022",
-          summary: "good",
-          url: "IT",
-          keywords: null,
-          year: 2022,
-          likes: 0,
-          read: 0,
-          change: false,
-          id: 1,
-          doi: "Li",
-        },
-        {
-          author: "Li",
-          title: "new2",
-          summary: "good",
-          url: "IT",
-          keywords: null,
-          year: 2021,
-          likes: 0,
-          read: 0,
-          change: false,
-          id: 2,
-          doi: "Li",
-        },
-        {
-          author: "Li",
-          title: "new3",
-          summary: "good",
-          url: "IT",
-          keywords: null,
-          year: 2021,
-          likes: 0,
-          read: 0,
-          change: false,
-          id: 3,
-          doi: "Li",
-        },
-      ],
+      likeList: [],
     };
   },
   mounted() {
@@ -160,6 +120,7 @@ export default {
     //   },
     // });
     this.subscribeCommand();
+    
   },
   methods: {
     userCommand(command) {

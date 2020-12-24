@@ -49,7 +49,7 @@
               </el-dropdown-menu>
             </el-dropdown>
 
-            <el-dropdown @command="subscribeCommand">
+            <el-dropdown @visible-change="subscribeCommand">
               <el-button class="inform" circle icon="el-icon-files"></el-button>
               <el-dropdown-menu class="navcmp" slot="dropdown">
                 <el-dropdown-item
@@ -97,7 +97,7 @@
               </el-dropdown-menu>
             </el-dropdown>
 
-            <el-dropdown @command="likeCommand">
+            <el-dropdown @visible-change="likeCommand">
               <el-button
                 class="inform"
                 circle
