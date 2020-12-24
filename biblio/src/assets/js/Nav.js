@@ -138,13 +138,14 @@ export default {
           console.log(response);
           if (response.data.msg == "successfully") {
             this.subscribeList = response.data.followList;
+            //console.log(this.subscribeList);
           }
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    likePaper(command){
+    likePaper(command) {
       this.$router.push({
         path: "/paper",
         query: { id: command },
@@ -241,6 +242,7 @@ export default {
     },
     deleteRow(index, rows) {
       if (rows == this.messageData) {
+        console.log(this.messageData[index].id);
         this.$axios({
           method: "delete",
           url: "/user/message",
@@ -252,6 +254,7 @@ export default {
           },
         })
           .then((response) => {
+            console.log(response);
             if (response.data.msg == "Delete successfully") {
               rows.splice(index, 1);
             } else this.$message.error("删除失败");
@@ -417,6 +420,14 @@ export default {
     },
     change(e) {
       this.$forceUpdate(e);
+    },
+    routeScholar(command) {
+      this.$router.push({
+        path: "/gate",
+        query: {
+          id: command,
+        },
+      });
     },
   },
 };

@@ -151,6 +151,14 @@ export default {
 
                 _this.$message.error("未登录！");
               }
+              //Mailbox is already occupied
+              else if (response.data.msg == "Mailbox is already occupied") {
+                console.log(
+                  "Infopage Requst failed! [Error: " + response.data.msg + "]"
+                );
+
+                _this.$message.error("邮箱被占用！");
+              }
             })
             .catch((error) => {
               console.log("Infopage Requst failed! [Error: " + error + "]");

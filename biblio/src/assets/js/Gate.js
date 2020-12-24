@@ -264,7 +264,7 @@ export default {
         if (!valid) return;
 
         var scholarID = this.resList.scholarInfo._id;
-        console.log(scholarID);
+        console.log(this.resList.scholarInfo);
         var token = window.localStorage.getItem("token");
         console.log(token);
 

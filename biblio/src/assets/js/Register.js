@@ -115,6 +115,7 @@ export default {
                       });
 
                     _this.$router.push("/");
+                    location.reload();
                   });
 
                 _this.$router.push("/");

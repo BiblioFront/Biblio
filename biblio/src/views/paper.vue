@@ -69,12 +69,16 @@
         <div class="relative_container">
           <h2>相似文献</h2>
 
-          <div class="relative_content">
-            <div class="relative_item">
+          <div class="relative_content" v-loading="loading">
+            <div
+              class="relative_item"
+              v-for="item in relativeList"
+              :key="item._id"
+            >
               <div class="item__above">
-                <div id="title">
+                <div id="title" @click="route2Paper(item)">
                   <span>[论文]</span>
-                  <span>闪电五连鞭</span>
+                  <span>{{ item.title }}</span>
                 </div>
 
                 <div class="item__btns_area">
@@ -84,55 +88,15 @@
                 </div>
               </div>
 
-              <div id="summary">
-                <p>
-                  二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时日本的军国主义海军非常强大，在当时盛极一时，昭和9年四月，江田岛海军兵学校将培育优秀的海军航空士官，这一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的
-                </p>
-              </div>
-
               <div id="author">
-                <span
-                  >马保国1 马保国2 马保国3 马保国4 马保国5 马保国6
-                  马保国6马保国6马保国6马保国6</span
-                >
-                <div id="time">
-                  <span>发布时间：</span>
-                  <span>xxxx年xx月xx日</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="relative_content">
-            <div class="relative_item">
-              <div class="item__above">
-                <div id="title">
-                  <span>[论文]</span>
-                  <span>闪电五连鞭</span>
-                </div>
-
-                <div class="item__btns_area">
-                  <button><svg-icon name="like"></svg-icon></button>
-                  <button><svg-icon name="relative"></svg-icon></button>
-                  <button><svg-icon name="share"></svg-icon></button>
-                </div>
+                <span>{{ item.author }}</span>
+                <span>{{ item.journal }}</span>
+                <span v-if="item.read">{{ item.read }}阅读</span>
+                <span v-if="item.like">{{ item.like }}收藏</span>
               </div>
 
               <div id="summary">
-                <p>
-                  二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时期，二战时日本的军国主义海军非常强大，在当时盛极一时，昭和9年四月，江田岛海军兵学校将培育优秀的海军航空士官，这一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的一批士官参加了袭击珍珠港的
-                </p>
-              </div>
-
-              <div id="author">
-                <span
-                  >马保国1 马保国2 马保国3 马保国4 马保国5 马保国6
-                  马保国6马保国6马保国6马保国6</span
-                >
-                <div id="time">
-                  <span>发布时间：</span>
-                  <span>xxxx年xx月xx日</span>
-                </div>
+                <p>{{ item.summary }}</p>
               </div>
             </div>
           </div>
@@ -199,7 +163,10 @@
 
     <el-footer>
       <div class="footer">
-        <span>footer</span>
+        <span
+          >©2020 Biblio
+          (京)-经营性-2017-0020京公网安备11000002000001号京ICP证030173号</span
+        >
       </div>
     </el-footer>
 

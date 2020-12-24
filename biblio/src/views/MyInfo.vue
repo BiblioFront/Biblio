@@ -56,7 +56,7 @@
               <el-col :span="18">
                 <el-input
                   prefix-icon="el-icon-user"
-                  v-model="userInfo.username"
+                  v-model="userInfo.nickname"
                   :disabled="true"
                 ></el-input>
               </el-col>

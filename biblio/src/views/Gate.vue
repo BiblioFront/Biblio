@@ -195,7 +195,10 @@
     </div>
 
     <div class="footer">
-      <span>footer</span>
+      <span
+        >©2020 Biblio
+        (京)-经营性-2017-0020京公网安备11000002000001号京ICP证030173号</span
+      >
     </div>
 
     <el-dialog

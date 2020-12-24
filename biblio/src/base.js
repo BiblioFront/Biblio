@@ -47,7 +47,7 @@ Vue.prototype.$search = {
     var searchForm = {
       field: this.$extract(field),
       words: input,
-      page: page,
+      page: Number(page),
       category: category,
     };
     //console.log(searchForm);
@@ -67,22 +67,70 @@ Vue.prototype.$search = {
       }
       console.log(_this.searchResult);
       store.commit("SET_SEARCHRESULT", _this.searchResult);
+
+      console.log(
+        "Search routing '" +
+          "/search?fd=" +
+          field +
+          "&at=" +
+          (field[0] == "all" ? "paper" : field[0]) +
+          "&wd=" +
+          input +
+          "&pg=" +
+          page +
+          "&ct=" +
+          category +
+          "'"
+      );
+      router.push({
+        path: "/search",
+        query: {
+          fd: field.join(","),
+          at: field[0] == "all" ? "paper" : field[0],
+          wd: input,
+          ct: category,
+          pg: page,
+        },
+      });
     });
   },
   $scholar(field, input, page) {
     var searchForm = {
       field: field,
       words: input,
-      page: page,
+      page: Number(page),
     };
     const _this = this;
     axios.post("/search/researcher", searchForm).then((res) => {
       _this.searchResult.total = res.data.total;
       _this.searchResult.scholarData = res.data;
       store.commit("SET_SEARCHRESULT", _this.searchResult);
+
+      console.log(
+        "Search routing '" +
+          "/search?fd=" +
+          field +
+          "&at=" +
+          (field[0] == "all" ? "paper" : field[0]) +
+          "&wd=" +
+          input +
+          "&pg=" +
+          page +
+          "&ct='"
+      );
+      router.push({
+        path: "/search",
+        query: {
+          fd: field.join(","),
+          at: field[0] == "all" ? "paper" : field[0],
+          wd: input,
+          ct: "",
+          pg: page,
+        },
+      });
     });
   },
-  $all(input) {
+  $all(field, input, page, category) {
     const _this = this;
     var total = 0;
     axios
@@ -135,6 +183,31 @@ Vue.prototype.$search = {
                     _this.searchResult.isAll = true;
 
                     store.commit("SET_SEARCHRESULT", _this.searchResult);
+                    console.log(
+                      "Search routing '" +
+                        "/search?fd=" +
+                        field +
+                        "&at=" +
+                        (field[0] == "all" ? "paper" : field[0]) +
+                        "&wd=" +
+                        input +
+                        "&pg=" +
+                        page +
+                        "&ct=" +
+                        category +
+                        "'"
+                    );
+                    router.push({
+                      path: "/search",
+                      query: {
+                        fd: field.join(","),
+                        at: field[0] == "all" ? "paper" : field[0],
+                        wd: input,
+                        ct: category,
+                        pg: page,
+                      },
+                    });
+                    location.reload();
                   });
               });
           });
@@ -152,32 +225,8 @@ Vue.prototype.$search = {
     } else if (field[0] == "scholar") {
       this.$scholar("scholar", "name", input, page);
     } else if (field[0] == "all") {
-      this.$all(input);
+      this.$all(field, input, page, category);
     }
-    console.log(
-      "Search routing '" +
-        "/search?fd=" +
-        field +
-        "&at=" +
-        (field[0] == "all" ? "paper" : field[0]) +
-        "&wd=" +
-        input +
-        "&pg=" +
-        page +
-        "&ct=" +
-        category +
-        "'"
-    );
-    router.push({
-      path: "/search",
-      query: {
-        fd: field.join(","),
-        at: field[0] == "all" ? "paper" : field[0],
-        wd: input,
-        ct: category,
-        pg: page,
-      },
-    });
   },
 };
 

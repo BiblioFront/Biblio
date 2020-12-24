@@ -60,6 +60,8 @@ export default {
       newComment: "",
 
       //relative:
+      relativeList: [{}],
+      loading: true,
     };
   },
   created: function() {
@@ -114,6 +116,7 @@ export default {
             }
 
             _this.share = window.location.href;
+            _this.getRelative();
           }
           //please login first
           else if (response.data.msg == "please login first") {
@@ -144,11 +147,7 @@ export default {
       var _this = this;
       this.$axios({
         method: "post",
-        url: "/user/favorite",
-        params: {
-          // paperID: "5fcece9000f8a0090a697fdb",
-          paperId: _this.id,
-        },
+        url: "/user/favorite?paperId=" + _this.$route.query.id,
         headers: {
           token: window.localStorage.getItem("token"),
         },
@@ -165,12 +164,10 @@ export default {
     },
     discollect: function() {
       console.log("取消收藏");
+      var _this = this;
       this.$axios({
         method: "delete",
-        url: "/user/favorite/delete",
-        params: {
-          paperId: this.id,
-        },
+        url: "/user/favorite/delete?paperId=" + _this.$route.query.id,
         headers: {
           token: window.localStorage.getItem("token"),
         },
@@ -194,12 +191,13 @@ export default {
     publish: function() {
       console.log("发布评论");
       console.log(this.newComment);
+      var _this = this;
       if (this.newComment === "") return;
       this.$axios({
         method: "post",
         url: "/user/comment",
         params: {
-          paperID: this.id,
+          paperID: _this.$route.query.id,
         },
         headers: {
           token: window.localStorage.getItem("token"),
@@ -229,6 +227,29 @@ export default {
       } else {
         this.$message.error("您的报错信息不能为空！");
       }
+    },
+    getRelative() {
+      //console.log(this.paperInfo.title);
+      var searchForm = {
+        field: "title",
+        words: this.paperInfo.title,
+        page: 1,
+        category: "",
+      };
+      const _this = this;
+      this.$axios.post("/search/paper", searchForm).then((res) => {
+        _this.relativeList = res.data.item;
+        _this.relativeList.splice(0, 1);
+        //console.log(_this.relativeList);
+        _this.loading = false;
+      });
+    },
+    route2Paper(item) {
+      this.$router.replace({
+        path: "/paper",
+        query: { id: item._id },
+      });
+      location.reload();
     },
   },
 };

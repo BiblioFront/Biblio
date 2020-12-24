@@ -311,6 +311,18 @@ export default {
             _this.searchResult.paperData = res.data;
 
             _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
+            var fd = ["ads", this.advancedSearchSelectValue];
+
+            this.$router.push({
+              path: "/search",
+              query: {
+                fd: fd.join(","),
+                at: "",
+                wd: JSON.stringify(adsForm),
+                ct: "",
+                pg: 1,
+              },
+            });
           });
           break;
         case "patent":
@@ -331,6 +343,18 @@ export default {
             _this.searchResult.patentData = res.data;
 
             _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
+            var fd = ["ads", this.advancedSearchSelectValue];
+
+            this.$router.push({
+              path: "/search",
+              query: {
+                fd: fd.join(","),
+                at: "",
+                wd: JSON.stringify(adsForm),
+                ct: "",
+                pg: 1,
+              },
+            });
           });
           break;
         case "project":
@@ -350,22 +374,21 @@ export default {
             _this.searchResult.projectData = res.data;
 
             _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
+            var fd = ["ads", this.advancedSearchSelectValue];
+
+            this.$router.push({
+              path: "/search",
+              query: {
+                fd: fd.join(","),
+                at: "",
+                wd: JSON.stringify(adsForm),
+                ct: "",
+                pg: 1,
+              },
+            });
           });
       }
       this.advancedSearchBox = false;
-
-      var fd = ["ads", this.advancedSearchSelectValue];
-
-      this.$router.push({
-        path: "/search",
-        query: {
-          fd: fd.join(","),
-          at: "",
-          wd: JSON.stringify(adsForm),
-          ct: "",
-          pg: 1,
-        },
-      });
     },
     route2Paper(id) {
       this.$router.push({

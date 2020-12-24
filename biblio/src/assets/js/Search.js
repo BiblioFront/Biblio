@@ -8,6 +8,7 @@ export default {
   },
   data() {
     return {
+      isSearch: false,
       isAds: false,
       extraFound: false,
       achievementActiveType: "paper",
@@ -40,6 +41,9 @@ export default {
     this.resList.patentData = this.$store.getters.getSearchResult.patentData;
     this.resList.projectData = this.$store.getters.getSearchResult.projectData;
     this.resList.scholarData = this.$store.getters.getSearchResult.scholarData;
+    if (!this.isSearch) {
+      this.isSearch = true;
+    }
   },
   methods: {
     initResult() {

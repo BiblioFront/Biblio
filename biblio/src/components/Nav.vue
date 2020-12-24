@@ -49,13 +49,13 @@
               </el-dropdown-menu>
             </el-dropdown>
 
-            <el-dropdown @visible-change="subscribeCommand">
+            <el-dropdown @visible-change="subscribeCommand" @command="routeScholar">
               <el-button class="inform" circle icon="el-icon-files"></el-button>
               <el-dropdown-menu class="navcmp" slot="dropdown">
                 <el-dropdown-item
-                  :command="item.scholarID"
+                  :command="item._id"
                   v-for="item in subscribeList"
-                  :key="item.scholarID"
+                  :key="item._id"
                   divided
                 >
                   <div class="subscirbeScholar">
