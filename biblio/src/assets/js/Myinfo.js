@@ -43,6 +43,17 @@ export default {
       },
     };
   },
+  mounted() {
+    console.log(this.userInfo);
+    // .then((response) => {
+    //   //console.log(response);
+    // })
+    // .catch((error) => {
+    //   //console.log(error);
+    // });
+
+    //console.log(this.isLogin);
+  },
   methods: {
     route2Gate() {
       this.$router.push({ path: "/gate", query: { id: this.userInfo.auth } });
