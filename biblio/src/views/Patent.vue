@@ -10,8 +10,10 @@
           <div class="biblio_source">
             <span>专利</span>
             <span>></span>
-            <el-tag>{{ patentInfo.title }}</el-tag>
-            <span>{{ patentInfo.publicDate }}</span>
+            <el-tag v-if="patentInfo.code">{{ patentInfo.code }}</el-tag>
+            <span v-if="patentInfo.publicDate">{{
+              patentInfo.publicDate
+            }}</span>
           </div>
 
           <div class="biblio_title">
@@ -28,21 +30,21 @@
             <span id="agency">{{ patentInfo.agency }}</span>
           </div>
 
-          <div class="summary">
+          <div class="summary" v-if="patentInfo.description">
             <span id="item-title">摘要</span>
             <span id="text">{{ patentInfo.summary }}</span>
           </div>
-          <div class="summary">
+          <div class="summary" v-if="patentInfo.description">
             <span id="item-title">描述</span>
             <span id="text">{{ patentInfo.description }}</span>
           </div>
 
-          <div class="other_info">
+          <div class="other_info" v-if="patentInfo.type">
             <span id="item-title">类型</span>
             <span id="text">{{ patentInfo.type }}</span>
           </div>
 
-          <div class="other_info">
+          <div class="other_info" v-if="patentInfo.status">
             <span id="item-title">状态</span>
             <span id="text">{{ patentInfo.status }}</span>
           </div>

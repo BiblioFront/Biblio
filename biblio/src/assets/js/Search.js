@@ -8,6 +8,7 @@ export default {
   },
   data() {
     return {
+      isAds: false,
       extraFound: false,
       achievementActiveType: "paper",
       isEnoughResult: true,
@@ -30,8 +31,9 @@ export default {
       currentPage: Number(this.$route.query.pg),
     };
   },
-  created() {
+  mounted() {
     this.initResult();
+    this.isAds = this.$route.query.fd.split(",")[0] == "ads" ? true : false;
     this.resList.total = this.$store.getters.getSearchResult.total;
     this.resList.isAll = this.$store.getters.getSearchResult.isAll;
     this.resList.paperData = this.$store.getters.getSearchResult.paperData;
@@ -161,32 +163,34 @@ export default {
       });
     },
     handleClick(tab) {
-      if (tab.name == "paper") {
-        this.notScholar = true;
-        this.pagesTotal = this.resList.paperData.pages;
-        this.filters = this.resList.paperData.classify;
+      if (this.$route.query.fd.split(",")[0] != "ads") {
+        if (tab.name == "paper") {
+          this.notScholar = true;
+          this.pagesTotal = this.resList.paperData.pages;
+          this.filters = this.resList.paperData.classify;
 
-        this.pageTurnTo("paper", 1);
-      }
-      if (tab.name == "patent") {
-        this.notScholar = true;
-        this.pagesTotal = this.resList.patentData.pages;
-        this.filters = this.resList.patentData.classify;
+          this.pageTurnTo("paper", 1);
+        }
+        if (tab.name == "patent") {
+          this.notScholar = true;
+          this.pagesTotal = this.resList.patentData.pages;
+          this.filters = this.resList.patentData.classify;
 
-        this.pageTurnTo("patent", 1);
-      }
-      if (tab.name == "project") {
-        this.notScholar = true;
-        this.pagesTotal = this.resList.projectData.pages;
-        this.filters = this.resList.projectData.classify;
+          this.pageTurnTo("patent", 1);
+        }
+        if (tab.name == "project") {
+          this.notScholar = true;
+          this.pagesTotal = this.resList.projectData.pages;
+          this.filters = this.resList.projectData.classify;
 
-        this.pageTurnTo("project", 1);
-      }
-      if (tab.name == "scholar") {
-        this.notScholar = false;
-        this.pagesTotal = this.resList.scholarData.pages;
+          this.pageTurnTo("project", 1);
+        }
+        if (tab.name == "scholar") {
+          this.notScholar = false;
+          this.pagesTotal = this.resList.scholarData.pages;
 
-        this.pageTurnTo("scholar", 1);
+          this.pageTurnTo("scholar", 1);
+        }
       }
     },
     pageTurn(page) {

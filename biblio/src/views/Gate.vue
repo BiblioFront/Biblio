@@ -39,6 +39,7 @@
           <button
             @click="uploadAchievementDialogVisible = true"
             v-if="resList.isAuth == 2"
+            class="uploadbtn"
           >
             上传成果
           </button>
@@ -110,9 +111,12 @@
             </div>
 
             <div class="item__btns_area">
-              <button><svg-icon name="like"></svg-icon></button>
-              <button><svg-icon name="relative"></svg-icon></button>
-              <button><svg-icon name="share"></svg-icon></button>
+              <button id="btn_share" @click="shareBtn(item)">
+                <svg-icon name="share"></svg-icon>
+              </button>
+              <button id="btn_setting" @click="settingBtn(item)">
+                <svg-icon name="setting" v-if="resList.isAuth == 2"></svg-icon>
+              </button>
             </div>
           </div>
 
@@ -485,6 +489,55 @@
       <div slot="footer" class="dialog-footer" v-show="achievementType != null">
         <el-button @click="uploadAchievement">确 定</el-button>
       </div>
+    </el-dialog>
+
+    <el-dialog title="分享" :visible.sync="shareVisible" width="50%">
+      <span style="font-size: 14px; color: #c0c0c0;"
+        >复制并粘贴给你的好友吧！</span
+      >
+      <el-input v-model="share" style="margin-top: 10px;"></el-input>
+    </el-dialog>
+
+    <el-dialog title="修改" :visible.sync="settingVisible" width="50%">
+      <el-form label-width="60px" :model="settingForm">
+        <el-form-item label="标题">
+          <el-input
+            v-model="settingForm.paper.title"
+            style="width:400px"
+            placeholder="标题"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="作者">
+          <el-input
+            v-model="settingForm.paper.author"
+            style="width:400px"
+            placeholder="作者"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="期刊名">
+          <el-input
+            v-model="settingForm.paper.journal"
+            style="width:400px"
+            placeholder="期刊名"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="关键词">
+          <el-input
+            v-model="settingForm.paper.keywords"
+            style="width:400px"
+            placeholder="关键词"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button @click="settingVisible = false">取 消</el-button>
+          <el-button @click="resetSetting">重 置</el-button>
+          <el-button type="primary" @click="confirmSetting">确认更改</el-button>
+        </el-form-item>
+      </el-form>
     </el-dialog>
   </div>
 </template>

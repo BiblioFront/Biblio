@@ -10,9 +10,8 @@ export default {
   data() {
     return {
       //userInfo:
-      userInfo: this.$store.getters.getUser,
-      defaultAvatar: "../assets/img/scholar_avatar_default.jpg",
-      isLogin: this.$store.getters.isLogin,
+      userInfo: {},
+      isLogin: false,
 
       //searchParams:
       searchOptions: [
@@ -111,14 +110,8 @@ export default {
     };
   },
   mounted() {
-    // this.$axios({
-    //   method: "get",
-    //   url: "/user/message",
-    //   params: {},
-    //   headers: {
-    //     token: window.localStorage.getItem("token"),
-    //   },
-    // });
+    this.userInfo = this.$store.getters.getUser;
+    this.isLogin = this.$store.getters.isLogin;
     this.subscribeCommand();
     this.likeCommand();
   },
@@ -170,11 +163,11 @@ export default {
           console.log(error);
         });
     },
-    deleteSubscirbe(scholarID) {
-      console.log(scholarID);
+    deleteSubscirbe(item) {
+      console.log(item._id);
 
       this.$axios
-        .get("user/follow/delete?scholarID=" + scholarID, {
+        .get("user/follow/delete?scholarID=" + item._id, {
           headers: { token: window.localStorage.getItem("token") },
         })
         .then((response) => {
@@ -206,7 +199,6 @@ export default {
           console.log(error);
           this.$message.error("please login first");
         });
-      
     },
     clearSubscribeList() {
       // xyy
@@ -312,7 +304,7 @@ export default {
         },
       });
     },
-    
+
     // setdrawer() {
     //   this.drawer = true;
     //   this.getMessage();
@@ -361,8 +353,7 @@ export default {
         this.$search.$boot(this.value, this.searchInput, 1, "");
       }
     },
-    
-  
+
     findUser() {
       this.$axios({
         method: "get",
@@ -382,7 +373,7 @@ export default {
             this.form[0].id = response.data.user.id;
             console.log(this.form);
             this.existName = true;
-          }else if(response.data.msg == "User does not exist"){
+          } else if (response.data.msg == "User does not exist") {
             this.$message.error("用户不存在！");
             this.existName = false;
           }

@@ -51,7 +51,7 @@
       <div class="img__msg_box">
         <span id="title">已收录文献</span>
         <div id="statistic">
-          <span id="high">291</span><span id="low">901</span>
+          <span id="high">491</span><span id="low">901</span>
         </div>
       </div>
     </div>
@@ -115,11 +115,7 @@
       width="600px"
       class="advanced_search-box"
     >
-      <el-form
-        label-width="80px"
-        :rules="advancedSearchInputRules"
-        :model="advancedSearchInput"
-      >
+      <el-form label-width="80px" :model="advancedSearchInput">
         <el-form-item label="搜索范围">
           <el-select
             v-model="advancedSearchSelectValue"
@@ -134,7 +130,6 @@
         <el-form
           label-width="80px"
           :model="advancedSearchInput"
-          :rules="advancedSearchInputRules"
           v-if="advancedSearchSelectValue == 'paper'"
         >
           <el-form
@@ -162,7 +157,6 @@
           <el-form
             label-width="80px"
             :inline="false"
-            :rules="advancedSearchInputRules"
             :model="advancedSearchInput"
           >
             <el-form-item label="期刊名">
@@ -177,10 +171,9 @@
               label-width="80px"
               :inline="true"
               status-icon=""
-              :rules="advancedSearchInputRules"
               :model="advancedSearchInput"
             >
-              <el-form-item label="发布年份" prop="time">
+              <el-form-item label="发布年份">
                 <el-input
                   v-model.number="advancedSearchInput.paper.date.lower"
                   style="width:100px"
@@ -188,7 +181,7 @@
                 ></el-input>
               </el-form-item>
 
-              <el-form-item label="" prop="time">
+              <el-form-item label="">
                 <el-input
                   v-model.number="advancedSearchInput.paper.date.upper"
                   style="width:100px"

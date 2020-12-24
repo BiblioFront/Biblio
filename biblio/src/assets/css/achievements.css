@@ -178,6 +178,20 @@
 .item__btns_area button:nth-child(3) .svg-icon:hover {
   fill: #61bb0d !important;
 }
+.item__btns_area #btn_share .svg-icon {
+  width: 16px !important;
+  height: 16px !important;
+}
+.item__btns_area #btn_setting .svg-icon {
+  width: 22px !important;
+  height: 22px !important;
+}
+.item__btns_area #btn_share .svg-icon:hover {
+  fill: #61bb0d !important;
+}
+.item__btns_area #btn_setting .svg-icon:hover {
+  fill: #b9b9b9 !important;
+}
 .achievements_item .btns_area button {
   height: 20px;
 }

@@ -7,22 +7,6 @@ export default {
     Nav,
   },
   data() {
-    var validateTime = (rule, value, callback) => {
-      if (value == "") {
-        return callback(new Error("年份不能为空"));
-      }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error("年份必须为数字"));
-        } else {
-          if (value < 1900 || value > 2020) {
-            callback(new Error("请输入正确的年份"));
-          } else {
-            callback();
-          }
-        }
-      }, 1000);
-    };
     return {
       //SearchParams:
       searchOptions: [
@@ -101,8 +85,8 @@ export default {
           author: "",
           journal: "",
           date: {
-            upper: "",
-            lower: "",
+            upper: 2020,
+            lower: 1900,
           },
           keywords: "",
         },
@@ -130,14 +114,6 @@ export default {
           },
         },
       },
-      advancedSearchInputRules: {
-        time: [
-          {
-            validator: validateTime,
-            trigger: "blur",
-          },
-        ],
-      },
 
       //searchResult:
       searchResult: {
@@ -154,8 +130,8 @@ export default {
 
       //slogen:
       slogen: {
-        upper: "This is upper slogen",
-        lower: "THIS IS LOWER SLOGEN",
+        upper: "Accelerating research discovery to shape a better future",
+        lower: "Today's research, tomorrow's innovation",
       },
     };
   },
@@ -314,7 +290,82 @@ export default {
       }
     },
     bootAS() {
+      const _this = this;
+      var adsForm = {};
+
+      switch (this.advancedSearchSelectValue) {
+        case "paper":
+          adsForm = {
+            title: _this.advancedSearchInput.paper.title,
+            author: _this.advancedSearchInput.paper.author,
+            journal: _this.advancedSearchInput.paper.journal,
+            keyword: _this.advancedSearchInput.paper.keywords,
+            year_l: _this.advancedSearchInput.paper.date.lower,
+            year_h: _this.advancedSearchInput.paper.date.upper,
+            page: 1,
+            category: "",
+          };
+          _this.$axios.post("/search/adSearchPaper", adsForm).then((res) => {
+            _this.searchResult.total = res.data.total;
+            _this.searchResult.isAll = false;
+            _this.searchResult.paperData = res.data;
+
+            _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
+          });
+          break;
+        case "patent":
+          adsForm = {
+            title: _this.advancedSearchInput.patent.title,
+            designer: _this.advancedSearchInput.patent.designer,
+            owner: _this.advancedSearchInput.patent.owner,
+            applyYear_l: _this.advancedSearchInput.patent.applyDate.lower,
+            applyYear_h: _this.advancedSearchInput.patent.applyDate.upper,
+            publicYear_l: _this.advancedSearchInput.patent.publicYear.lower,
+            publicYear_h: _this.advancedSearchInput.patent.publicYear.upper,
+            page: 1,
+            category: "",
+          };
+          _this.$axios.post("//search/adSearchPatent", adsForm).then((res) => {
+            _this.searchResult.total = res.data.total;
+            _this.searchResult.isAll = false;
+            _this.searchResult.patentData = res.data;
+
+            _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
+          });
+          break;
+        case "project":
+          adsForm = {
+            title: _this.advancedSearchInput.project.title,
+            author: _this.advancedSearchInput.project.author,
+            company: _this.advancedSearchInput.project.company,
+            keyword: _this.advancedSearchInput.project.keywords,
+            year_l: _this.advancedSearchInput.project.date.upper,
+            year_h: _this.advancedSearchInput.project.date.lower,
+            page: 1,
+            category: "",
+          };
+          _this.$axios.post("/search/adSearchProject", adsForm).then((res) => {
+            _this.searchResult.total = res.data.total;
+            _this.searchResult.isAll = false;
+            _this.searchResult.projectData = res.data;
+
+            _this.$store.commit("SET_SEARCHRESULT", _this.searchResult);
+          });
+      }
       this.advancedSearchBox = false;
+
+      var fd = ["ads", this.advancedSearchSelectValue];
+
+      this.$router.push({
+        path: "/search",
+        query: {
+          fd: fd.join(","),
+          at: "",
+          wd: JSON.stringify(adsForm),
+          ct: "",
+          pg: 1,
+        },
+      });
     },
     route2Paper(id) {
       this.$router.push({

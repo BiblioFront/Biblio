@@ -85,6 +85,34 @@ export default {
       yearIndex: [],
       biblioIndex: [],
       resList: {},
+
+      //Buttons:
+      shareVisible: false,
+      share: "",
+      settingVisible: false,
+      settingForm: {
+        paper: {
+          author: "",
+          title: "",
+          summary: "",
+          url: "",
+          keywords: "",
+          journal: "",
+          organization: "",
+        },
+      },
+      savedSettingForm: {
+        id: "",
+        paper: {
+          author: "",
+          title: "",
+          summary: "",
+          url: "",
+          keywords: "",
+          journal: "",
+          organization: "",
+        },
+      },
     };
   },
   created() {
@@ -144,15 +172,28 @@ export default {
           year++;
         }
 
+        var progress = {
+          paperProgress: _this.paperProgress,
+          patentProgress: _this.patentProgress,
+          projectProgress: _this.projectProgress,
+        };
+        window.sessionStorage.setItem("progress", JSON.stringify(progress));
+
         _this.$store.commit("SET_SCHOLARINFO", res.data);
       });
   },
   mounted() {
     var scholarInfo = this.$store.getters.getScholarInfo;
     this.resList = scholarInfo;
+    var progress = JSON.parse(window.sessionStorage.getItem("progress"));
+    this.paperProgress = progress.paperProgress;
+    this.patentProgress = progress.patentProgress;
+    this.projectProgress = progress.projectProgress;
   },
   beforeDestroy() {
     this.$store.commit("REMOVE_SCHOLARINFO");
+    window.sessionStorage.setItem("progress", JSON.stringify({}));
+    window.sessionStorage.setItem("linemap", JSON.stringify({}));
   },
   methods: {
     initGate() {
@@ -266,35 +307,39 @@ export default {
     },
     //关注
     follow() {
-      // xyy
       var token = window.localStorage.getItem("token");
       console.log(token);
       var _id = this.resList.scholarInfo._id;
       console.log(_id);
+      const _this = this;
       this.$axios({
         methods: "get",
         url: "user/follow?scholarID=" + _id,
         headers: { token: token },
       })
         .then((response) => {
+          _this.resList.isFollow = true;
           console.log(response);
         })
         .catch((error) => {
           console.log(error);
         });
-      // this.$axios({
-      //     methods: "post",
-      //     url: "user/follow?scholarID=" + _id,
-      //     headers: {
-      //         token: token,
-      //     },
-      // }).then((response) => {
-      //     console.log(response)
-      // }).catch((error) => {
-      //     console.log(error)
-      // });
     },
-    deleteFollow() {},
+    deleteFollow() {
+      var token = window.localStorage.getItem("token");
+      const _this = this;
+      this.$axios
+        .get("user/follow/delete?scholarID=" + this.$route.query.id, {
+          headers: { token: token },
+        })
+        .then((response) => {
+          _this.resList.isFollow = false;
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     // 上传论文
     uploadPaper() {
       this.$refs.uploadPaperFormRef.validate((valid) => {
@@ -344,7 +389,7 @@ export default {
       this.$refs.uploadPatentFormRef.validate((valid) => {
         if (!valid) return;
 
-        var scholarID = this.resList.scholarInfo.scholarID;
+        var scholarID = this.resList.scholarInfo._id;
         console.log(scholarID);
         var token = window.localStorage.getItem("token");
         console.log(token);
@@ -404,7 +449,7 @@ export default {
       this.$refs.uploadProjectFormRef.validate((valid) => {
         if (!valid) return;
 
-        var scholarID = this.resList.scholarInfo.scholarID;
+        var scholarID = this.resList.scholarInfo._id;
         console.log(scholarID);
         var token = window.localStorage.getItem("token");
         console.log(token);
@@ -475,6 +520,54 @@ export default {
         path: "/project",
         query: { id: id },
       });
+    },
+    shareBtn(item) {
+      this.shareVisible = true;
+      this.share = "http://localhost:8080/paper?id=" + item._id;
+    },
+    settingBtn(item) {
+      this.settingForm.id = item._id;
+      this.settingForm.paper.author = item.author;
+      this.settingForm.paper.title = item.title;
+      this.settingForm.paper.summary = item.summary;
+      this.settingForm.paper.url = item.url;
+      this.settingForm.paper.keywords = item.keywords;
+      this.settingForm.paper.journal = item.journal;
+      this.settingForm.paper.organization = item.organization;
+      this.savedSettingForm = this.settingForm;
+      this.settingVisible = true;
+    },
+    resetSetting() {
+      this.settingForm.paper.author = this.savedSettingForm.paper.author;
+      this.settingForm.paper.title = this.savedSettingForm.paper.title;
+      this.settingForm.paper.summary = this.savedSettingForm.paper.summary;
+      this.settingForm.paper.keywords = this.savedSettingForm.paper.keywords;
+      this.settingForm.paper.journal = this.savedSettingForm.paper.journal;
+      this.settingForm.paper.organization = this.savedSettingForm.paper.organization;
+    },
+    confirmSetting() {
+      this.$axios
+        .patch(
+          "/user/paper/change?ResearcherID=" +
+            this.$route.query.id +
+            "&paperID=" +
+            this.settingForm.id,
+          this.settingForm.paper,
+          {
+            headers: { token: window.localStorage.getItem("token") },
+          }
+        )
+        .then((res) => {
+          if (res.data.msg == "successfully") {
+            this.$message.success("修改成功");
+          } else if (res.data.msg == "You have no authority") {
+            this.$message.error("您没有权限！");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.settingVisible = false;
     },
   },
 };

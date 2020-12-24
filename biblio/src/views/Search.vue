@@ -6,9 +6,10 @@
       <div class="prompt">
         <span>共找到</span>
         <span id="result">{{ resList.total }}</span>
-        <span>个结果与 “</span>
-        <span id="keyword">{{ this.$route.query.wd }}</span>
-        <span>” 相关</span>
+        <span>个结果</span>
+        <span id="keyword" v-if="!isAds"
+          >与 “{{ this.$route.query.wd }}” 相关</span
+        >
       </div>
 
       <div v-if="extraFound" class="extra_found_box">
