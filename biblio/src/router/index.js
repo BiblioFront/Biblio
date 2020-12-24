@@ -13,6 +13,9 @@ import Admin from "../views/Admin.vue";
 import PaperAdd from "../views/PaperAdd.vue";
 import PatentAdd from "../views/PatentAdd.vue";
 import ProjectAdd from "../views/ProjectAdd.vue";
+import PaperEdit from "../views/PaperEdit.vue";
+import PatentEdit from "../views/PatentEdit.vue";
+import ProjectEdit from "../views/ProjectEdit.vue";
 
 Vue.use(VueRouter);
 
@@ -81,6 +84,21 @@ const routes = [
     path: "/projectadd",
     name: "ProjectAdd",
     component: ProjectAdd,
+  },
+  {
+    path: "/projectedit",
+    name: "ProjectEdit",
+    component: ProjectEdit,
+  },
+  {
+    path: "/patentedit",
+    name: "PatentEdit",
+    component: PatentEdit,
+  },
+  {
+    path: "/paperedit",
+    name: "PaperEdit",
+    component: PaperEdit,
   },
 ];
 

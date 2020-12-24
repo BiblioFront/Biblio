@@ -219,10 +219,50 @@ export default {
     },
     clearLike() {},
     deleteRow(index, rows) {
-      rows.splice(index, 1);
+      if (rows == this.messageData) {
+        this.$axios({
+          method: "delete",
+          url: "/user/message",
+          params: {
+            messageID: this.messageData[index].id,
+          },
+          headers: {
+            token: window.localStorage.getItem("token"),
+          },
+        })
+          .then((response) => {
+            if (response.data.msg == "Delete successfully") {
+              rows.splice(index, 1);
+            } else this.$message.error("删除失败");
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$message.error("删除失败");
+          });
+      }
     },
     deleteAll() {
-      this.messageData.splice();
+      for (var i = this.messageData.length - 1; i >= 0; i--) {
+        this.$axios({
+          method: "delete",
+          url: "/user/message",
+          params: {
+            messageID: this.messageData[i].id,
+          },
+          headers: {
+            token: window.localStorage.getItem("token"),
+          },
+        })
+          .then((response) => {
+            if (response.data.msg == "Delete successfully") {
+              this.messageData.splice(i, 1);
+            } else this.$message.error("删除失败");
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$message.error("删除失败");
+          });
+      }
     },
     route2Home() {
       this.$router.push({ path: "/" });
@@ -248,6 +288,37 @@ export default {
           id: this.userInfo.auth,
         },
       });
+    },
+    setdrawer() {
+      this.drawer = true;
+      console.log(this.drawer);
+      this.messageData = [];
+      this.$axios({
+        method: "get",
+        url: "/user/message",
+        params: {},
+        headers: {
+          token: window.localStorage.getItem("token"),
+        },
+      })
+        .then((response) => {
+          var messages = response.data.messageList;
+          for (var i = 0; i < messages.length; i++) {
+            var messageObject = {};
+            messageObject.from = messages[i].sender.username;
+            messageObject.time = messages[i].date;
+            messageObject.id = messages[i].id;
+            messageObject.content = messages[i].content;
+            messageObject.avator = messages[i].sender.avator;
+            this.messageData.push(messageObject);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    showForm() {
+      this.formsee = true;
     },
     route2Search() {
       if (this.searchInput == "") {
