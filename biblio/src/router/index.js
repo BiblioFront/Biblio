@@ -13,6 +13,9 @@ import Admin from "../views/Admin.vue";
 import PaperAdd from "../views/PaperAdd.vue";
 import PatentAdd from "../views/PatentAdd.vue";
 import ProjectAdd from "../views/ProjectAdd.vue";
+import PaperEdit from "../views/PaperEdit.vue";
+import PatentEdit from "../views/PatentEdit.vue";
+import ProjectEdit from "../views/ProjectEdit.vue";
 
 Vue.use(VueRouter);
 
@@ -69,23 +72,44 @@ const routes = [
   },
   {
     path: "/paperadd",
-    name : "PaperAdd",
-    component : PaperAdd
+    name: "PaperAdd",
+    component: PaperAdd,
   },
   {
-    path:"/patentadd",
-    name :"PatentAdd",
-    component:PatentAdd
+    path: "/patentadd",
+    name: "PatentAdd",
+    component: PatentAdd,
   },
   {
-    path:"/projectadd",
-    name:"ProjectAdd",
-    component:ProjectAdd
-  }
+    path: "/projectadd",
+    name: "ProjectAdd",
+    component: ProjectAdd,
+  },
+  {
+    path: "/projectedit",
+    name: "ProjectEdit",
+    component: ProjectEdit,
+  },
+  {
+    path: "/patentedit",
+    name: "PatentEdit",
+    component: PatentEdit,
+  },
+  {
+    path: "/paperedit",
+    name: "PaperEdit",
+    component: PaperEdit,
+  },
 ];
 
 const router = new VueRouter({
   routes,
+  scrollBehavior() {
+    return {
+      x: 0,
+      y: 0,
+    };
+  },
 });
 
 const VueRouterPush = VueRouter.prototype.push;

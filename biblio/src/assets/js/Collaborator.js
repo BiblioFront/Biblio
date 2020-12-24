@@ -11,7 +11,7 @@ export default {
     },
     data: {
       type: Array,
-      default: [],
+      default: [{}],
     },
   },
   data() {
@@ -40,7 +40,7 @@ export default {
           min: 80,
           max: 600,
           inRange: {
-            colorLightness: [0, 0.7],
+            colorLightness: [0.3, 0.7],
           },
         },
         textStyle: {

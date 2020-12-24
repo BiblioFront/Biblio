@@ -34,10 +34,8 @@ export default {
   methods: {
     initProgressbar() {
       this.circleProgressbar = this.$echarts.init(this.$refs.circleProgressbar);
-      console.log(this.progress);
-      console.log(parseFloat(this.progress));
       var percent = parseFloat(this.progress);
-      console.log(percent);
+      //console.log(percent);
       const option = {
         title: {
           show: true,

@@ -32,6 +32,7 @@ export default {
   methods: {
     initWordsCloud() {
       this.wordscloud = this.$echarts.init(this.$refs.wordscloud);
+      //console.log(this.data);
       const option = {
         tooltip: {
           pointFormat: "{series.name}: <b>共{point.percentage:.d}篇</b>",

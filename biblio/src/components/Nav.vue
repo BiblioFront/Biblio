@@ -187,12 +187,12 @@
               <el-avatar :size="30" :src="scope.row.avatar"></el-avatar>
               <el-collapse-item
                 class="message_content"
-                :title="scope.row.from"
+                :title="scope.row.messageData.sender.username"
                 name="1"
               >
-                <p>{{ scope.row.content }}</p>
+                <p>{{ scope.row.messageData.content }}</p>
                 <p id="message_time">
-                  {{ scope.row.time }}
+                  {{ scope.row.messageData.date }}
                 </p>
               </el-collapse-item>
             </el-collapse>
@@ -220,7 +220,7 @@
     </el-drawer>
 
     <el-dialog title="发送私信" :visible.sync="formsee">
-      <el-form :model="form" :label-position="labelPosition">
+      <el-form :model="form">
         <el-form-item label="用户名" style="margin-left:30px">
           <el-input
             v-model="form.name"

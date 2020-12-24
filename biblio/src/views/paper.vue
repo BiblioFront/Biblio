@@ -10,34 +10,36 @@
           <div class="biblio_source">
             <span>论文</span>
             <span>></span>
-            <el-tag>{{ paper.title }}</el-tag>
-            <span>{{ paper.date }}</span>
+            <el-tag v-if="paperInfo.journal"
+              >《{{ paperInfo.journal }}》</el-tag
+            >
+            <span v-if="paperInfo.date">{{ paperInfo.date }}</span>
           </div>
 
           <div class="biblio_title">
             <h1>
-              {{ paper.title }}
+              {{ paperInfo.title }}
             </h1>
           </div>
 
           <div class="author_info">
-            <span id="author">{{ paper.author }}</span>
-            <span id="organization">{{ paper.organization }}</span>
+            <span id="author">{{ paperInfo.author }}</span>
+            <span id="organization">{{ paperInfo.organization }}</span>
           </div>
 
           <div class="summary">
             <span id="item-title">摘要</span>
-            <span id="text">{{ paper.summary }}</span>
+            <span id="text">{{ paperInfo.summary }}</span>
           </div>
 
           <div class="other_info">
             <span id="item-title">关键词</span>
-            <span id="text">{{ paper.keywords }}</span>
+            <span id="text">{{ paperInfo.keywords }}</span>
           </div>
 
-          <div class="other_info">
+          <div class="other_info" v-if="paperInfo.doi">
             <span id="item-title">DOI</span>
-            <span id="text">{{ paper.url }}</span>
+            <span id="text">{{ paperInfo.doi }}</span>
           </div>
 
           <div class="bibliopage btns_area">
@@ -47,16 +49,16 @@
             <el-button @click="discollect" v-else
               ><svg-icon name="like"></svg-icon>取消收藏</el-button
             >
-            <el-button @click="reference"
+            <el-button @click="referenceVisible = true"
               ><svg-icon name="quote"></svg-icon>引用</el-button
             >
             <el-button @click="source"
               ><svg-icon name="download"></svg-icon>来源</el-button
             >
-            <el-button @click="error"
+            <el-button @click="errorVisible = true"
               ><svg-icon name="warning"></svg-icon>报错</el-button
             >
-            <el-button @click="share"
+            <el-button @click="shareVisible = true"
               ><svg-icon name="share"></svg-icon>分享</el-button
             >
           </div>
@@ -139,7 +141,7 @@
 
       <div class="comments_container">
         <div class="comments_header">
-          <h1>250</h1>
+          <h1>{{ comments.length }}</h1>
           <h1>评论</h1>
         </div>
 
@@ -200,184 +202,42 @@
         <span>footer</span>
       </div>
     </el-footer>
+
+    <el-dialog title="引用" :visible.sync="referenceVisible" width="50%">
+      <span style="font-size: 14px; color: #c0c0c0;">复制以引用</span>
+      <el-input
+        placeholder="复制以引用"
+        v-model="reference"
+        style="margin-top: 10px;"
+      ></el-input>
+    </el-dialog>
+
+    <el-dialog title="文献有误？" :visible.sync="errorVisible" width="50%">
+      <span style="font-size: 14px; color: #555;"
+        >请输入报错信息，以方便管理员进行审核</span
+      >
+      <el-input
+        type="textarea"
+        placeholder="报错信息"
+        v-model="error"
+        style="margin-top: 10px;"
+      ></el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="errorVisible = false">取 消</el-button>
+        <el-button type="primary" @click="sendErrorMsg">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <el-dialog title="分享" :visible.sync="shareVisible" width="50%">
+      <span style="font-size: 14px; color: #c0c0c0;"
+        >复制并粘贴给你的好友吧！</span
+      >
+      <el-input v-model="share" style="margin-top: 10px;"></el-input>
+    </el-dialog>
   </el-container>
 </template>
 
-<script>
-import Nav from "@/components/Nav.vue";
-
-export default {
-  name: "Paper",
-  components: {
-    Nav,
-  },
-  data: function() {
-    return {
-      id: "5fccd166376ae34bbb980c42",
-      isFavorite: false,
-      paper: {
-        _id: "5fccd17b376ae34bbb980c49",
-        author: "李树娟,钟焕荣,于亮,赵军,范伟检,黄伟",
-        title: "危险化学品数据库的发展现状与展望",
-        summary:
-          "为完善我国危险化学品数据库,充分发挥其为化学品安全管理和公众提供可靠的信息服务的作用,通过研究国外危险化学品数据库的发展现状及其特点,分析我国危险化学品数据库目前存在的问题.研究表明:国外危险化学品数据库发展较完善,其数据结构设计较合理,且信息全面、数量多;而我国危险化学品数据库建设还比较落后,存在数据结构设计简单、标准不统一、信息未能共享等问题.因此,在发展我国危险化学品数据库时,应确保数据的数量、质量和多样性,设计合理的数据结构,并实现数据共享,使其为安全评价提供可靠的数据支持.",
-        url:
-          "http://d.wanfangdata.com.cn/periodical/ChlQZXJpb2RpY2FsQ0hJTmV3UzIwMjAxMjAzEhJoY2NsbGh5eXkyMDIwMDEwMzQaCHNneDVrbTNz",
-        keywords: "危险化学品;数据库",
-        date: "2020年12月30日",
-        organization: "江田岛海军学院",
-      },
-      comments: [
-        {
-          commenterID: "",
-          commenter: {
-            username: "森上下士",
-            avator: "",
-          },
-          paperID: "",
-          content: "我是四年级学生森上下士",
-          time: "2020年12月21日",
-          id: "",
-        },
-      ],
-      newComment: "",
-    };
-  },
-  created: function() {
-    console.log("created");
-    console.log(this.id);
-    console.log(window.localStorage.getItem("token"));
-    var _this = this;
-    this.$axios({
-      method: "get",
-      url: "/user/paper",
-      params: {
-        paperID: _this.id,
-      },
-      headers: {
-        token: window.localStorage.getItem("token"),
-      },
-    })
-      .then((response) => {
-        if (response.data.msg == "get paper and comment successfully") {
-          console.log("get success");
-          // console.log(this.paper);
-          this.paper = response.data.paper;
-          this.comments = response.data.commentList;
-          this.isFavorite = response.data.isFavorite;
-          console.log(response.data.isFavorite);
-        } else console.log(response.data.msg);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  },
-  methods: {
-    handleCommand(command) {
-      if (command == "info") {
-        /* 跳转至对应用户信息页 */
-        console.log("userinf");
-        this.$router.push("/info");
-      } else if (command == "letter") {
-        /* 发送私信 */
-        console.log("send letter");
-      }
-    },
-    error: function() {
-      console.log("报错");
-    },
-    collect: function() {
-      console.log("收藏");
-      var _this = this;
-      this.$axios({
-        method: "post",
-        url: "/user/favorite",
-        params: {
-          // paperID: "5fcece9000f8a0090a697fdb",
-          paperId: _this.id,
-        },
-        headers: {
-          token: window.localStorage.getItem("token"),
-        },
-      })
-        .then((response) => {
-          console.log(response.data.msg);
-          if (response.data.msg === "Collected successfully") {
-            this.isFavorite = true;
-          } else this.isFavorite = false;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    discollect: function() {
-      console.log("取消收藏");
-      this.$axios({
-        method: "delete",
-        url: "/user/favorite/delete",
-        params: {
-          paperId: this.id,
-        },
-        headers: {
-          token: window.localStorage.getItem("token"),
-        },
-      })
-        .then((response) => {
-          console.log(response.data.msg);
-          if (response.data.msg === "Delete successfully")
-            this.isFavorite = false;
-          else this.isFavorite = true;
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .then((response) => {
-          console.log(response.msg);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    publish: function() {
-      console.log("发布评论");
-      console.log(this.newComment);
-      if (this.newComment === "") return;
-      this.$axios({
-        method: "post",
-        url: "/user/comment",
-        params: {
-          paperID: this.id,
-        },
-        headers: {
-          token: window.localStorage.getItem("token"),
-        },
-        data: {
-          content: this.newComment,
-        },
-      })
-        .then((response) => {
-          console.log(response.data.msg);
-          if (response.data.msg === "comment success") {
-            this.comments.push(response.data.comment);
-            this.newComment = "";
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    reference: function() {
-      console.log("引用");
-    },
-    source: function() {
-      console.log("来源");
-    },
-    share: function() {
-      console.log("分享");
-    },
-  },
-};
-</script>
+<script src="../assets/js/Paper.js"></script>
 
 <style scoped>
 @import "../assets/css/global.css";

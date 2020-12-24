@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem("token"),
     userInfo: JSON.parse(localStorage.getItem("userInfo")),
+    scholarInfo: JSON.parse(sessionStorage.getItem("scholarInfo")),
     searchResult: JSON.parse(sessionStorage.getItem("searchResult")),
   },
   mutations: {
@@ -17,6 +18,10 @@ export default new Vuex.Store({
     SET_USERINFO: (state, userInfo) => {
       state.userInfo = userInfo;
       localStorage.setItem("userInfo", JSON.stringify(userInfo));
+    },
+    SET_SCHOLARINFO: (state, scholarInfo) => {
+      state.scholarInfo = scholarInfo;
+      sessionStorage.setItem("scholarInfo", JSON.stringify(scholarInfo));
     },
     SET_SEARCHRESULT: (state, searchResult) => {
       state.searchResult = searchResult;
@@ -35,16 +40,23 @@ export default new Vuex.Store({
       localStorage.setItem("token", "");
       localStorage.setItem("userInfo", JSON.stringify(""));
     },
+    REMOVE_SCHOLARINFO: (state) => {
+      state.scholarInfo = "";
+      sessionStorage.setItem("scholarInfo", JSON.stringify(""));
+    },
   },
   getters: {
     isLogin: (state) => {
       return state.token == "" ? false : true;
     },
-    getSearchResult: (state) => {
-      return state.searchResult;
-    },
     getUser: (state) => {
       return state.userInfo;
+    },
+    getScholarInfo: (state) => {
+      return state.scholarInfo;
+    },
+    getSearchResult: (state) => {
+      return state.searchResult;
     },
   },
   actions: {},

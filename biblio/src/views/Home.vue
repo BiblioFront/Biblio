@@ -51,7 +51,7 @@
       <div class="img__msg_box">
         <span id="title">已收录文献</span>
         <div id="statistic">
-          <span id="high">146</span><span id="low">146</span>
+          <span id="high">291</span><span id="low">901</span>
         </div>
       </div>
     </div>
@@ -66,12 +66,12 @@
         <div class="left_box__content">
           <div
             class="left_box__item"
-            v-for="item in hotspot.paper"
+            v-for="(item, index) in hotspot.paper"
             :key="item._id"
             @click="route2Paper(item._id)"
           >
             <div id="number">
-              <span>1</span>
+              <span>{{ index + 1 }}</span>
               <svg-icon name="hexagon"></svg-icon>
             </div>
 
