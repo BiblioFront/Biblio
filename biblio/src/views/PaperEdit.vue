@@ -135,6 +135,7 @@ export default {
   },
   created: function () {
     console.log("paper edit created!");
+    this.paperID = this.$route.query.id,
     this.$axios({
       method: "get",
       url: "/user",

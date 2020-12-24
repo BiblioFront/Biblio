@@ -173,11 +173,14 @@ export default {
   },
   created:function(){
     console.log("project");
+    var _this = this;
+    this.id = this.$route.query.id;
     this.$axios({
       method:'get',
       url:'/user/project',
       params:{
-        projectID:this.id
+        // projectID:this.id
+        projectID:_this.$route.query.id,
       },
       headers:{
         token:window.localStorage.getItem("token")

@@ -180,6 +180,7 @@ export default {
     };
   },
   created: function () {
+    this.id = this.$route.query.id;
     var _this = this;
     this.$axios({
       method: "get",

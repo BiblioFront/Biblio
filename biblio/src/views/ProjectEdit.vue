@@ -74,6 +74,7 @@ export default {
     };
   },
   created: function () {
+    this.projectid = this.$route.query.id;
     this.$axios({
       method: "get",
       url: "/user",
