@@ -312,19 +312,7 @@ export default {
         },
       });
     },
-    route2Search() {
-      if (this.searchInput == "") {
-        this.$message({
-          customClass: "inputMessage--navcmp",
-          duration: 1000,
-          offset: 80,
-          message: "请先输入搜索内容",
-        });
-        console.log("Searching error: No Input!");
-      } else {
-        this.$search.$boot(this.value, this.searchInput, 1, "");
-      }
-    },
+    
     // setdrawer() {
     //   this.drawer = true;
     //   this.getMessage();
@@ -360,6 +348,21 @@ export default {
     showForm() {
       this.formsee = true;
     },
+    route2Search() {
+      if (this.searchInput == "") {
+        this.$message({
+          customClass: "inputMessage--navcmp",
+          duration: 1000,
+          offset: 80,
+          message: "请先输入搜索内容",
+        });
+        console.log("Searching error: No Input!");
+      } else {
+        this.$search.$boot(this.value, this.searchInput, 1, "");
+      }
+    },
+    
+  
     findUser() {
       this.$axios({
         method: "get",
@@ -379,6 +382,9 @@ export default {
             this.form[0].id = response.data.user.id;
             console.log(this.form);
             this.existName = true;
+          }else if(response.data.msg == "User does not exist"){
+            this.$message.error("用户不存在！");
+            this.existName = false;
           }
         })
         .catch((error) => {
