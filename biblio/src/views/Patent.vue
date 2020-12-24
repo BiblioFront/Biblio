@@ -10,41 +10,41 @@
           <div class="biblio_source">
             <span>专利</span>
             <span>></span>
-            <el-tag>{{ patent.title }}</el-tag>
-            <span>{{ patent.publicDate }}</span>
+            <el-tag>{{ patentInfo.title }}</el-tag>
+            <span>{{ patentInfo.publicDate }}</span>
           </div>
 
           <div class="biblio_title">
             <h1>
-              {{ patent.title }}
+              {{ patentInfo.title }}
             </h1>
           </div>
 
           <div class="author_info">
             <span id="author" style="font-weight: bold;">{{
-              patent.desinger
+              patentInfo.desinger
             }}</span>
-            <span id="author">{{ patent.owner }}</span>
-            <span id="agency">{{ patent.agency }}</span>
+            <span id="author">{{ patentInfo.owner }}</span>
+            <span id="agency">{{ patentInfo.agency }}</span>
           </div>
 
           <div class="summary">
             <span id="item-title">摘要</span>
-            <span id="text">{{ patent.summary }}</span>
+            <span id="text">{{ patentInfo.summary }}</span>
           </div>
           <div class="summary">
             <span id="item-title">描述</span>
-            <span id="text">{{ patent.description }}</span>
+            <span id="text">{{ patentInfo.description }}</span>
           </div>
 
           <div class="other_info">
             <span id="item-title">类型</span>
-            <span id="text">{{ patent.type }}</span>
+            <span id="text">{{ patentInfo.type }}</span>
           </div>
 
           <div class="other_info">
             <span id="item-title">状态</span>
-            <span id="text">{{ patent.status }}</span>
+            <span id="text">{{ patentInfo.status }}</span>
           </div>
 
           <div class="bibliopage btns_area">
