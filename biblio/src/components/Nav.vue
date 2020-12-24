@@ -118,7 +118,7 @@
                       </div>
 
                       <el-button
-                        @click="deleteLike"
+                        @click="deleteLike(item._id)"
                         type="text"
                         class="message_delete"
                         icon="el-icon-error"
