@@ -10,53 +10,59 @@
           <div class="biblio_source">
             <span>专利</span>
             <span>></span>
-            <el-tag>{{patent.title}}</el-tag>
-            <span>{{patent.publicDate}}</span>
+            <el-tag>{{ patent.title }}</el-tag>
+            <span>{{ patent.publicDate }}</span>
           </div>
 
           <div class="biblio_title">
             <h1>
-              {{patent.title}}
+              {{ patent.title }}
             </h1>
           </div>
 
           <div class="author_info">
-            <span id="author" style="font-weight: bold;"
-              >{{patent.desinger}}</span
-            >
-            <span id="author">{{patent.owner}}</span>
-            <span id="agency">{{patent.agency}}</span>
+            <span id="author" style="font-weight: bold;">{{
+              patent.desinger
+            }}</span>
+            <span id="author">{{ patent.owner }}</span>
+            <span id="agency">{{ patent.agency }}</span>
           </div>
 
           <div class="summary">
             <span id="item-title">摘要</span>
-            <span id="text"
-              >{{patent.summary}}</span
-            >
+            <span id="text">{{ patent.summary }}</span>
           </div>
           <div class="summary">
             <span id="item-title">描述</span>
-            <span id="text"
-              >{{patent.description}}</span
-            >
+            <span id="text">{{ patent.description }}</span>
           </div>
 
           <div class="other_info">
             <span id="item-title">类型</span>
-            <span id="text">{{patent.type}}</span>
+            <span id="text">{{ patent.type }}</span>
           </div>
 
           <div class="other_info">
             <span id="item-title">状态</span>
-            <span id="text">{{patent.status}}</span>
+            <span id="text">{{ patent.status }}</span>
           </div>
 
           <div class="bibliopage btns_area">
-            <el-button><svg-icon name="like"></svg-icon>收藏</el-button>
-            <el-button><svg-icon name="quote"></svg-icon>引用</el-button>
-            <el-button><svg-icon name="download"></svg-icon>来源</el-button>
-            <el-button><svg-icon name="warning"></svg-icon>报错</el-button>
-            <el-button><svg-icon name="share"></svg-icon>分享</el-button>
+            <el-button
+              ><svg-icon
+                name="quote"
+                @click="referenceVisible = true"
+              ></svg-icon
+              >引用</el-button
+            >
+            <el-button
+              ><svg-icon name="warning" @click="errorVisible = true"></svg-icon
+              >报错</el-button
+            >
+            <el-button
+              ><svg-icon name="share" @click="shareVisible = true"></svg-icon
+              >分享</el-button
+            >
           </div>
         </div>
 
@@ -141,78 +147,43 @@
         <span>footer</span>
       </div>
     </el-footer>
+
+    <el-dialog title="引用" :visible.sync="referenceVisible" width="50%">
+      <span style="font-size: 14px; color: #c0c0c0;">复制以引用</span>
+      <el-input
+        placeholder="复制以引用"
+        v-model="reference"
+        style="margin-top: 10px;"
+      ></el-input>
+    </el-dialog>
+
+    <el-dialog title="文献有误？" :visible.sync="errorVisible" width="50%">
+      <span style="font-size: 14px; color: #555;"
+        >请输入报错信息，以方便管理员进行审核</span
+      >
+      <el-input
+        type="textarea"
+        placeholder="报错信息"
+        v-model="error"
+        style="margin-top: 10px;"
+      ></el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="errorVisible = false">取 消</el-button>
+        <el-button type="primary" @click="sendErrorMsg">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <el-dialog title="分享" :visible.sync="shareVisible" width="50%">
+      <span style="font-size: 14px; color: #c0c0c0;"
+        >复制并粘贴给你的好友吧！</span
+      >
+      <el-input v-model="share" style="margin-top: 10px;"></el-input>
+    </el-dialog>
   </el-container>
 </template>
 
-<script>
-import Nav from "@/components/Nav.vue";
+<script src="../assets/js/Patent.js"></script>
 
-export default {
-  name:'Patent',
-  components:{
-    Nav
-  },
-  data:function(){
-    return {
-      id:"5fccd1a1376ae34bbb980c58",
-      patent:{
-        _id:"",
-        title:"基于二维快速自旋回波的磁共振成像方法和装置",
-        summary:"",
-        type:"发明专利",
-        patentID:'CN201811618720.9',
-        applyDate:'西门子(深圳)磁共振有限公司',
-        publishID:"CN111381204A",
-        publicDate:"王玉宇,翁得河,周堃,张乐",
-        mainTypeNumber:"G01R33/54(2006.01) G G01 G01R G01R33",
-        typeNumber:"G01R33/54(2006.01), A61B5/055(2006.01), G01R33/54, A61B5/055",
-        owner:"王玉宇,翁得河,周堃,张乐",
-        desinger:"森上下士",
-        address:"518057 广东省深圳市高新区中区高新中二道西门子磁共振园",
-        agency:"",
-        agent:"",
-        code : '广东;44',
-        description:"",
-        status:"在审",
-        read:0,
-        change:false,
-        sort:null
-      }
-    }
-  },
-  created:function(){
-    var _this = this;
-    this.$axios({
-      method: "get",
-      url: "/user/patent",
-      params: {
-        patentID: _this.id,
-      },
-      headers: {
-        token: window.localStorage.getItem("token"),
-      },
-    })
-      .then((response) => {
-        if (response.data.patent !== undefined) {
-          console.log("get success");
-          _this.patent = response.data.patent;
-        } else {
-          console.log(response.data.msg);
-          this.$message({
-            message:"您所访问的专利不存在",
-            type:"error"
-          })
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  },
-  methods:{
-    
-  }
-}
-</script>
 <style scoped>
 @import "../assets/css/global.css";
 @import "../assets/css/biblio.css";

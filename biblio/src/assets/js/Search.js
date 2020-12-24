@@ -30,8 +30,14 @@ export default {
       currentPage: Number(this.$route.query.pg),
     };
   },
-  mounted: function() {
+  created() {
     this.initResult();
+    this.resList.total = this.$store.getters.getSearchResult.total;
+    this.resList.isAll = this.$store.getters.getSearchResult.isAll;
+    this.resList.paperData = this.$store.getters.getSearchResult.paperData;
+    this.resList.patentData = this.$store.getters.getSearchResult.patentData;
+    this.resList.projectData = this.$store.getters.getSearchResult.projectData;
+    this.resList.scholarData = this.$store.getters.getSearchResult.scholarData;
   },
   methods: {
     initResult() {
@@ -109,20 +115,12 @@ export default {
       else {
         this.category = label;
 
-        var searchForm = {};
-        if (this.$route.query.at == "patent")
-          searchForm = {
-            field: field,
-            words: this.$route.query.wd,
-            page: this.$route.query.pg,
-          };
-        else
-          searchForm = {
-            field: field,
-            words: this.$route.query.wd,
-            page: this.$route.query.pg,
-            category: this.category,
-          };
+        var searchForm = {
+          field: field,
+          words: this.$route.query.wd,
+          page: Number(this.$route.query.pg),
+          category: this.category,
+        };
         console.log(searchForm);
         const _this = this;
         this.$axios
@@ -155,13 +153,12 @@ export default {
         path: "/search",
         query: {
           fd: this.$route.query.fd,
+          at: this.$route.query.at,
           wd: this.$route.query.wd,
           ct: this.category,
           pg: this.$route.query.pg,
         },
       });
-
-      //this.$router.go(0);
     },
     handleClick(tab) {
       if (tab.name == "paper") {

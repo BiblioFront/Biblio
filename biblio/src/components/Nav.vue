@@ -77,7 +77,7 @@
                     </div>
 
                     <el-button
-                      @click="deleteSubscirbe"
+                      @click.native="deleteSubscirbe(item.scholarID)"
                       type="text"
                       class="message_delete"
                       icon="el-icon-error"

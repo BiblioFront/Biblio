@@ -104,57 +104,49 @@ export default {
       existName: false,
 
       //subscribe:
-      subscribeList: [
-        {
-          scholarID: "2",
-          name: "Li",
-          field: "IT",
-          origanization: "buaa",
-          id: 2,
-        },
-      ],
+      subscribeList: [{}],
 
       //like:
       likeList: [
         {
-                    "author": "Li",
-                    "title": "new2022",
-                    "summary": "good",
-                    "url": "IT",
-                    "keywords": null,
-                    "year": 2022,
-                    "likes": 0,
-                    "read": 0,
-                    "change": false,
-                    "id": 1,
-                    "doi": "Li"
-                },
-                {
-                    "author": "Li",
-                    "title": "new2",
-                    "summary": "good",
-                    "url": "IT",
-                    "keywords": null,
-                    "year": 2021,
-                    "likes": 0,
-                    "read": 0,
-                    "change": false,
-                    "id": 2,
-                    "doi": "Li"
-                },
-                {
-                    "author": "Li",
-                    "title": "new3",
-                    "summary": "good",
-                    "url": "IT",
-                    "keywords": null,
-                    "year": 2021,
-                    "likes": 0,
-                    "read": 0,
-                    "change": false,
-                    "id": 3,
-                    "doi": "Li"
-                }
+          author: "Li",
+          title: "new2022",
+          summary: "good",
+          url: "IT",
+          keywords: null,
+          year: 2022,
+          likes: 0,
+          read: 0,
+          change: false,
+          id: 1,
+          doi: "Li",
+        },
+        {
+          author: "Li",
+          title: "new2",
+          summary: "good",
+          url: "IT",
+          keywords: null,
+          year: 2021,
+          likes: 0,
+          read: 0,
+          change: false,
+          id: 2,
+          doi: "Li",
+        },
+        {
+          author: "Li",
+          title: "new3",
+          summary: "good",
+          url: "IT",
+          keywords: null,
+          year: 2021,
+          likes: 0,
+          read: 0,
+          change: false,
+          id: 3,
+          doi: "Li",
+        },
       ],
     };
   },
@@ -167,14 +159,7 @@ export default {
         token: window.localStorage.getItem("token"),
       },
     });
-    // .then((response) => {
-    //   //console.log(response);
-    // })
-    // .catch((error) => {
-    //   //console.log(error);
-    // });
-
-    //console.log(this.isLogin);
+    this.subscribeCommand();
   },
   methods: {
     userCommand(command) {
@@ -187,124 +172,118 @@ export default {
       }
     },
     subscribeCommand() {
-		// xyy
-		this.$axios({
-			method: "get",
-			url: "user/follow/all",
-			headers: {
-			token: window.localStorage.getItem("token"),
-			},
-		})
-		.then((response) => {
-		console.log(response);
-		if (response.data.msg == "successfully") {
-			this.subscribeList = response.data.favoriteList;
-		}
-		})
-		.catch((error) => {
-		console.log(error);
-		});
-	},
-    likeCommand() {
-		this.$axios({
-			method: "get",
-			url: "/user/favorite/all",
-			params: {},
-			headers: {
-			token: window.localStorage.getItem("token"),
-			},
-		})
-		.then((response) => {
-		console.log(response);
-		if (response.data.msg == "successfully") {
-			this.likeList = response.data.favoriteList;
-		}
-		})
-		.catch((error) => {
-		console.log(error);
-		});
-	},
-    deleteSubscirbe() {
-		// xyy
-		// this.$axios({
-		//     method: "delete",
-		//     url:"user/follow/delete/" + scholarID,
-		//     headers:{
-		//         token:window.localStorage.getItem("token"),
-		//     },
-		// })
-		this.$axios
-			.delete(
-			//这个地方应该从参数传点什么让我知道我该删哪个
-			"user/follow/delete?=scholarID" + this,
-			{ headers: { token: window.sessionStorage.getItem("token") } }
-			)
-			.then((response) => {
-			console.log(response);
-			})
-			.catch((error) => {
-			console.log(error);
-			});
-	},
-    deleteLike(index, rows) {
-		if(rows==this.likeList){
-			this.$axios({
-				method:'delete',
-				url:'/user/favorite/delete',
-				params:{
-					likeID:this.likeList[index].id
-				},
-				headers:{
-					token:window.localStorage.getItem("token"),
-				}
-			}).then(response => {
-          if(response.data.msg=="Delete successfully"){
-            rows.splice(index, 1);
+      // xyy
+      this.$axios({
+        method: "get",
+        url: "user/follow/all",
+        headers: {
+          token: window.localStorage.getItem("token"),
+        },
+      })
+        .then((response) => {
+          console.log(response);
+          if (response.data.msg == "successfully") {
+            this.subscribeList = response.data.followList;
           }
-          else
-            this.$message.error("Delete failed");
-        }).catch(error => {
-          console.log(error);
-          this.$message.error("please login first");
         })
-		}
-	},
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    likeCommand() {
+      this.$axios({
+        method: "get",
+        url: "/user/favorite/all",
+        params: {},
+        headers: {
+          token: window.localStorage.getItem("token"),
+        },
+      })
+        .then((response) => {
+          console.log(response);
+          if (response.data.msg == "successfully") {
+            this.likeList = response.data.favoriteList;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    deleteSubscirbe(scholarID) {
+      console.log(scholarID);
+
+      this.$axios
+        .get("user/follow/delete?scholarID=" + scholarID, {
+          headers: { token: window.localStorage.getItem("token") },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.subscribeCommand();
+    },
+    deleteLike(index, rows) {
+      if (rows == this.likeList) {
+        this.$axios({
+          method: "delete",
+          url: "/user/favorite/delete",
+          params: {
+            likeID: this.likeList[index].id,
+          },
+          headers: {
+            token: window.localStorage.getItem("token"),
+          },
+        })
+          .then((response) => {
+            if (response.data.msg == "Delete successfully") {
+              rows.splice(index, 1);
+            } else this.$message.error("Delete failed");
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$message.error("please login first");
+          });
+      }
+    },
     clearSubscribeList() {
-		// xyy
-		this.$axios
-			.delete("user/follow/delete/all", {
-			headers: { token: window.sessionStorage.getItem("token") },
-			})
-			.then((response) => {
-			console.log(response);
-			})
-			.catch((error) => {
-			console.log(error);
-			});
-	},
+      // xyy
+      this.$axios
+        .get("user/follow/delete/all", {
+          headers: { token: window.localStorage.getItem("token") },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.subscribeCommand();
+    },
     clearLike() {
-		for(var i=this.likeList.length-1;i>=0;i--){
-			this.$axios({
-				method:'delete',
-				url:'/user/favorite/delete/all',
-				params:{
-					likeID:this.likeList[i].id
-				},
-				headers:{
-					token:window.localStorage.getItem("token"),
-				}
-			}).then(response => {
-			if(response.data.msg=="Delete all successfully"){
-				this.likeList.splice(i, 1);
-		}
-		else
-			this.$message.error("Delete all failed");
-		}).catch(error => {
-			console.log(error);
-			this.$message.error("please login first");
-		})
-		}
-	},
+      for (var i = this.likeList.length - 1; i >= 0; i--) {
+        this.$axios({
+          method: "delete",
+          url: "/user/favorite/delete/all",
+          params: {
+            likeID: this.likeList[i].id,
+          },
+          headers: {
+            token: window.localStorage.getItem("token"),
+          },
+        })
+          .then((response) => {
+            if (response.data.msg == "Delete all successfully") {
+              this.likeList.splice(i, 1);
+            } else this.$message.error("Delete all failed");
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$message.error("please login first");
+          });
+      }
+    },
     deleteRow(index, rows) {
       if (rows == this.messageData) {
         this.$axios({
@@ -376,6 +355,11 @@ export default {
         },
       });
     },
+    
+    // setdrawer() {
+    //   this.drawer = true;
+    //   this.getMessage();
+    // },
     setdrawer() {
       this.drawer = true;
       console.log(this.drawer);
@@ -421,6 +405,7 @@ export default {
       }
     },
     
+  
     findUser() {
       this.$axios({
         method: "get",

@@ -87,6 +87,41 @@
   letter-spacing: 1px;
   outline: none;
   cursor: pointer;
+  transition: 0.2s ease-in-out;
+  -webkit-transition: 0.2s ease-in-out;
+  -moz-transition: 0.2s ease-in-out;
+}
+.verifybtn:hover {
+  background: #f0b103;
+  border: 2px solid #f0b103;
+  color: #fff;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  transition: 0.1s ease-in-out;
+  -webkit-transition: 0.1s ease-in-out;
+  -moz-transition: 0.1s ease-in-out;
+}
+.verifybtn:active,
+.verifybtn:focus {
+  color: #fff;
+  background: #d8a005;
+  border: 2px solid #d8a005;
+  box-shadow: 0 2px 3px 0 rgba(213, 213, 213, 0.7);
+}
+.subscribebtn:hover {
+  background: #9234df;
+  border: 2px solid #9234df;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  color: #fff;
+  transition: 0.1s ease-in-out;
+  -webkit-transition: 0.1s ease-in-out;
+  -moz-transition: 0.1s ease-in-out;
+}
+.subscribebtn:active,
+.subscribebtn:focus {
+  color: #fff;
+  background: #6d11b8;
+  border: 2px solid #6d11b8;
+  box-shadow: 0 2px 3px 0 rgba(213, 213, 213, 0.7);
 }
 .research_info {
   width: 100%;

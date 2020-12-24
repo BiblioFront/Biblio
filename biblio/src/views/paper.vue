@@ -27,12 +27,12 @@
             <span id="organization">{{ paperInfo.organization }}</span>
           </div>
 
-          <div class="summary">
+          <div class="summary" v-if="paperInfo.summary">
             <span id="item-title">摘要</span>
             <span id="text">{{ paperInfo.summary }}</span>
           </div>
 
-          <div class="other_info">
+          <div class="other_info" v-if="paperInfo.keywords">
             <span id="item-title">关键词</span>
             <span id="text">{{ paperInfo.keywords }}</span>
           </div>
