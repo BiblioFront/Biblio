@@ -187,12 +187,12 @@
               <el-avatar :size="30" :src="scope.row.avatar"></el-avatar>
               <el-collapse-item
                 class="message_content"
-                :title="scope.row.messageData.sender.username"
+                :title="scope.row.from"
                 name="1"
               >
-                <p>{{ scope.row.messageData.content }}</p>
+                <p>{{ scope.row.content }}</p>
                 <p id="message_time">
-                  {{ scope.row.messageData.date }}
+                  {{ scope.row.time }}
                 </p>
               </el-collapse-item>
             </el-collapse>
