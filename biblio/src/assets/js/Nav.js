@@ -107,59 +107,20 @@ export default {
       subscribeList: [{}],
 
       //like:
-      likeList: [
-        {
-          author: "Li",
-          title: "new2022",
-          summary: "good",
-          url: "IT",
-          keywords: null,
-          year: 2022,
-          likes: 0,
-          read: 0,
-          change: false,
-          id: 1,
-          doi: "Li",
-        },
-        {
-          author: "Li",
-          title: "new2",
-          summary: "good",
-          url: "IT",
-          keywords: null,
-          year: 2021,
-          likes: 0,
-          read: 0,
-          change: false,
-          id: 2,
-          doi: "Li",
-        },
-        {
-          author: "Li",
-          title: "new3",
-          summary: "good",
-          url: "IT",
-          keywords: null,
-          year: 2021,
-          likes: 0,
-          read: 0,
-          change: false,
-          id: 3,
-          doi: "Li",
-        },
-      ],
+      likeList: [],
     };
   },
   mounted() {
-    this.$axios({
-      method: "get",
-      url: "/user/message",
-      params: {},
-      headers: {
-        token: window.localStorage.getItem("token"),
-      },
-    });
+    // this.$axios({
+    //   method: "get",
+    //   url: "/user/message",
+    //   params: {},
+    //   headers: {
+    //     token: window.localStorage.getItem("token"),
+    //   },
+    // });
     this.subscribeCommand();
+    
   },
   methods: {
     userCommand(command) {
@@ -459,30 +420,6 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-        });
-    },
-    getMessage() {
-      console.log("User Requsting...  \nPulling message list...");
-
-      const _this = this;
-      this.$axios
-        .get("/user/message", {
-          headers: { token: window.localStorage.getItem("token") },
-        })
-        .then((res) => {
-          const msg = res.data.msg;
-          //Get message successfully
-          if (msg === "Get message successfully") {
-            console.log("Pull message list SUCCESS!");
-
-            _this.messageData = res.data.messageList;
-          }
-          //please login first
-          else if (msg === "please login first") {
-            console.log("Pull message list failed! [Error: " + msg + "]");
-
-            _this.$message.error("未登录！");
-          }
         });
     },
     change(e) {

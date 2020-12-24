@@ -49,7 +49,7 @@
               </el-dropdown-menu>
             </el-dropdown>
 
-            <el-dropdown @command="subscribeCommand">
+            <el-dropdown @visible-change="subscribeCommand">
               <el-button class="inform" circle icon="el-icon-files"></el-button>
               <el-dropdown-menu class="navcmp" slot="dropdown">
                 <el-dropdown-item
@@ -97,7 +97,7 @@
               </el-dropdown-menu>
             </el-dropdown>
 
-            <el-dropdown @command="likeCommand">
+            <el-dropdown @visible-change="likeCommand">
               <el-button
                 class="inform"
                 circle
@@ -187,12 +187,12 @@
               <el-avatar :size="30" :src="scope.row.avatar"></el-avatar>
               <el-collapse-item
                 class="message_content"
-                :title="scope.row.messageData.sender.username"
+                :title="scope.row.from"
                 name="1"
               >
-                <p>{{ scope.row.messageData.content }}</p>
+                <p>{{ scope.row.content }}</p>
                 <p id="message_time">
-                  {{ scope.row.messageData.date }}
+                  {{ scope.row.time }}
                 </p>
               </el-collapse-item>
             </el-collapse>
