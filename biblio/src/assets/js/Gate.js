@@ -182,15 +182,12 @@ export default {
         console.log(token);
 
         this.$axios
-          .post(
-            "/user/verificatio",
+          .get(
+            "/user/verification?researcherID=" +
+              this.resList.scholarInfo.scholarID,
             {
-              params: {
-                researcherID: this.resList.scholarInfo.scholarID,
-              },
-            },
-            { verification_code: this.verificationForm.verification_code },
-            { headers: { token: token } }
+              headers: { token: token },
+            }
           )
           .then((response) => {
             var msg = response.data.msg;
@@ -225,16 +222,20 @@ export default {
       this.$refs.verificationFormRef.validate((valid) => {
         if (!valid) return;
 
-        var scholarID = this.resList.scholarInfo.scholarID;
+        var scholarID = this.resList.scholarInfo._id;
         console.log(scholarID);
         var token = window.localStorage.getItem("token");
         console.log(token);
 
         this.$axios
-          .post(
-            "/user/claim?researcherID=" + scholarID,
-            { verification_code: this.verificationForm.verification_code },
-            { headers: { token: token } }
+          .get(
+            "/user/claim?researcherID=" +
+              scholarID +
+              "&verification_code=" +
+              this.verificationForm.verification_code,
+            {
+              headers: { token: token },
+            }
           )
           .then((response) => {
             var msg = response.data.msg;
@@ -270,12 +271,11 @@ export default {
       console.log(token);
       var _id = this.resList.scholarInfo._id;
       console.log(_id);
-      this.$axios
-        .post("user/follow?scholarID=" + _id, {
-          headers: {
-            token: token,
-          },
-        })
+      this.$axios({
+        methods: "get",
+        url: "user/follow?scholarID=" + _id,
+        headers: { token: token },
+      })
         .then((response) => {
           console.log(response);
         })
@@ -294,11 +294,12 @@ export default {
       //     console.log(error)
       // });
     },
+    deleteFollow() {},
     // 上传论文
     uploadPaper() {
       this.$refs.uploadPaperFormRef.validate((valid) => {
         if (!valid) return;
-        var scholarID = this.resList.scholarInfo.scholarID;
+        var scholarID = this.resList.scholarInfo._id;
         console.log(scholarID);
         var token = window.localStorage.getItem("token");
         console.log(token);
@@ -457,6 +458,23 @@ export default {
         this.uploadProject();
       }
     },
-    pageTurnTo() {},
+    route2Paper(id) {
+      this.$router.push({
+        path: "/paper",
+        query: { id: id },
+      });
+    },
+    route2Patent(id) {
+      this.$router.push({
+        path: "/patent",
+        query: { id: id },
+      });
+    },
+    route2Project(id) {
+      this.$router.push({
+        path: "/project",
+        query: { id: id },
+      });
+    },
   },
 };

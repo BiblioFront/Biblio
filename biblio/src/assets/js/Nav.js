@@ -289,6 +289,23 @@ export default {
         },
       });
     },
+    route2Search() {
+      if (this.searchInput == "") {
+        this.$message({
+          customClass: "inputMessage--navcmp",
+          duration: 1000,
+          offset: 80,
+          message: "请先输入搜索内容",
+        });
+        console.log("Searching error: No Input!");
+      } else {
+        this.$search.$boot(this.value, this.searchInput, 1, "");
+      }
+    },
+    // setdrawer() {
+    //   this.drawer = true;
+    //   this.getMessage();
+    // },
     setdrawer() {
       this.drawer = true;
       console.log(this.drawer);
@@ -316,26 +333,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    },
-    showForm() {
-      this.formsee = true;
-    },
-    route2Search() {
-      if (this.searchInput == "") {
-        this.$message({
-          customClass: "inputMessage--navcmp",
-          duration: 1000,
-          offset: 80,
-          message: "请先输入搜索内容",
-        });
-        console.log("Searching error: No Input!");
-      } else {
-        this.$search.$boot(this.value, this.searchInput, 1, "");
-      }
-    },
-    setdrawer() {
-      this.drawer = true;
-      this.getMessage();
     },
     showForm() {
       this.formsee = true;

@@ -11,7 +11,7 @@
         <div class="gatepage scholar_info">
           <div>
             <span id="name">{{ resList.scholarInfo.name }}</span>
-            <svg-icon name="verify" v-if="resList.isFollow"></svg-icon>
+            <svg-icon name="verify" v-if="resList.isAuth"></svg-icon>
           </div>
 
           <span id="institution">{{ resList.scholarInfo.organization }}</span>
@@ -19,13 +19,26 @@
         </div>
 
         <div class="scholar_btns_area">
-          <button @click="verification" v-if="!resList.isFollow">
+          <button
+            class="verifybtn"
+            @click="verification"
+            v-if="resList.isAuth == 0"
+          >
             我要认证
           </button>
-          <button>关注</button>
+          <button @click="follow" v-if="!resList.isFollow" class="subscribebtn">
+            关注
+          </button>
+          <button
+            @click="deleteFollow"
+            v-if="resList.isFollow"
+            class="subscribebtn dark"
+          >
+            取消关注
+          </button>
           <button
             @click="uploadAchievementDialogVisible = true"
-            v-if="resList.isAuth"
+            v-if="resList.isAuth == 2"
           >
             上传成果
           </button>
@@ -53,6 +66,132 @@
 
         <Collaborator :data="resList.collaborators" />
       </div>
+    </div>
+
+    <div class="achievements_box">
+      <div id="filter_bar">
+        <div class="filter_bar__item">
+          <ul>
+            <li>
+              <span>全部年份</span>
+              <div id="cutline"></div>
+            </li>
+            <li>
+              <span>全部类型</span>
+              <div id="cutline"></div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="filter_bar__item">
+          <ul>
+            <li>
+              <span>被引量</span>
+              <div id="cutline"></div>
+            </li>
+            <li>
+              <span>发表时间</span>
+              <div id="cutline"></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="achievements_content">
+        <div
+          class="achievements_item"
+          v-for="item in resList.paper.info"
+          :key="item._id"
+        >
+          <div class="item__above">
+            <div id="title" @click="route2Paper(item._id)">
+              <span>[论文]</span>
+              <span>{{ item.title }}</span>
+            </div>
+
+            <div class="item__btns_area">
+              <button><svg-icon name="like"></svg-icon></button>
+              <button><svg-icon name="relative"></svg-icon></button>
+              <button><svg-icon name="share"></svg-icon></button>
+            </div>
+          </div>
+
+          <div id="author">
+            <span>{{ item.author }}</span>
+            <span>{{ item.journal }}</span>
+            <span v-if="item.read">{{ item.read }}阅读</span>
+            <span v-if="item.like">{{ item.like }}收藏</span>
+          </div>
+
+          <div id="summary">
+            <p>{{ item.summary }}</p>
+          </div>
+        </div>
+
+        <div
+          class="achievements_item"
+          v-for="item in resList.patent.info"
+          :key="item._id"
+        >
+          <div class="item__above">
+            <div id="title" @click="route2Patent(item._id)">
+              <span>[专利]</span>
+              <span>{{ item.title }}</span>
+            </div>
+
+            <div class="item__btns_area">
+              <button><svg-icon name="like"></svg-icon></button>
+              <button><svg-icon name="relative"></svg-icon></button>
+              <button><svg-icon name="share"></svg-icon></button>
+            </div>
+          </div>
+
+          <div id="author">
+            <span>{{ item.designer }}</span>
+            <span>{{ item.owner }}</span>
+            <span v-if="item.read">{{ item.read }}阅读</span>
+            <span v-if="item.like">{{ item.like }}收藏</span>
+          </div>
+
+          <div id="summary">
+            <p>{{ item.summary }}</p>
+          </div>
+        </div>
+
+        <div
+          class="achievements_item"
+          v-for="item in resList.project.info"
+          :key="item._id"
+        >
+          <div class="item__above">
+            <div id="title" @click="route2Project(item._id)">
+              <span>[科研项目]</span>
+              <span>{{ item.title }}</span>
+            </div>
+
+            <div class="item__btns_area">
+              <button><svg-icon name="like"></svg-icon></button>
+              <button><svg-icon name="relative"></svg-icon></button>
+              <button><svg-icon name="share"></svg-icon></button>
+            </div>
+          </div>
+
+          <div id="author">
+            <span>{{ item.author }}</span>
+            <span>{{ item.company }}</span>
+            <span>{{ item.year }}</span>
+            <span v-if="item.read">{{ item.read }}阅读</span>
+          </div>
+
+          <div id="summary">
+            <p>{{ item.summary }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>footer</span>
     </div>
 
     <el-dialog
@@ -347,144 +486,6 @@
         <el-button @click="uploadAchievement">确 定</el-button>
       </div>
     </el-dialog>
-
-    <div class="achievements_box">
-      <div id="filter_bar">
-        <div class="filter_bar__item">
-          <ul>
-            <li>
-              <span>全部年份</span>
-              <div id="cutline"></div>
-            </li>
-            <li>
-              <span>全部类型</span>
-              <div id="cutline"></div>
-            </li>
-          </ul>
-        </div>
-
-        <div class="filter_bar__item">
-          <ul>
-            <li>
-              <span>被引量</span>
-              <div id="cutline"></div>
-            </li>
-            <li>
-              <span>发表时间</span>
-              <div id="cutline"></div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="achievements_content">
-        <div
-          class="achievements_item"
-          v-for="item in resList.paper.info"
-          :key="item._id"
-        >
-          <div class="item__above">
-            <div id="title">
-              <span>[论文]</span>
-              <span>{{ item.title }}</span>
-            </div>
-
-            <div class="item__btns_area">
-              <button><svg-icon name="like"></svg-icon></button>
-              <button><svg-icon name="relative"></svg-icon></button>
-              <button><svg-icon name="share"></svg-icon></button>
-            </div>
-          </div>
-
-          <div id="author">
-            <span>{{ item.author }}</span>
-            <span>{{ item.journal }}</span>
-            <span v-if="item.read">{{ item.read }}阅读</span>
-            <span v-if="item.like">{{ item.like }}收藏</span>
-          </div>
-
-          <div id="summary">
-            <p>{{ item.summary }}</p>
-          </div>
-        </div>
-
-        <div
-          class="achievements_item"
-          v-for="item in resList.patent.info"
-          :key="item._id"
-        >
-          <div class="item__above">
-            <div id="title">
-              <span>[专利]</span>
-              <span>{{ item.title }}</span>
-            </div>
-
-            <div class="item__btns_area">
-              <button><svg-icon name="like"></svg-icon></button>
-              <button><svg-icon name="relative"></svg-icon></button>
-              <button><svg-icon name="share"></svg-icon></button>
-            </div>
-          </div>
-
-          <div id="author">
-            <span>{{ item.designer }}</span>
-            <span>{{ item.owner }}</span>
-            <span v-if="item.read">{{ item.read }}阅读</span>
-            <span v-if="item.like">{{ item.like }}收藏</span>
-          </div>
-
-          <div id="summary">
-            <p>{{ item.summary }}</p>
-          </div>
-        </div>
-
-        <div
-          class="achievements_item"
-          v-for="item in resList.project.info"
-          :key="item._id"
-        >
-          <div class="item__above">
-            <div id="title">
-              <span>[科研项目]</span>
-              <span>{{ item.title }}</span>
-            </div>
-
-            <div class="item__btns_area">
-              <button><svg-icon name="like"></svg-icon></button>
-              <button><svg-icon name="relative"></svg-icon></button>
-              <button><svg-icon name="share"></svg-icon></button>
-            </div>
-          </div>
-
-          <div id="author">
-            <span>{{ item.author }}</span>
-            <span>{{ item.company }}</span>
-            <span>{{ item.year }}</span>
-            <span v-if="item.read">{{ item.read }}阅读</span>
-          </div>
-
-          <div id="summary">
-            <p>{{ item.summary }}</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="pageturn" v-if="biblioCount > 20">
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          :total="biblioCount"
-          :pager-count="11"
-          :page-size="20"
-          @current-change="pageTurnTo"
-        >
-        </el-pagination>
-      </div>
-    </div>
-
-    <div class="footer">
-      <span>footer</span>
-    </div>
   </div>
 </template>
 

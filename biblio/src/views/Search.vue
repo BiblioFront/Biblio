@@ -108,9 +108,8 @@
               class="achievements_item"
               v-for="item in resList.patentData.item"
               :key="item.id"
-              @click="route2Patent(item._id)"
             >
-              <div class="item__above">
+              <div class="item__above" @click="route2Patent(item._id)">
                 <div id="title">
                   <span>[专利]</span>
                   <span>{{ item.title }}</span>
@@ -143,10 +142,9 @@
               class="achievements_item"
               v-for="item in resList.projectData.item"
               :key="item._id"
-              @click="route2Project(item._id)"
             >
               <div class="item__above">
-                <div id="title">
+                <div id="title" @click="route2Project(item._id)">
                   <span>[科研项目]</span>
                   <span>{{ item.title }}</span>
                 </div>
