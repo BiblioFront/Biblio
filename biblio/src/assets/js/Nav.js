@@ -420,13 +420,7 @@ export default {
         this.$search.$boot(this.value, this.searchInput, 1, "");
       }
     },
-    setdrawer() {
-      this.drawer = true;
-      this.getMessage();
-    },
-    showForm() {
-      this.formsee = true;
-    },
+    
     findUser() {
       this.$axios({
         method: "get",
@@ -446,6 +440,9 @@ export default {
             this.form[0].id = response.data.user.id;
             console.log(this.form);
             this.existName = true;
+          }else if(response.data.msg == "User does not exist"){
+            this.$message.error("用户不存在！");
+            this.existName = false;
           }
         })
         .catch((error) => {
