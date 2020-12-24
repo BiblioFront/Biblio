@@ -151,6 +151,12 @@ export default {
           console.log(error);
         });
     },
+    likePaper(command){
+      this.$router.push({
+        path: "/paper",
+        query: { id: command },
+      });
+    },
     likeCommand() {
       this.$axios({
         method: "get",
