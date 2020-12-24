@@ -6,7 +6,6 @@ export default {
       type: Number,
       default: 1,
     },
-    inheritSearchResult: {},
   },
   data() {
     return {
@@ -80,56 +79,19 @@ export default {
           label: "学者",
         },
       ],
-      value: this.$route.query.fd || ["all"],
-      searchInput: this.$route.query.wd || "",
-      searchResult: this.inheritSearchResult,
+      value: ["all"],
+      searchInput: "",
+      searchResult: {
+        total: 0,
+        isAll: false,
+        paperData: {},
+        patentData: {},
+        projectData: {},
+        scholarData: {},
+      },
 
       //messageParams:
-      messageData: [
-        {
-          from: "user10086",
-          time: "2020.12.19 16:05",
-          content: "hi!",
-        },
-        {
-          from: "user10087",
-          time: "2020.12.19 16:07",
-          content:
-            "hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!hi!",
-        },
-        {
-          from: "user10086",
-          time: "2020.12.19 16:05",
-          content: "hi!",
-        },
-        {
-          from: "user10086",
-          time: "2020.12.19 16:05",
-          content: "hi!",
-        },
-        {
-          from: "user10086",
-          time: "2020.12.19 16:05",
-          content: "hi!",
-        },
-        {
-          from: "user10086",
-          time: "2020.12.19 16:05",
-          content: "hi!",
-        },
-        {
-          from: "user10086",
-          time: "2020.12.19 16:05",
-          content: "hi!",
-        },
-        {
-          from: "user10086",
-          time: "2020.12.19 16:05",
-          content: "hi!",
-        },
-      ],
-      drawer: false,
-      formsee: false,
+      messageData: [],
       form: [
         {
           name: "",
@@ -137,8 +99,9 @@ export default {
           id: "",
         },
       ],
-      formLabelWidth: "100px",
-      labelPosition: "right",
+      drawer: false,
+      formsee: false,
+      existName: false,
 
       //subscribe:
       subscribeList: [
@@ -198,11 +161,62 @@ export default {
         this.$router.go(0);
       }
     },
-    subscribeCommand() {},
+    subscribeCommand() {
+      // xyy
+      this.$axios({
+        method: "get",
+        url: "user/follow/all",
+        headers: {
+          token: window.localStorage.getItem("token"),
+        },
+      })
+        .then((response) => {
+          console.log(response);
+          if (response.data.msg == "successfully") {
+            this.subscribeList = response.data.favoriteList;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     likeCommand() {},
-    deleteSubscirbe() {},
+    deleteSubscirbe() {
+      // xyy
+      // this.$axios({
+      //     method: "delete",
+      //     url:"user/follow/delete/" + scholarID,
+      //     headers:{
+      //         token:window.localStorage.getItem("token"),
+      //     },
+      // })
+      this.$axios
+        .delete(
+          //这个地方应该从参数传点什么让我知道我该删哪个
+          "user/follow/delete?=scholarID" + this,
+          { headers: { token: window.sessionStorage.getItem("token") } }
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     deleteLike() {},
-    clearSubscribeList() {},
+    clearSubscribeList() {
+      // xyy
+      this.$axios
+        .delete("user/follow/delete/all", {
+          headers: { token: window.sessionStorage.getItem("token") },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     clearLike() {},
     deleteRow(index, rows) {
       rows.splice(index, 1);
@@ -235,13 +249,6 @@ export default {
         },
       });
     },
-    setdrawer() {
-      this.drawer = true;
-      console.log(this.drawer);
-    },
-    showForm() {
-      this.formsee = true;
-    },
     route2Search() {
       if (this.searchInput == "") {
         this.$message({
@@ -254,6 +261,13 @@ export default {
       } else {
         this.$search.$boot(this.value, this.searchInput, 1, "");
       }
+    },
+    setdrawer() {
+      this.drawer = true;
+      this.getMessage();
+    },
+    showForm() {
+      this.formsee = true;
     },
     findUser() {
       this.$axios({
@@ -305,6 +319,30 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+        });
+    },
+    getMessage() {
+      console.log("User Requsting...  \nPulling message list...");
+
+      const _this = this;
+      this.$axios
+        .get("/user/message", {
+          headers: { token: window.localStorage.getItem("token") },
+        })
+        .then((res) => {
+          const msg = res.data.msg;
+          //Get message successfully
+          if (msg === "Get message successfully") {
+            console.log("Pull message list SUCCESS!");
+
+            _this.messageData = res.data.messageList;
+          }
+          //please login first
+          else if (msg === "please login first") {
+            console.log("Pull message list failed! [Error: " + msg + "]");
+
+            _this.$message.error("未登录！");
+          }
         });
     },
     change(e) {

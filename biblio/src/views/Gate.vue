@@ -10,20 +10,22 @@
 
         <div class="gatepage scholar_info">
           <div>
-            <span id="name">{{ all.scholarInfo.name }}</span>
-            <svg-icon name="verify" v-if="all.isFollow"></svg-icon>
+            <span id="name">{{ resList.scholarInfo.name }}</span>
+            <svg-icon name="verify" v-if="resList.isFollow"></svg-icon>
           </div>
 
-          <span id="institution">{{ all.scholarInfo.organization }}</span>
-          <span id="subject">{{ all.scholarInfo.field }}</span>
+          <span id="institution">{{ resList.scholarInfo.organization }}</span>
+          <span id="subject">{{ resList.scholarInfo.field }}</span>
         </div>
 
         <div class="scholar_btns_area">
-          <button @click="verification" v-if="!all.isFollow">我要认证</button>
+          <button @click="verification" v-if="!resList.isFollow">
+            我要认证
+          </button>
           <button>关注</button>
           <button
             @click="uploadAchievementDialogVisible = true"
-            v-if="all.isAuth"
+            v-if="resList.isAuth"
           >
             上传成果
           </button>
@@ -45,11 +47,11 @@
         </div>
 
         <div class="achievements">
-          <WordsCloud :data="all.scholarKeywords" />
-          <LineMap :data="all.publishYear" />
+          <WordsCloud :data="resList.scholarKeywords" />
+          <LineMap :xAxis="yearIndex" :yAxis="biblioIndex" />
         </div>
 
-        <Collaborator :data="all.collaborators" />
+        <Collaborator :data="resList.collaborators" />
       </div>
     </div>
 
@@ -378,7 +380,7 @@
       <div class="achievements_content">
         <div
           class="achievements_item"
-          v-for="item in all.paper.info"
+          v-for="item in resList.paper.info"
           :key="item._id"
         >
           <div class="item__above">
@@ -408,7 +410,7 @@
 
         <div
           class="achievements_item"
-          v-for="item in all.patent.info"
+          v-for="item in resList.patent.info"
           :key="item._id"
         >
           <div class="item__above">
@@ -438,7 +440,7 @@
 
         <div
           class="achievements_item"
-          v-for="item in all.project.info"
+          v-for="item in resList.project.info"
           :key="item._id"
         >
           <div class="item__above">

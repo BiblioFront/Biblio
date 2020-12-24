@@ -11,32 +11,37 @@ Vue.prototype.$search = {
   searchResult: {
     total: 0,
     isAll: false,
+    category: "",
     paperData: {},
     patentData: {},
     projectData: {},
     scholarData: {},
   },
   $extract(field) {
-    switch (field[1]) {
-      case "paper_title":
-        return "title";
-      case "paper_author":
-        return "author";
-      case "paper_doi":
-        return "doi";
-      case "paper_keywords":
-        return "keywords";
-      case "patent_title":
-        return "title";
-      case "patent_owner":
-        return "owner";
-      case "project_title":
-        return "title";
-      case "project_author":
-        return "author";
-      case "project_keywords":
-        return "keywords";
-    }
+    if (field.length == 2) {
+      switch (field[1]) {
+        case "title":
+          return "title";
+        case "paper_title":
+          return "title";
+        case "paper_author":
+          return "author";
+        case "paper_doi":
+          return "doi";
+        case "paper_keywords":
+          return "keywords";
+        case "patent_title":
+          return "title";
+        case "patent_owner":
+          return "owner";
+        case "project_title":
+          return "title";
+        case "project_author":
+          return "author";
+        case "project_keywords":
+          return "keywords";
+      }
+    } else return "";
   },
   $post(method, field, input, page, category) {
     var searchForm = {
@@ -45,7 +50,7 @@ Vue.prototype.$search = {
       page: page,
       category: category,
     };
-    //console.log(method);
+    //console.log(searchForm);
     const _this = this;
     axios.post("/search/" + method, searchForm).then((res) => {
       _this.searchResult.total = res.data.total;
@@ -128,6 +133,7 @@ Vue.prototype.$search = {
                     }
                     _this.searchResult.total = total;
                     _this.searchResult.isAll = true;
+
                     store.commit("SET_SEARCHRESULT", _this.searchResult);
                   });
               });
@@ -136,6 +142,7 @@ Vue.prototype.$search = {
   },
   $boot(field, input, page, category) {
     console.log("Search booting '" + field + "'...");
+    console.log(field[0]);
     if (field[0] == "paper") {
       this.$post("paper", field, input, page, category);
     } else if (field[0] == "patent") {
@@ -143,7 +150,7 @@ Vue.prototype.$search = {
     } else if (field[0] == "project") {
       this.$post("project", field, input, page, category);
     } else if (field[0] == "scholar") {
-      this.$scholar("scholar", field, input, page);
+      this.$scholar("scholar", "name", input, page);
     } else if (field[0] == "all") {
       this.$all(input);
     }
@@ -151,16 +158,23 @@ Vue.prototype.$search = {
       "Search routing '" +
         "/search?fd=" +
         field +
+        "&at=" +
+        (field[0] == "all" ? "paper" : field[0]) +
         "&wd=" +
         input +
         "&pg=" +
-        page
+        page +
+        "&ct=" +
+        category +
+        "'"
     );
     router.push({
       path: "/search",
       query: {
-        fd: field,
+        fd: field.join(","),
+        at: field[0] == "all" ? "paper" : field[0],
         wd: input,
+        ct: category,
         pg: page,
       },
     });

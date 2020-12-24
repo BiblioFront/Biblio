@@ -69,23 +69,29 @@ const routes = [
   },
   {
     path: "/paperadd",
-    name : "PaperAdd",
-    component : PaperAdd
+    name: "PaperAdd",
+    component: PaperAdd,
   },
   {
-    path:"/patentadd",
-    name :"PatentAdd",
-    component:PatentAdd
+    path: "/patentadd",
+    name: "PatentAdd",
+    component: PatentAdd,
   },
   {
-    path:"/projectadd",
-    name:"ProjectAdd",
-    component:ProjectAdd
-  }
+    path: "/projectadd",
+    name: "ProjectAdd",
+    component: ProjectAdd,
+  },
 ];
 
 const router = new VueRouter({
   routes,
+  scrollBehavior() {
+    return {
+      x: 0,
+      y: 0,
+    };
+  },
 });
 
 const VueRouterPush = VueRouter.prototype.push;
